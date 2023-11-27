@@ -8,4 +8,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="assets\images\Лого ТНС.jpg" />
+    <None Remove="assets\images\На авторизацию_Обновление кода.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="assets\images\Лого ТНС.jpg" />
+    <Resource Include="assets\images\На авторизацию_Обновление кода.jpg" />
+  </ItemGroup>
+
 </Project>

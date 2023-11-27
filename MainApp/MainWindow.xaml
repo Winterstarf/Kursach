@@ -3,10 +3,35 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        SizeToContent="WidthAndHeight"
+        Title="Auth" Height="350" Width="500" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
+        <TextBlock Height="30" Width="200" Margin="38,48,262,256" Text="Телеком Нева Связь" FontSize="18" FontWeight="Medium"/>
+        <Image Height="96" Width="123" HorizontalAlignment="Right" VerticalAlignment="Top" Source="assets\images\Лого ТНС.jpg"/>
 
+        <StackPanel Margin="125,111,318,111">
+            <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Номер" FontSize="15" TextAlignment="Left"/>
+            <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Пароль" FontSize="15" TextAlignment="Left"/>
+            <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Код" FontSize="15" TextAlignment="Left"/>
+        </StackPanel>
+
+        <StackPanel Margin="193,111,155,102">
+            <TextBox x:Name="NumTB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            <PasswordBox x:Name="PassPB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="CodeTB" Height="25" Width="100" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+        </StackPanel>
+        <Button x:Name="CodeBtn" Height="27" Width="25" Margin="305,175,170,132" >
+            <Button.Template>
+                <ControlTemplate>
+                    <Image Source="assets\images\На авторизацию_Обновление кода.jpg"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <StackPanel Margin="169,237,155,41" Orientation="Horizontal">
+            <Button x:Name="CancelBtn" Height="25" Width="80" Margin="0,0,15,0" Content="Отмена" FontSize="15" VerticalContentAlignment="Center"/>
+            <Button x:Name="LoginBtn" Height="25" Width="80" Content="Вход" FontSize="15" VerticalAlignment="Center"/>
+        </StackPanel>
     </Grid>
 </Window>
