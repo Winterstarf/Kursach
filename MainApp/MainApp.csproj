@@ -18,4 +18,8 @@
     <Resource Include="assets\images\На авторизацию_Обновление кода.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="classes\" />
+  </ItemGroup>
+
 </Project>
