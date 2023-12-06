@@ -21,6 +21,7 @@ namespace MainApp
                 SqlConnection con = new SqlConnection(@"Data Source=201-04\SQLEXPRESS;Initial Catalog=Neva;Integrated Security=SSPI");
                 con.Open();
 
+                //изменить на настоящие данные из бд
                 SqlCommand cmd = new SqlCommand("select * from UserData where Username='" + username + "' and Pass='" + password + "'", con);
                 cmd.CommandType = CommandType.Text;
 
@@ -33,9 +34,9 @@ namespace MainApp
 
                 if (dataSet.Tables[0].Rows.Count > 0)
                 {
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Show();
                     this.Close();
+                    MainWindow m = new MainWindow();
+                    m.Show();
                 }
 
                 con.Close();

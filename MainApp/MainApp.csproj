@@ -14,16 +14,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="assets\images\Лого ТНС.jpg" />
     <Resource Include="assets\images\На авторизацию_Обновление кода.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="classes\" />
+    <Folder Include="pages\" />
+    <Folder Include="windows\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="assets\images\Лого ТНС.jpg" />
   </ItemGroup>
 
 </Project>
