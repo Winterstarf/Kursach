@@ -8,7 +8,7 @@
         Title="Вход в систему" Height="330" Width="450" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBlock Height="30" Width="200" Margin="28,33,222,251" Text="Телеком Нева Связь" FontSize="18" FontWeight="Medium"/>
-        <Image Height="96" Width="123" HorizontalAlignment="Right" VerticalAlignment="Top" Source="assets\images\Лого ТНС.jpg"/>
+        <Image Height="96" Width="123" HorizontalAlignment="Right" VerticalAlignment="Top" Source="\assets\images\Лого ТНС.jpg"/>
 
         <StackPanel Margin="109,111,278,111">
             <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Номер" FontSize="15" TextAlignment="Left"/>
@@ -18,13 +18,13 @@
 
         <StackPanel Margin="172,111,125,102">
             <TextBox x:Name="NumTB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center" KeyDown="NumTB_KeyDown"/>
-            <PasswordBox x:Name="PassPB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsEnabled="False"/>
+            <PasswordBox x:Name="PassPB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsEnabled="False" KeyDown="PassPB_KeyDown"/>
             <TextBox x:Name="CodeTB" Height="25" Width="100" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsEnabled="False"/>
         </StackPanel>
         <Button x:Name="CodeBtn" Height="27" Width="25" Margin="283,176,142,111" IsEnabled="False">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="assets\images\На авторизацию_Обновление кода.jpg"/>
+                    <Image Source="\assets\images\На авторизацию_Обновление кода.jpg"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2cb0b9b6233e4a3ba196e88fc344773c" Name="Diagram1">
+        <EntityTypeShape EntityType="NevaModel.Announcement" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.AntennaType" Width="1.5" PointX="5.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.BasicStation" Width="1.5" PointX="10.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.BasicStationModel" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.CommsStandard" Width="1.5" PointX="5.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.ContractType" Width="1.5" PointX="9" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.Crowdness" Width="1.5" PointX="1.5" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.Email" Width="1.5" PointX="8.25" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.Gender" Width="1.5" PointX="3.75" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.Hardware" Width="1.5" PointX="11.25" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.HwType" Width="1.5" PointX="6" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.Neighborhood" Width="1.5" PointX="1.5" PointY="25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.Passport" Width="1.5" PointX="8.25" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.Phone" Width="1.5" PointX="8.25" PointY="25.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.ProblemType" Width="1.5" PointX="6" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.Report" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.ServiceDetails" Width="1.5" PointX="11.25" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.ServiceIssue" Width="1.5" PointX="6" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.ServiceType" Width="1.5" PointX="6" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.ServiceWorkType" Width="1.5" PointX="6" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.Staff" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.StaffRole" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.SubAddress" Width="1.5" PointX="3.75" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.SubContract" Width="1.5" PointX="11.25" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.SubPayment" Width="1.5" PointX="8.25" PointY="31.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.Subscriber" Width="1.5" PointX="6" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.SupportStatus" Width="1.5" PointX="6" PointY="28.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.ConnectedService" Width="1.5" PointX="13.5" PointY="24.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.Rent" Width="1.5" PointX="13.5" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NevaModel.SupportHistory" Width="1.5" PointX="8.25" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="NevaModel.fk_idRoleAnnounce" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idAntennaType" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idModel" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idCommsStandard" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idConType" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idCrowd" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idSubEmail" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idGender" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idHard" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idHwType" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.idHwTypeSupport" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idHood" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idSubPass" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idSubPhone" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idProblemType" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idStaffReport" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idSConService" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idSTypeDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idServiceIssue" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.idServiceTypeSupport" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idServiceWorkType" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idRoleStaff" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idStaffSupport" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idSubAddress" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idConConService" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idConRent" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idSubCon" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idSubPay" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idSubSupport" ManuallyRouted="false" />
+        <AssociationConnector Association="NevaModel.fk_idStatus" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
