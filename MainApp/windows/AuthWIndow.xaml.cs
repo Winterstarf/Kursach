@@ -26,7 +26,7 @@ namespace MainApp
             SqlConnection con = new SqlConnection(@"Data Source=201-04\SQLEXPRESS;Initial Catalog=BigBoars;Integrated Security=SSPI");
             con.Open();
 
-            SqlCommand cmd = new SqlCommand("select * from Staff where Username='" + username + "' and StaffPass='" + password + "'", con);
+            SqlCommand cmd = new SqlCommand("select * from Doctors where Username='" + username + "' and Password='" + password + "'", con);
             cmd.CommandType = CommandType.Text;
 
             object result = cmd.ExecuteScalar();
@@ -40,7 +40,7 @@ namespace MainApp
             {
                 this.Close();
                 MainWindow m = new MainWindow();
-                
+                m.
             }
             else
             {
