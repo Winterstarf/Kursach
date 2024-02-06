@@ -7,9 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="assets\images\" />
-    <Folder Include="assets\models\" />
-    <Folder Include="pages\" />
+    <None Remove="assets\images\hog.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="windows\" />
   </ItemGroup>
 
@@ -23,6 +24,10 @@
     <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Security" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="assets\images\hog.png" />
   </ItemGroup>
 
   <ItemGroup>

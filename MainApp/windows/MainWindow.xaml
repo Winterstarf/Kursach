@@ -8,28 +8,23 @@
         Title="База данных" Height="600" Width="850" ResizeMode="CanResize" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="167"/>
-            <RowDefinition Height="417*"/>
+            <RowDefinition Height="116"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="110"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="41"/>
-            <ColumnDefinition Width="165"/>
+            <ColumnDefinition Width="190*"/>
+            <ColumnDefinition Width="14"/>
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.RowSpan="2">
-            <Image x:Name="Logo_img" Height="90" Width="90" Margin="10"></Image>
-            <Button x:Name="Sub_btn" Height="35" Margin="10,10,10,5" FontSize="14" Content="Абоненты"></Button>
-            <Button x:Name="Hwcontrol_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Упр. об." ></Button>
-            <Button x:Name="Assets_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Активы"></Button>
-            <Button x:Name="Billing_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Биллинг"></Button>
-            <Button x:Name="Support_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Поддержка"></Button>
-            <Button x:Name="CRM_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="CRM"></Button>
+            <Image x:Name="Logo_img" Height="90" Width="90" Margin="10" Source="\assets\images\hog.png"/>
+            <Button x:Name="Patients_btn" Height="35" Margin="10,10,10,5" FontSize="14" Content="Пациенты" Click="Patients_btn_Click"></Button>
+            <Button x:Name="Hospitalizations_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Госпит." Click="Hospitalizations_btn_Click"></Button>
+            <Button x:Name="HAD_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Леч.-диаг." Click="HAD_btn_Click"></Button>
         </StackPanel>
-        <TextBlock x:Name="Razdel_tb" Text="Placeholder" FontSize="30" Grid.Column="1" Margin="25,25,0,0" Height="50" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top"></TextBlock>
-        <Image x:Name="Ava_img" Grid.Column="3" Height="40" Width="40" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,25,25,0"></Image>
-        <ComboBox x:Name="User_cb" Grid.Column="2" Height="25" Width="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,33,80,0" Grid.ColumnSpan="2" IsEditable="True" IsReadOnly="True" Text="пользователь" Focusable="False"></ComboBox>
-        <TextBlock Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="События" FontSize="20" Height="30" Width="80" Margin="0,0,0,12"></TextBlock>
+
+        <TextBlock x:Name="CurrentPage_tb" Text="Placeholder" FontSize="30" Grid.Column="2" Margin="21,25,0,0" Height="50" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top"></TextBlock>
 
         <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,50">
 

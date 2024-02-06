@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Navigation;
 
 namespace MainApp
 {
@@ -13,6 +14,21 @@ namespace MainApp
             
             AuthWindow a = new AuthWindow();
             this.Owner = a;
+        }
+
+        private void Patients_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Hospitalizations_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void HAD_btn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -1,9 +1,6 @@
-﻿using MainApp.classes;
-using System;
+﻿using System;
 using System.Data;
-using System.Data.Common.CommandTrees.ExpressionBuilder;
 using System.Data.SqlClient;
-using System.Threading;
 using System.Windows;
 
 namespace MainApp
@@ -29,8 +26,6 @@ namespace MainApp
             SqlCommand cmd = new SqlCommand("select * from Doctors where Username='" + username + "' and Password='" + password + "'", con);
             cmd.CommandType = CommandType.Text;
 
-            object result = cmd.ExecuteScalar();
-
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = cmd;
             DataSet dataSet = new DataSet();
@@ -38,16 +33,18 @@ namespace MainApp
 
             if (dataSet.Tables[0].Rows.Count > 0)
             {
-                this.Close();
                 MainWindow m = new MainWindow();
-                m.
+                this.Close();
+                m.Show();
             }
-            else
-            {
-                MessageBox.Show("Не существует такого логина/пароля!");
-            }
+            else MessageBox.Show("Не существует такого логина/пароля!");
 
             con.Close();
+        }
+
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("НЕЧЕГО ОТМЕНЯТЬ!!!!!!!!!!!!!!!");
         }
     }
 }

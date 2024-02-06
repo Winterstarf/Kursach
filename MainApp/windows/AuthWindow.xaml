@@ -5,24 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
-        Title="Вход в систему" Height="272" Width="357" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="Вход в систему" Height="248" Width="377" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock Height="30" Margin="31,27,169,199" Text="Большие Кабаны" FontSize="18" FontWeight="Medium"/>
-        <Image Height="96" Width="123" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <TextBlock Height="30" Margin="35,30,165,172" Text="Большие Кабаны" FontSize="18" FontWeight="Medium"/>
+        <Image Height="104" Width="99" HorizontalAlignment="Right" VerticalAlignment="Top" Source="\assets\images\hog.png"/>
 
-        <StackPanel Margin="63,107,217,93">
-            <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Логин" FontSize="15" TextAlignment="Left"/>
-            <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Пароль" FontSize="15" TextAlignment="Left"/>
+        <StackPanel Margin="68,94,244,86">
+            <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Логин" FontSize="14" TextAlignment="Left"/>
+            <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Пароль" FontSize="14" TextAlignment="Left"/>
         </StackPanel>
 
-        <StackPanel Margin="118,107,85,85">
+        <StackPanel Margin="124,92,79,76">
             <TextBox x:Name="UsernameTB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
             <PasswordBox x:Name="PassPB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
         </StackPanel>
 
-        <StackPanel Margin="102,182,73,31" Orientation="Horizontal">
-            <Button x:Name="CancelBtn" Height="25" Width="80" Margin="0,0,15,0" Content="Отмена" FontSize="15" VerticalContentAlignment="Center"/>
-            <Button x:Name="LoginBtn" Height="25" Width="80" Content="Вход" FontSize="15" VerticalAlignment="Center" Click="LoginBtn_Click"/>
+        <StackPanel Margin="100,180,75,22" Orientation="Horizontal">
+            <Button x:Name="CancelBtn" Height="25" Width="80" Margin="0,0,15,0" Content="Отмена" FontSize="14" VerticalContentAlignment="Center" Click="CancelBtn_Click"/>
+            <Button x:Name="LoginBtn" Height="25" Width="80" Content="Вход" FontSize="14" VerticalAlignment="Center" Click="LoginBtn_Click"/>
         </StackPanel>
     </Grid>
 </Window>
