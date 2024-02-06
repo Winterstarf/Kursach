@@ -17,6 +17,9 @@
             <ColumnDefinition Width="190*"/>
             <ColumnDefinition Width="14"/>
         </Grid.ColumnDefinitions>
+        
+        <TextBlock x:Name="CurrentPage_tb" Text="Placeholder" FontSize="30" Grid.Column="2" Margin="21,25,0,0" Height="50" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top"></TextBlock>
+        
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.RowSpan="2">
             <Image x:Name="Logo_img" Height="90" Width="90" Margin="10" Source="\assets\images\hog.png"/>
             <Button x:Name="Patients_btn" Height="35" Margin="10,10,10,5" FontSize="14" Content="Пациенты" Click="Patients_btn_Click"></Button>
@@ -24,10 +27,8 @@
             <Button x:Name="HAD_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Леч.-диаг." Click="HAD_btn_Click"></Button>
         </StackPanel>
 
-        <TextBlock x:Name="CurrentPage_tb" Text="Placeholder" FontSize="30" Grid.Column="2" Margin="21,25,0,0" Height="50" Width="350" HorizontalAlignment="Left" VerticalAlignment="Top"></TextBlock>
-
         <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,50">
-
+            
         </DataGrid>
     </Grid>
 </Window>
