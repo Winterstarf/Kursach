@@ -5,33 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
-        Title="Вход в систему" Height="330" Width="450" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="Вход в систему" Height="272" Width="357" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock Height="30" Width="200" Margin="28,33,222,251" Text="Телеком Нева Связь" FontSize="18" FontWeight="Medium"/>
-        <Image Height="96" Width="123" HorizontalAlignment="Right" VerticalAlignment="Top" Source="\assets\images\Лого ТНС.jpg"/>
+        <TextBlock Height="30" Margin="31,27,169,199" Text="Большие Кабаны" FontSize="18" FontWeight="Medium"/>
+        <Image Height="96" Width="123" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
-        <StackPanel Margin="109,111,278,111">
-            <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Номер" FontSize="15" TextAlignment="Left"/>
+        <StackPanel Margin="63,107,217,93">
+            <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Логин" FontSize="15" TextAlignment="Left"/>
             <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Пароль" FontSize="15" TextAlignment="Left"/>
-            <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Код" FontSize="15" TextAlignment="Left"/>
         </StackPanel>
 
-        <StackPanel Margin="172,111,125,102">
-            <TextBox x:Name="NumTB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center" KeyDown="NumTB_KeyDown"/>
-            <PasswordBox x:Name="PassPB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsEnabled="False" KeyDown="PassPB_KeyDown"/>
-            <TextBox x:Name="CodeTB" Height="25" Width="100" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center" IsEnabled="False"/>
+        <StackPanel Margin="118,107,85,85">
+            <TextBox x:Name="UsernameTB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            <PasswordBox x:Name="PassPB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
         </StackPanel>
-        <Button x:Name="CodeBtn" Height="27" Width="25" Margin="283,176,142,111" IsEnabled="False">
-            <Button.Template>
-                <ControlTemplate>
-                    <Image Source="\assets\images\На авторизацию_Обновление кода.jpg"/>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
 
-        <StackPanel Margin="137,240,137,38" Orientation="Horizontal">
+        <StackPanel Margin="102,182,73,31" Orientation="Horizontal">
             <Button x:Name="CancelBtn" Height="25" Width="80" Margin="0,0,15,0" Content="Отмена" FontSize="15" VerticalContentAlignment="Center"/>
-            <Button x:Name="LoginBtn" Height="25" Width="80" Content="Вход" FontSize="15" VerticalAlignment="Center" IsEnabled="False"/>
+            <Button x:Name="LoginBtn" Height="25" Width="80" Content="Вход" FontSize="15" VerticalAlignment="Center" Click="LoginBtn_Click"/>
         </StackPanel>
     </Grid>
 </Window>

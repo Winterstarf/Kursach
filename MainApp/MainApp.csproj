@@ -7,23 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="assets\images\Лого ТНС.jpg" />
-    <None Remove="assets\images\На авторизацию_Обновление кода.jpg" />
-    <None Remove="assets\models\MainModel.edmx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EntityDeploy Include="assets\models\MainModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MainModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="assets\images\На авторизацию_Обновление кода.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Folder Include="assets\images\" />
+    <Folder Include="assets\models\" />
     <Folder Include="pages\" />
     <Folder Include="windows\" />
   </ItemGroup>
@@ -41,19 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="assets\images\Лого ТНС.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="assets\models\MainModel.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MainModel.edmx</DependentUpon>
-    </Compile>
   </ItemGroup>
 
 </Project>
