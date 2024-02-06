@@ -1,1 +1,1 @@
-* App to interact with the Neva database
+* App to interact with the BigBoars database
