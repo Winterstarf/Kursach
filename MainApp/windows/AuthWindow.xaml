@@ -5,22 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
-        Title="Вход в систему" Height="248" Width="377" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="Вход в систему" Height="255" Width="356" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock Height="30" Margin="35,30,165,172" Text="Большие Кабаны" FontSize="18" FontWeight="Medium"/>
+        <TextBlock Margin="14,23,93,169" Text="Большие Кабаны" FontSize="30" FontWeight="Medium" RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="0.988"/>
+                    <SkewTransform AngleX="-21.318" AngleY="1.792"/>
+                    <RotateTransform Angle="3.431"/>
+                    <TranslateTransform X="6.274" Y="2.441"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        
         <Image Height="104" Width="99" HorizontalAlignment="Right" VerticalAlignment="Top" Source="\assets\images\hog.png"/>
 
-        <StackPanel Margin="68,94,244,86">
-            <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Логин" FontSize="14" TextAlignment="Left"/>
-            <TextBlock Height="25" Width="55" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Пароль" FontSize="14" TextAlignment="Left"/>
+        <StackPanel Margin="100,74,100,66">
+            <TextBlock Height="25" Width="55" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Логин" FontSize="13" TextAlignment="Left"/>
+            <TextBox x:Name="UsernameTB" Height="25" Width="145" Margin="5,-3,0,3" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            <TextBlock Height="25" Width="55" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Пароль" FontSize="13" TextAlignment="Left"/>
+            <PasswordBox x:Name="PassPB" Height="25" Width="145" Margin="5,-3,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
         </StackPanel>
 
-        <StackPanel Margin="124,92,79,76">
-            <TextBox x:Name="UsernameTB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-            <PasswordBox x:Name="PassPB" Height="25" Width="145" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-        </StackPanel>
-
-        <StackPanel Margin="100,180,75,22" Orientation="Horizontal">
+        <StackPanel Margin="95,182,81,19" Orientation="Horizontal">
             <Button x:Name="CancelBtn" Height="25" Width="80" Margin="0,0,15,0" Content="Отмена" FontSize="14" VerticalContentAlignment="Center" Click="CancelBtn_Click"/>
             <Button x:Name="LoginBtn" Height="25" Width="80" Content="Вход" FontSize="14" VerticalAlignment="Center" Click="LoginBtn_Click"/>
         </StackPanel>

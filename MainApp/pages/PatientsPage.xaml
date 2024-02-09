@@ -1,0 +1,60 @@
+﻿<Page x:Class="MainApp.pages.PatientsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MainApp.pages"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PatientsPage">
+
+    <Grid>
+        <TextBox x:Name="Search_tb" Margin="5,5,5,5" Width="250" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center" TextChanged="Search_TextChanged" />
+
+        <DataGrid x:Name="DG_Patients" ColumnWidth="*" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,40,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.LastName}"/>
+                <DataGridTextColumn Header="Имя" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.FirstName}"/>
+                <DataGridTextColumn Header="Отчество" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.MiddleName}"/>
+                <DataGridTextColumn Header="Пол" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.Genders.GenderName}"/>
+                <DataGridTextColumn Header="Дата рождения" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.BirthDate}"/>
+                <DataGridTextColumn Header="Город" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.Addresses.City}"/>
+                <DataGridTextColumn Header="Улица" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.Addresses.Street}"/>
+                <DataGridTextColumn Header="Дом" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.Addresses.HouseNumber}"/>
+                <DataGridTextColumn Header="Квартира" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.Addresses.FlatNumber}"/>
+                <DataGridTextColumn Header="Место работы" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.WorkPlace}"/>
+                <DataGridTextColumn Header="Страховой полис" Binding="{Binding Medcard.InsurancePolicies.PolicyNumber}"/>
+                <DataGridTextColumn Header="Страховая компания" Binding="{Binding Medcard.InsurancePolicies.InsuranceCompanies.CompanyName}"/>
+                <DataGridTemplateColumn Header="Почта">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding Emails}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Email}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Телефон">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding Phones}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Phone}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Паспорт" Binding="{Binding Medcard.InsurancePolicies.Passports.PassportNumber}"/>
+                <DataGridTextColumn Header="Медкарта" Binding="{Binding Medcard.MedcardNumber}"/>
+                <DataGridTextColumn Header="Дата выдачи медкарты" Binding="{Binding Medcard.DateIssued}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
