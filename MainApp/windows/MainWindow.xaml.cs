@@ -1,5 +1,6 @@
 ﻿using MainApp.assets.models;
 using MainApp.pages;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,7 +11,6 @@ namespace MainApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        BigBoarsEntities db_cont = new BigBoarsEntities();
         PatientsPage pap;
         HospitalizationsPage hop;
         HADPage hap;

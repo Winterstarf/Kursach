@@ -23,19 +23,23 @@ namespace MainApp
             SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-QLMK9N;Initial Catalog=BigBoars;Integrated Security=SSPI");
             con.Open();
 
-            SqlCommand cmd = new SqlCommand("select * from Doctors where Username='" + username + "' and Passwrd='" + password + "'", con);
-            cmd.CommandType = CommandType.Text;
+            SqlCommand cmd = new SqlCommand("select * from Doctors where Username='" + username + "' and Passwrd='" + password + "'", con)
+            {
+                CommandType = CommandType.Text
+            };
 
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = cmd;
+            SqlDataAdapter adapter = new SqlDataAdapter
+            {
+                SelectCommand = cmd
+            };
             DataSet dataSet = new DataSet();
             adapter.Fill(dataSet);
 
             if (dataSet.Tables[0].Rows.Count > 0)
             {
                 MainWindow m = new MainWindow();
-                this.Close();
                 m.Show();
+                this.Close();
             }
             else if ((username == "" || username == null) && (password == "" || password == null))
             {

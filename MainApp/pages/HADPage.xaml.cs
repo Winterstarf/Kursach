@@ -1,5 +1,6 @@
 ﻿using MainApp.assets.models;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace MainApp.pages
@@ -31,6 +32,29 @@ namespace MainApp.pages
                         hads.MedAppointments.Medcards.InsurancePolicies.Passports.Patients.FirstName.Contains(searchText) ||
                         hads.MedAppointments.Medcards.InsurancePolicies.Passports.Patients.MiddleName.Contains(searchText))
                     .ToList();
+            }
+        }
+
+        private void Del_btn_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (DG_HADs.SelectedItem == null)
+            {
+                MessageBox.Show("Не выбрана строка для удаления!");
+                return;
+            }
+            else
+            {
+                var selectedData = (dynamic)DG_HADs.SelectedItem;
+
+                MessageBoxResult res = MessageBox.Show("Подтвердите удаление", "Удаление строки", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+                if (res == MessageBoxResult.Yes)
+                {
+                    db_cont.DeleteObject(selectedData);
+                    db_cont.SaveChanges();
+
+                    DG_HADs.ItemsSource = db_cont.HealingAndDiagnostics.ToList();
+                }
             }
         }
     }

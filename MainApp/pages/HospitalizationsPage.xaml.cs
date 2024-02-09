@@ -45,5 +45,28 @@ namespace MainApp.pages
                     .ToList();
             }
         }
+
+        private void Del_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DG_Hosps.SelectedItem == null)
+            {
+                MessageBox.Show("Не выбрана строка для удаления!");
+                return;
+            }
+            else
+            {
+                var selectedData = (dynamic)DG_Hosps.SelectedItem;
+
+                MessageBoxResult res = MessageBox.Show("Подтвердите удаление", "Удаление строки", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+                if (res == MessageBoxResult.Yes)
+                {
+                    db_cont.DeleteObject(selectedData);
+                    db_cont.SaveChanges();
+
+                    DG_Hosps.ItemsSource = db_cont.Hospitalizations.ToList();
+                }
+            }
+        }
     }
 }
