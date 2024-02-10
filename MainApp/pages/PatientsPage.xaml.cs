@@ -1,4 +1,5 @@
 ﻿using MainApp.assets.models;
+using MainApp.windows;
 using System.Data.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Windows;
@@ -86,6 +87,37 @@ namespace MainApp.pages
                     DG_Patients.ItemsSource = q.ToList();
                 }
             }
+        }
+
+        private void Add_btn_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new PatientsAddWindow();
+            win.ShowDialog();
+
+            var q = from medcard in db_cont.Medcards
+                    join email in db_cont.Emails on medcard.InsurancePolicies.Passports.Patients.id equals email.idPatient into emailGroup
+                    join phone in db_cont.Phones on medcard.InsurancePolicies.Passports.Patients.id equals phone.idPatient into phoneGroup
+                    select new
+                    {
+                        Medcard = medcard,
+                        Emails = emailGroup,
+                        Phones = phoneGroup,
+                    };
+            DG_Patients.ItemsSource = q.ToList();
+        }
+
+        private void Refresh_btn_Click(object sender, RoutedEventArgs e)
+        {
+            var q = from medcard in db_cont.Medcards
+                    join email in db_cont.Emails on medcard.InsurancePolicies.Passports.Patients.id equals email.idPatient into emailGroup
+                    join phone in db_cont.Phones on medcard.InsurancePolicies.Passports.Patients.id equals phone.idPatient into phoneGroup
+                    select new
+                    {
+                        Medcard = medcard,
+                        Emails = emailGroup,
+                        Phones = phoneGroup,
+                    };
+            DG_Patients.ItemsSource = q.ToList();
         }
     }
 }

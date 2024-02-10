@@ -1,4 +1,5 @@
 ﻿using MainApp.assets.models;
+using MainApp.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,6 +68,18 @@ namespace MainApp.pages
                     DG_Hosps.ItemsSource = db_cont.Hospitalizations.ToList();
                 }
             }
+        }
+
+        private void Add_btn_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new HospitalizationsAddWindow();
+            win.ShowDialog();
+            DG_Hosps.ItemsSource = db_cont.Hospitalizations.ToList();
+        }
+
+        private void Refresh_btn_Click(object sender, RoutedEventArgs e)
+        {
+            DG_Hosps.ItemsSource = db_cont.Hospitalizations.ToList();
         }
     }
 }

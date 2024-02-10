@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="assets\images\hog.png" />
+    <None Remove="assets\images\shrek.png" />
     <None Remove="assets\models\MainModel.edmx" />
   </ItemGroup>
 
@@ -36,6 +37,7 @@
 
   <ItemGroup>
     <Resource Include="assets\images\hog.png" />
+    <Resource Include="assets\images\shrek.png" />
   </ItemGroup>
 
   <ItemGroup>

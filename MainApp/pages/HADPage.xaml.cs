@@ -1,4 +1,5 @@
 ﻿using MainApp.assets.models;
+using MainApp.windows;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -56,6 +57,18 @@ namespace MainApp.pages
                     DG_HADs.ItemsSource = db_cont.HealingAndDiagnostics.ToList();
                 }
             }
+        }
+
+        private void Add_btn_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new HADAddWindow();
+            win.ShowDialog();
+            DG_HADs.ItemsSource = db_cont.HealingAndDiagnostics.ToList();
+        }
+
+        private void Refresh_btn_Click(object sender, RoutedEventArgs e)
+        {
+            DG_HADs.ItemsSource = db_cont.HealingAndDiagnostics.ToList();
         }
     }
 }
