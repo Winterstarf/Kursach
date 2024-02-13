@@ -22,6 +22,7 @@ namespace MainApp.windows
     /// </summary>
     public partial class PatientsAddWindow : Window
     {
+        //добавить возможность добавить новую ст. компанию
         BigBoarsEntities db_cont = new BigBoarsEntities();
         public PatientsAddWindow()
         {
