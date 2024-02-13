@@ -58,6 +58,19 @@ namespace MainApp.windows
             db_cont.SaveChanges();
             this.Close();
         }
+
+        private void App_cb_DropDownClosed(object sender, EventArgs e)
+        {
+            var newHospitalizationData = (NewHospitalizationData)this.DataContext;
+            if (((ComboBox)sender).SelectedItem != null)
+            {
+                var q = from hosp in db_cont.MedAppointments
+                        where hosp.id == newHospitalizationData.SelectedApp.id
+                        select hosp.Medcards.InsurancePolicies.Passports.Patients.LastName + " " + hosp.Medcards.InsurancePolicies.Passports.Patients.FirstName + " с диагнозом: " + hosp.Diagnose;
+
+                CurrentPat_tbk.Text = $"Текущий пациент: {q.Single()}";
+            }
+        }
     }
 
     public class NewHospitalizationData

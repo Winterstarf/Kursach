@@ -52,6 +52,19 @@ namespace MainApp.windows
             db_cont.SaveChanges();
             this.Close();
         }
+
+        private void App_cb_DropDownClosed(object sender, EventArgs e)
+        {
+            var newHADData = (NewHADData)this.DataContext;
+            if (((ComboBox)sender).SelectedItem != null)
+            {
+                var q = from app in db_cont.MedAppointments
+                        where app.id == newHADData.SelectedApp.id
+                        select app.Medcards.InsurancePolicies.Passports.Patients.LastName + " " + app.Medcards.InsurancePolicies.Passports.Patients.FirstName + " с диагнозом: " + app.Diagnose;
+
+                CurrentPat_tbk.Text = $"Текущий пациент: {q.Single()}";
+            }
+        }
     }
 
     public class NewHADData
@@ -63,5 +76,6 @@ namespace MainApp.windows
         public string Recs { get; set; }
         public Doctors SelectedDoctor { get; set; }
         public List<Doctors> DoctorOptions { get; set; }
+
     }
 }

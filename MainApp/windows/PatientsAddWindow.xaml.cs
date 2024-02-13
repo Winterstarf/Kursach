@@ -22,8 +22,8 @@ namespace MainApp.windows
     /// </summary>
     public partial class PatientsAddWindow : Window
     {
-        //добавить возможность добавить новую ст. компанию
         BigBoarsEntities db_cont = new BigBoarsEntities();
+        private int Manual;
         public PatientsAddWindow()
         {
             InitializeComponent();
@@ -35,12 +35,30 @@ namespace MainApp.windows
             newPatientData.GenderOptions = genders;
             var companies = db_cont.InsuranceCompanies.ToList();
             newPatientData.CompanyOptions = companies;
+
+            InsCompDroplist_rb.IsChecked = true;
         }
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)
         {
             var newPatientData = (NewPatientData)this.DataContext;
             CultureInfo us = new CultureInfo("en-US");
+            int ActualIdInsuranceCompany;
+
+            if (Manual == 1)
+            {
+                var newInsuranceCompany = new InsuranceCompanies
+                {
+                    CompanyName = InsComp_tb.Text
+                };
+                db_cont.InsuranceCompanies.AddObject(newInsuranceCompany);
+                db_cont.SaveChanges();
+                ActualIdInsuranceCompany = newInsuranceCompany.id;
+            }
+            else
+            {
+                ActualIdInsuranceCompany = newPatientData.SelectedCompany.id;
+            }
 
             var newAddress = new Addresses
             {
@@ -97,7 +115,7 @@ namespace MainApp.windows
 
             var newInsurancePolicy = new InsurancePolicies
             {
-                idInsuranceCompany = newPatientData.SelectedCompany.id,
+                idInsuranceCompany = ActualIdInsuranceCompany,
                 PolicyNumber = newPatientData.PolicyNumber,
                 ExpiryDate = DateTime.ParseExact("2100-01-01", "yyyy-MM-dd", us),
                 idPassport = newPassportId
@@ -120,6 +138,20 @@ namespace MainApp.windows
             db_cont.Medcards.AddObject(newMedcard);
             db_cont.SaveChanges();
             this.Close();
+        }
+
+        private void InsCompDroplist_rb_Checked(object sender, RoutedEventArgs e)
+        {
+            Manual = 0;
+            InsComp_cb.Visibility = Visibility.Visible;
+            InsComp_tb.Visibility = Visibility.Hidden;
+        }
+
+        private void InsCompManual_rb_Checked(object sender, RoutedEventArgs e)
+        {
+            Manual = 1;
+            InsComp_cb.Visibility = Visibility.Hidden;
+            InsComp_tb.Visibility = Visibility.Visible;
         }
     }
 
