@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="assets\images\hog.gif" />
     <None Remove="assets\images\hog.png" />
     <None Remove="assets\images\shrek.png" />
     <None Remove="assets\models\MainModel.edmx" />
@@ -22,6 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="assets\images\hog.gif" />
     <Resource Include="assets\images\hog.png" />
     <Resource Include="assets\images\shrek.png" />
   </ItemGroup>

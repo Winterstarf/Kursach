@@ -1,5 +1,11 @@
 ﻿using MainApp.pages;
+using System;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
+using WpfAnimatedGif;
 
 namespace MainApp
 {
@@ -37,6 +43,23 @@ namespace MainApp
         {
             CurrentPage_tb.Text = "Лечение и диагностика";
             DG_frm.NavigationService.Navigate(hap);
+        }
+
+        private async void SecretSurprise_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Secret_img.Visibility = Visibility.Visible;
+
+            var image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = new System.Uri(@"\assets\images\hog.gif", UriKind.Relative);
+            image.EndInit();
+
+            ImageBehavior.SetAnimatedSource(Secret_img, image);
+            ImageBehavior.SetRepeatBehavior(Secret_img, new RepeatBehavior(1));
+
+            await Task.Delay(8000);
+
+            Secret_img.Visibility = Visibility.Hidden;
         }
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)

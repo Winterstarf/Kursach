@@ -6,6 +6,20 @@
         mc:Ignorable="d"
         SizeToContent="Manual"
         Title="База данных" MinHeight="700" MinWidth="1000" Height="700" Width="1000" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" SizeChanged="MainWindow_SizeChanged" Closed="Window_Closed">
+    <Window.Resources>
+        <Style x:Key="NoFocusStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="116"/>
@@ -19,9 +33,12 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock x:Name="CurrentPage_tb" FontSize="34" Grid.Column="2" Margin="5,0,0,0" Height="64" Width="378" HorizontalAlignment="Left" VerticalAlignment="Center"><Run Language="ru-ru" Text="Не выбрана страница!"/></TextBlock>
+        <Image x:Name="Secret_img" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="500" Height="100" Margin="10"/>
+        <Button x:Name="SecretSurprise_btn" Height="90" Width="90" Margin="10" Grid.Column="0" Grid.Row="0" Opacity="100" Background="White" BorderThickness="0" Click="SecretSurprise_btn_Click" Style="{StaticResource NoFocusStyle}">
+            <Image x:Name="Logo_img" Height="90" Width="90" Source="\assets\images\hog.png"/>
+        </Button>
 
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.RowSpan="2">
-            <Image x:Name="Logo_img" Height="90" Width="90" Margin="10" Source="\assets\images\hog.png"/>
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1">
             <Button x:Name="Patients_btn" Height="35" Margin="10,10,10,5" FontSize="14" Content="Пациенты" Click="Patients_btn_Click"></Button>
             <Button x:Name="Hospitalizations_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Госпит." Click="Hospitalizations_btn_Click"></Button>
             <Button x:Name="HAD_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Леч.-диаг." Click="HAD_btn_Click"></Button>
