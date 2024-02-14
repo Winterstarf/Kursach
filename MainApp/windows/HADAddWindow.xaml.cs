@@ -22,12 +22,20 @@ namespace MainApp.windows
     public partial class HADAddWindow : Window
     {
         BigBoarsEntities db_cont = new BigBoarsEntities();
+        HADDrugsAddWindow drugs;
+        HADProcsAddWindow procs;
+        HADDocsAddWindow doctors;
+
         public HADAddWindow()
         {
             InitializeComponent();
 
             var newHADData = new NewHADData();
             this.DataContext = newHADData;
+
+            drugs = new HADDrugsAddWindow();
+            procs = new HADProcsAddWindow();
+            doctors = new HADDocsAddWindow();
 
             var apps = db_cont.MedAppointments.ToList();
             newHADData.AppOptions = apps;
@@ -36,7 +44,7 @@ namespace MainApp.windows
         }
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)
-        {
+        {  
             var newHADData = (NewHADData)this.DataContext;
             CultureInfo us = new CultureInfo("en-US");
 
@@ -50,6 +58,54 @@ namespace MainApp.windows
             };
             db_cont.HealingAndDiagnostics.AddObject(newHAD);
             db_cont.SaveChanges();
+
+            int newIdHAD = newHAD.id;
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (drugs.DrugIds[i] != 0)
+                {
+                    var newHADDrug = new HAD_Drugs
+                    {
+                        idHAD = newIdHAD,
+                        idDrug = drugs.DrugIds[i],
+                        Doze = drugs.DrugDozes[i],
+                        ConsumingFormat = drugs.DrugFormats[i]
+                    };
+                    db_cont.HAD_Drugs.AddObject(newHADDrug);
+                    db_cont.SaveChanges();
+                }
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (procs.ProcIds[i] != 0)
+                {
+                    var newHADProc = new HAD_Procedures
+                    {
+                        idHAD = newIdHAD,
+                        idProc = procs.ProcIds[i]
+                    };
+                    db_cont.HAD_Procedures.AddObject(newHADProc);
+                    db_cont.SaveChanges();
+                }
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (doctors.DocIds[i] != 0)
+                {
+                    var newHADDoc = new HAD_NextDoctors
+                    {
+                        idHAD = newIdHAD,
+                        idDoctor = doctors.DocIds[i],
+                        ExtraInfo = doctors.Infos[i]
+                    };
+                    db_cont.HAD_NextDoctors.AddObject(newHADDoc);
+                    db_cont.SaveChanges();
+                }
+            }
+
             this.Close();
         }
 
@@ -64,6 +120,21 @@ namespace MainApp.windows
 
                 CurrentPat_tbk.Text = $"Текущий пациент: {q.Single()}";
             }
+        }
+
+        private void DrugsAdd_btn_Click(object sender, RoutedEventArgs e)
+        {
+            drugs.ShowDialog();
+        }
+
+        private void ProcsAdd_btn_Click(object sender, RoutedEventArgs e)
+        {
+            procs.ShowDialog();
+        }
+
+        private void DocsAdd_btn_Click(object sender, RoutedEventArgs e)
+        {
+            doctors.ShowDialog();
         }
     }
 

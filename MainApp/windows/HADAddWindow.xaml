@@ -25,16 +25,20 @@
                     <DataTemplate>
                         <TextBlock>
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1} {2}">
+                                <MultiBinding StringFormat="{}{0} {1} {2} {3}">
                                     <Binding Path="LastName"/>
                                     <Binding Path="FirstName"/>
                                     <Binding Path="MiddleName"/>
+                                    <Binding Path="Roles.RoleName"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+            <Button x:Name="DrugsAdd_btn" Content="Добавить лекарства" Height="30" Width="150" Margin="10" HorizontalAlignment="Left" Click="DrugsAdd_btn_Click"/>
+            <Button x:Name="ProcsAdd_btn" Content="Добавить процедуры" Height="30" Width="150" Margin="10" HorizontalAlignment="Left" Click="ProcsAdd_btn_Click"/>
+            <Button x:Name="DocsAdd_btn" Content="Добавить след. докторов" Height="30" Width="150" Margin="10" HorizontalAlignment="Left" Click="DocsAdd_btn_Click"/>
         </StackPanel>
         <StackPanel Margin="271,0,0,50">
             <Image Source="\assets\images\shrek.png"/>

@@ -46,5 +46,10 @@ namespace MainApp
         {
             
         }
+
+        private void Window_Closed(object sender, System.EventArgs e)
+        {
+            System.Environment.Exit(0);
+        }
     }
 }

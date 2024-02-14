@@ -1,0 +1,208 @@
+﻿<Window x:Class="MainApp.windows.HADDrugsAddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MainApp.windows"
+        mc:Ignorable="d"
+        Title="Добавление" Height="680" Width="590" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+    <Grid>
+        <StackPanel Margin="0,0,280,50">
+            <TextBlock Text="Лекарство 1-е" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,10,10,2" FontSize="14"/>
+            <ComboBox x:Name="DrugName1_сb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding DrugOptions}" SelectedItem="{Binding SelectedDrug1}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="DrugFullName"/>
+                                    <Binding Path="CompanyName"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Лекарство 2-е" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <ComboBox x:Name="DrugName2_сb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding DrugOptions}" SelectedItem="{Binding SelectedDrug2}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="DrugFullName"/>
+                                    <Binding Path="CompanyName"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Лекарство 3-е" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <ComboBox x:Name="DrugName3_сb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding DrugOptions}" SelectedItem="{Binding SelectedDrug3}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="DrugFullName"/>
+                                    <Binding Path="CompanyName"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Лекарство 4-е" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <ComboBox x:Name="DrugName4_сb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding DrugOptions}" SelectedItem="{Binding SelectedDrug4}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="DrugFullName"/>
+                                    <Binding Path="CompanyName"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Лекарство 5-е" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <ComboBox x:Name="DrugName5_сb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding DrugOptions}" SelectedItem="{Binding SelectedDrug5}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="DrugFullName"/>
+                                    <Binding Path="CompanyName"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Лекарство 6-е" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <ComboBox x:Name="DrugName6_сb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding DrugOptions}" SelectedItem="{Binding SelectedDrug6}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="DrugFullName"/>
+                                    <Binding Path="CompanyName"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Лекарство 7-е" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <ComboBox x:Name="DrugName7_сb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding DrugOptions}" SelectedItem="{Binding SelectedDrug7}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="DrugFullName"/>
+                                    <Binding Path="CompanyName"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Лекарство 8-е" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <ComboBox x:Name="DrugName8_сb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding DrugOptions}" SelectedItem="{Binding SelectedDrug8}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="DrugFullName"/>
+                                    <Binding Path="CompanyName"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Лекарство 9-е" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <ComboBox x:Name="DrugName9_сb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding DrugOptions}" SelectedItem="{Binding SelectedDrug9}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="DrugFullName"/>
+                                    <Binding Path="CompanyName"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Лекарство 10-е" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <ComboBox x:Name="DrugName10_сb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding DrugOptions}" SelectedItem="{Binding SelectedDrug10}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="DrugFullName"/>
+                                    <Binding Path="CompanyName"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel Margin="295,0,140,43">
+            <TextBlock Text="Доза" Height="20" Width="40" HorizontalAlignment="Left" Margin="10,10,10,2" FontSize="14"/>
+            <TextBox x:Name="Doze1_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Доза" Height="20" Width="40" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Doze2_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Доза" Height="20" Width="40" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Doze3_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Доза" Height="20" Width="40" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Doze4_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Доза" Height="20" Width="40" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Doze5_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Доза" Height="20" Width="40" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Doze6_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Доза" Height="20" Width="40" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Doze7_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Доза" Height="20" Width="40" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Doze8_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Доза" Height="20" Width="40" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Doze9_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Доза" Height="20" Width="40" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Doze10_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <StackPanel Margin="434,0,0,43">
+            <TextBlock Text="Ф. пр. и когда" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,10,10,2" FontSize="14"/>
+            <TextBox x:Name="Format1_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Ф. пр. и когда" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Format2_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Ф. пр. и когда" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Format3_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Ф. пр. и когда" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Format4_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Ф. пр. и когда" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Format5_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Ф. пр. и когда" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Format6_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Ф. пр. и когда" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Format7_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Ф. пр. и когда" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Format8_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Ф. пр. и когда" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Format9_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+            <TextBlock Text="Ф. пр. и когда" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,5,10,2" FontSize="14"/>
+            <TextBox x:Name="Format10_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="110" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <Button x:Name="Save_btn" Content="Добавить" Click="Save_btn_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15" Height="30" Width="90"/>
+    </Grid>
+</Window>

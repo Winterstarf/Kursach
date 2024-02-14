@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.windows"
         mc:Ignorable="d"
-        Title="Добавление" Height="623" Width="560" WindowStartupLocation="CenterScreen">
+        Title="Добавление" Height="625" Width="560" WindowStartupLocation="CenterScreen">
     <Grid>
         <Button x:Name="Save_btn" Content="Добавить" Click="Save_btn_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15" Height="30" Width="90"/>
         <TextBlock x:Name="CurrentPat_tbk" Text="Текущий пациент:" Height="52" Width="248" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,5,0,0" TextWrapping="Wrap"/>
