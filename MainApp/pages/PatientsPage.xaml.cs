@@ -12,7 +12,8 @@ namespace MainApp.pages
     /// </summary>
     public partial class PatientsPage : Page
     {
-        BigBoarsEntities db_cont = new BigBoarsEntities();
+        readonly BigBoarsEntities db_cont = new BigBoarsEntities();
+
         public PatientsPage()
         {
             InitializeComponent();
@@ -69,7 +70,6 @@ namespace MainApp.pages
                 Medcards selectedRow = selectedData.Medcard;
 
                 MessageBoxResult res = MessageBox.Show("Подтвердите удаление", "Удаление строки", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-
                 if (res == MessageBoxResult.Yes)
                 {
                     db_cont.DeleteObject(selectedRow);

@@ -1,20 +1,10 @@
 ﻿using MainApp.assets.models;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MainApp.windows
 {
@@ -23,11 +13,12 @@ namespace MainApp.windows
     /// </summary>
     public partial class HADDrugsAddWindow : Window
     {
-        BigBoarsEntities db_cont = new BigBoarsEntities();
+        readonly BigBoarsEntities db_cont = new BigBoarsEntities();
+        readonly NewDrugsData n = new NewDrugsData();
         public int[] DrugIds = new int[10];
         public string[] DrugDozes = new string[10];
         public string[] DrugFormats = new string[10];
-        NewDrugsData n = new NewDrugsData();
+        
         public HADDrugsAddWindow()
         {
             InitializeComponent();
@@ -40,36 +31,46 @@ namespace MainApp.windows
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)
         {
-            PropertyInfo[] p = typeof(NewDrugsData).GetProperties();
-            for (int i = 0; i < DrugIds.Length; i++)
+            try
             {
-                Drugs selectedDrug = (Drugs)p[i].GetValue(n);
-                if (selectedDrug != null)
+                PropertyInfo[] p = typeof(NewDrugsData).GetProperties();
+
+                for (int i = 0; i < DrugIds.Length; i++)
                 {
-                    DrugIds[i] = selectedDrug.id;
-                    TextBox dozeTextBox = (TextBox)this.FindName($"Doze{i + 1}_tb");
-                    TextBox formatTextBox = (TextBox)this.FindName($"Format{i + 1}_tb");
-                    if (dozeTextBox != null && formatTextBox != null &&
-                        !string.IsNullOrEmpty(dozeTextBox.Text) && !string.IsNullOrEmpty(formatTextBox.Text))
+                    Drugs selectedDrug = (Drugs)p[i].GetValue(n);
+                    if (selectedDrug != null)
                     {
-                        DrugDozes[i] = dozeTextBox.Text;
-                        DrugFormats[i] = formatTextBox.Text;
+                        DrugIds[i] = selectedDrug.id;
+                        TextBox dozeTextBox = (TextBox)this.FindName($"Doze{i + 1}_tb");
+                        TextBox formatTextBox = (TextBox)this.FindName($"Format{i + 1}_tb");
+
+                        if (dozeTextBox != null && formatTextBox != null &&
+                            !string.IsNullOrEmpty(dozeTextBox.Text) && !string.IsNullOrEmpty(formatTextBox.Text))
+                        {
+                            DrugDozes[i] = dozeTextBox.Text;
+                            DrugFormats[i] = formatTextBox.Text;
+                        }
+                        else
+                        {
+                            DrugDozes[i] = string.Empty;
+                            DrugFormats[i] = string.Empty;
+                            throw new Exception("Некоторые обязательные поля не указаны или содержат неправильный тип данных!");
+                        }
                     }
                     else
                     {
+                        DrugIds[i] = 0;
                         DrugDozes[i] = string.Empty;
                         DrugFormats[i] = string.Empty;
                     }
                 }
-                else
-                {
-                    DrugIds[i] = 0;
-                    DrugDozes[i] = string.Empty;
-                    DrugFormats[i] = string.Empty;
-                }
-            }
 
-            this.Close();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}");
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

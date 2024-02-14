@@ -11,7 +11,8 @@ namespace MainApp.pages
     /// </summary>
     public partial class HADPage : Page
     {
-        BigBoarsEntities db_cont = new BigBoarsEntities();
+        readonly BigBoarsEntities db_cont = new BigBoarsEntities();
+
         public HADPage()
         {
             InitializeComponent();
@@ -48,7 +49,6 @@ namespace MainApp.pages
                 var selectedData = (dynamic)DG_HADs.SelectedItem;
 
                 MessageBoxResult res = MessageBox.Show("Подтвердите удаление", "Удаление строки", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-
                 if (res == MessageBoxResult.Yes)
                 {
                     db_cont.DeleteObject(selectedData);
@@ -63,6 +63,7 @@ namespace MainApp.pages
         {
             var win = new HADAddWindow();
             win.ShowDialog();
+
             DG_HADs.ItemsSource = db_cont.HealingAndDiagnostics.ToList();
         }
 

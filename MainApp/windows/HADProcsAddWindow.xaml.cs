@@ -1,18 +1,8 @@
 ﻿using MainApp.assets.models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MainApp.windows
 {
@@ -21,9 +11,10 @@ namespace MainApp.windows
     /// </summary>
     public partial class HADProcsAddWindow : Window
     {
-        BigBoarsEntities db_cont = new BigBoarsEntities();
+        readonly BigBoarsEntities db_cont = new BigBoarsEntities();
+        readonly NewProcData n = new NewProcData();
         public int[] ProcIds = new int[5];
-        NewProcData n = new NewProcData();
+        
         public HADProcsAddWindow()
         {
             InitializeComponent();

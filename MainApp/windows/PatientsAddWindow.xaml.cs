@@ -1,19 +1,9 @@
 ﻿using MainApp.assets.models;
-using MainApp.pages;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MainApp.windows
 {
@@ -22,8 +12,10 @@ namespace MainApp.windows
     /// </summary>
     public partial class PatientsAddWindow : Window
     {
-        BigBoarsEntities db_cont = new BigBoarsEntities();
+        readonly BigBoarsEntities db_cont = new BigBoarsEntities();
+        readonly CultureInfo us = new CultureInfo("en-US");
         private int Manual;
+
         public PatientsAddWindow()
         {
             InitializeComponent();
@@ -41,103 +33,114 @@ namespace MainApp.windows
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)
         {
-            var newPatientData = (NewPatientData)this.DataContext;
-            CultureInfo us = new CultureInfo("en-US");
-            int ActualIdInsuranceCompany;
-
-            if (Manual == 1)
+            try
             {
-                var newInsuranceCompany = new InsuranceCompanies
+                var newPatientData = (NewPatientData)this.DataContext;
+                int ActualIdInsuranceCompany;
+
+                if (LastName_tb.Text == string.Empty || FirstName_tb.Text == string.Empty || Gender_cb.SelectedItem == null || BirthDate_tb.Text == string.Empty 
+                    || !DateTime.TryParseExact(BirthDate_tb.Text, "yyyy-MM-dd", us, DateTimeStyles.None, out DateTime birthDateRes) || City_tb.Text == string.Empty 
+                    || Street_tb.Text == string.Empty || HouseNumber_tb.Text == string.Empty || InsPolicy_tb.Text == string.Empty || !ulong.TryParse(InsPolicy_tb.Text, out ulong insPolicyRes) 
+                    || InsPolicy_tb.Text.Length != 16 || (Manual == 0 && InsComp_cb.SelectedItem == null) || (Manual == 1 && InsComp_tb.Text == string.Empty) 
+                    || Email_tb.Text == string.Empty || Phone_tb.Text == string.Empty || Passport_tb.Text == string.Empty || !uint.TryParse(Passport_tb.Text, out uint passportRes) || Passport_tb.Text.Length != 10)
                 {
-                    CompanyName = InsComp_tb.Text
+                    throw new Exception("Некоторые обязательные поля не указаны или содержат неправильный тип данных!");
+                }
+
+                if (Manual == 1)
+                {
+                    var newInsuranceCompany = new InsuranceCompanies
+                    {
+                        CompanyName = InsComp_tb.Text
+                    };
+                    db_cont.InsuranceCompanies.AddObject(newInsuranceCompany);
+                    db_cont.SaveChanges();
+                    ActualIdInsuranceCompany = newInsuranceCompany.id;
+                }
+                else
+                {
+                    ActualIdInsuranceCompany = newPatientData.SelectedCompany.id;
+                }
+
+                var newAddress = new Addresses
+                {
+                    City = newPatientData.City,
+                    Street = newPatientData.Street,
+                    HouseNumber = newPatientData.HouseNumber,
+                    FlatNumber = newPatientData.FlatNumber
                 };
-                db_cont.InsuranceCompanies.AddObject(newInsuranceCompany);
+                db_cont.Addresses.AddObject(newAddress);
                 db_cont.SaveChanges();
-                ActualIdInsuranceCompany = newInsuranceCompany.id;
+                int newAddressId = newAddress.id;
+
+                var newPatient = new Patients
+                {
+                    LastName = newPatientData.LastName,
+                    FirstName = newPatientData.FirstName,
+                    MiddleName = newPatientData.MiddleName,
+                    idGender = newPatientData.SelectedGender.id,
+                    BirthDate = DateTime.ParseExact(newPatientData.BirthDate, "yyyy-MM-dd", us),
+                    idAddress = newAddressId,
+                    WorkPlace = newPatientData.WorkPlace
+                };
+                db_cont.Patients.AddObject(newPatient);
+                db_cont.SaveChanges();
+                int newPatientId = newPatient.id;
+
+                var newEmail = new Emails
+                {
+                    Email = newPatientData.Email,
+                    idPatient = newPatientId,
+                };
+                db_cont.Emails.AddObject(newEmail);
+                db_cont.SaveChanges();
+
+                var newPhone = new Phones
+                {
+                    Phone = newPatientData.Phone,
+                    idPatient = newPatientId
+                };
+                db_cont.Phones.AddObject(newPhone);
+                db_cont.SaveChanges();
+
+                var newPassport = new Passports
+                {
+                    PassportNumber = newPatientData.SerialNumber,
+                    idPatient = newPatientId
+                };
+                db_cont.Passports.AddObject(newPassport);
+                db_cont.SaveChanges();
+                int newPassportId = newPassport.id;
+
+                var newInsurancePolicy = new InsurancePolicies
+                {
+                    idInsuranceCompany = ActualIdInsuranceCompany,
+                    PolicyNumber = newPatientData.PolicyNumber,
+                    ExpiryDate = DateTime.ParseExact("2100-01-01", "yyyy-MM-dd", us),
+                    idPassport = newPassportId
+                };
+                db_cont.InsurancePolicies.AddObject(newInsurancePolicy);
+                db_cont.SaveChanges();
+                int newInsurancePolicyId = newInsurancePolicy.id;
+
+                Random rnd = new Random();
+                int mn = rnd.Next(100000, 999999);
+                DateTime di = DateTime.Now;
+                var newMedcard = new Medcards
+                {
+                    MedcardNumber = Convert.ToString(mn),
+                    idPolicy = newInsurancePolicyId,
+                    DateIssued = di
+                };
+                db_cont.Medcards.AddObject(newMedcard);
+                db_cont.SaveChanges();
+
+                this.Close();
             }
-            else
+            catch (Exception ex)
             {
-                ActualIdInsuranceCompany = newPatientData.SelectedCompany.id;
+                MessageBox.Show($"{ex.Message}");
             }
-
-            var newAddress = new Addresses
-            {
-                City = newPatientData.City,
-                Street = newPatientData.Street,
-                HouseNumber = newPatientData.HouseNumber,
-                FlatNumber = newPatientData.FlatNumber
-            };
-            db_cont.Addresses.AddObject(newAddress);
-            db_cont.SaveChanges();
-
-            int newAddressId = newAddress.id;
-
-            var newPatient = new Patients
-            {
-                LastName = newPatientData.LastName,
-                FirstName = newPatientData.FirstName,
-                MiddleName = newPatientData.MiddleName,
-                idGender = newPatientData.SelectedGender.id,
-                BirthDate = DateTime.ParseExact(newPatientData.BirthDate, "yyyy-MM-dd", us),
-                idAddress = newAddressId,
-                WorkPlace = newPatientData.WorkPlace
-            };
-            db_cont.Patients.AddObject(newPatient);
-            db_cont.SaveChanges();
-
-            int newPatientId = newPatient.id;
-
-            var newEmail = new Emails
-            {
-                Email = newPatientData.Email,
-                idPatient = newPatientId,
-            };
-            db_cont.Emails.AddObject(newEmail);
-            db_cont.SaveChanges();
-
-            var newPhone = new Phones
-            {
-                Phone = newPatientData.Phone,
-                idPatient = newPatientId
-            };
-            db_cont.Phones.AddObject(newPhone);
-            db_cont.SaveChanges();
-
-            var newPassport = new Passports
-            {
-                PassportNumber = newPatientData.SerialNumber,
-                idPatient = newPatientId
-            };
-            db_cont.Passports.AddObject(newPassport);
-            db_cont.SaveChanges();
-            
-            int newPassportId = newPassport.id;
-
-            var newInsurancePolicy = new InsurancePolicies
-            {
-                idInsuranceCompany = ActualIdInsuranceCompany,
-                PolicyNumber = newPatientData.PolicyNumber,
-                ExpiryDate = DateTime.ParseExact("2100-01-01", "yyyy-MM-dd", us),
-                idPassport = newPassportId
-            };
-            db_cont.InsurancePolicies.AddObject(newInsurancePolicy);
-            db_cont.SaveChanges();
-
-            int newInsurancePolicyId = newInsurancePolicy.id;
-
-            Random rnd = new Random();
-            int mn = rnd.Next(100000, 999999);
-            DateTime di = DateTime.Now;
-
-            var newMedcard = new Medcards
-            {
-                MedcardNumber = Convert.ToString(mn),
-                idPolicy = newInsurancePolicyId,
-                DateIssued = di
-            };
-            db_cont.Medcards.AddObject(newMedcard);
-            db_cont.SaveChanges();
-            this.Close();
         }
 
         private void InsCompDroplist_rb_Checked(object sender, RoutedEventArgs e)
@@ -163,7 +166,6 @@ namespace MainApp.windows
         public Genders SelectedGender { get; set; }
         public List<Genders> GenderOptions { get; set; }
         public string BirthDate { get; set; }
-        public string idAddress { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
         public string HouseNumber { get; set; }

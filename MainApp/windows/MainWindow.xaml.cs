@@ -1,19 +1,16 @@
-﻿using MainApp.assets.models;
-using MainApp.pages;
-using System.Runtime.CompilerServices;
+﻿using MainApp.pages;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace MainApp
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        PatientsPage pap;
-        HospitalizationsPage hop;
-        HADPage hap;
+        readonly PatientsPage pap;
+        readonly HospitalizationsPage hop;
+        readonly HADPage hap;
 
         public MainWindow()
         {
@@ -44,7 +41,7 @@ namespace MainApp
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            
+            //i dont know why this works, dont add anything here
         }
 
         private void Window_Closed(object sender, System.EventArgs e)

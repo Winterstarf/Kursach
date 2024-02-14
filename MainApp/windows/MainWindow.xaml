@@ -6,7 +6,6 @@
         mc:Ignorable="d"
         SizeToContent="Manual"
         Title="База данных" MinHeight="700" MinWidth="1000" Height="700" Width="1000" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" SizeChanged="MainWindow_SizeChanged" Closed="Window_Closed">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="116"/>

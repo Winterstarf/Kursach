@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.windows"
         mc:Ignorable="d"
-        Title="Добавление" Height="600" Width="560" WindowStartupLocation="CenterScreen">
+        Title="Добавление" Height="600" Width="560" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
         <Button x:Name="Save_btn" Content="Добавить" Click="Save_btn_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15" Height="30" Width="90"/>
 
@@ -29,6 +29,7 @@
             <TextBlock Text="Квартира (необ.)" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <TextBox x:Name="FlatNumber_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding FlatNumber}"/>
         </StackPanel>
+        
         <StackPanel Margin="271,0,0,50">
             <TextBlock Text="Место работы (необ.)" Height="20" Width="150" HorizontalAlignment="Left" Margin="10,10,10,2" FontSize="14"/>
             <TextBox x:Name="WorkPlace_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding WorkPlace}"/>
@@ -51,9 +52,9 @@
             <TextBox x:Name="Phone_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding Phone}"/>
             <TextBlock Text="Паспорт" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <TextBox x:Name="Passport_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding SerialNumber}"/>
-            <TextBlock Text="Медкарта (авто)" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Height="20" Width="208" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"><Run Text="Медкарта (авто"/><Run Language="ru-ru" Text="выдача"/><Run Text=")"/></TextBlock>
             <TextBox x:Name="Medcard_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" IsEnabled="False" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBlock Text="Дата выдачи медкарты (авто)" Height="20" Width="251" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Height="20" Width="272" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"><Run Text="Дата выдачи медкарты (авто"/><Run Language="ru-ru" Text="выдача"/><Run Text=")"/></TextBlock>
             <TextBox x:Name="MedcardDateIssued_tb" FontSize="14" Margin="10,0,10,5" Height="25" IsEnabled="false" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
         </StackPanel>
     </Grid>

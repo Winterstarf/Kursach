@@ -3,16 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MainApp.windows
 {
@@ -21,10 +13,10 @@ namespace MainApp.windows
     /// </summary>
     public partial class HADAddWindow : Window
     {
-        BigBoarsEntities db_cont = new BigBoarsEntities();
-        HADDrugsAddWindow drugs;
-        HADProcsAddWindow procs;
-        HADDocsAddWindow doctors;
+        readonly BigBoarsEntities db_cont = new BigBoarsEntities();
+        readonly HADDrugsAddWindow drugs;
+        readonly HADProcsAddWindow procs;
+        readonly HADDocsAddWindow doctors;
 
         public HADAddWindow()
         {
@@ -44,69 +36,80 @@ namespace MainApp.windows
         }
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)
-        {  
-            var newHADData = (NewHADData)this.DataContext;
-            CultureInfo us = new CultureInfo("en-US");
-
-            var newHAD = new HealingAndDiagnostics
+        {
+            try
             {
-                idMedApp = newHADData.SelectedApp.id,
-                AnamnezHarvest = newHADData.Anamnez,
-                Symptomatics = newHADData.Symptomatics,
-                DoctorRecommendations = newHADData.Recs,
-                idDoctor = newHADData.SelectedDoctor.id
-            };
-            db_cont.HealingAndDiagnostics.AddObject(newHAD);
-            db_cont.SaveChanges();
+                var newHADData = (NewHADData)this.DataContext;
 
-            int newIdHAD = newHAD.id;
-
-            for (int i = 0; i < 10; i++)
-            {
-                if (drugs.DrugIds[i] != 0)
+                if (App_cb.SelectedItem == null || Anamnez_tb.Text == string.Empty || Symptomatics_tb.Text == string.Empty 
+                    || Recs_tb.Text == string.Empty || Doctor_сb.SelectedItem == null)
                 {
-                    var newHADDrug = new HAD_Drugs
-                    {
-                        idHAD = newIdHAD,
-                        idDrug = drugs.DrugIds[i],
-                        Doze = drugs.DrugDozes[i],
-                        ConsumingFormat = drugs.DrugFormats[i]
-                    };
-                    db_cont.HAD_Drugs.AddObject(newHADDrug);
-                    db_cont.SaveChanges();
+                    throw new Exception("Некоторые обязательные поля не указаны или содержат неправильный тип данных!");
                 }
-            }
 
-            for (int i = 0; i < 5; i++)
-            {
-                if (procs.ProcIds[i] != 0)
+                var newHAD = new HealingAndDiagnostics
                 {
-                    var newHADProc = new HAD_Procedures
-                    {
-                        idHAD = newIdHAD,
-                        idProc = procs.ProcIds[i]
-                    };
-                    db_cont.HAD_Procedures.AddObject(newHADProc);
-                    db_cont.SaveChanges();
-                }
-            }
+                    idMedApp = newHADData.SelectedApp.id,
+                    AnamnezHarvest = newHADData.Anamnez,
+                    Symptomatics = newHADData.Symptomatics,
+                    DoctorRecommendations = newHADData.Recs,
+                    idDoctor = newHADData.SelectedDoctor.id
+                };
+                db_cont.HealingAndDiagnostics.AddObject(newHAD);
+                db_cont.SaveChanges();
+                int newIdHAD = newHAD.id;
 
-            for (int i = 0; i < 3; i++)
-            {
-                if (doctors.DocIds[i] != 0)
+                for (int i = 0; i < 10; i++)
                 {
-                    var newHADDoc = new HAD_NextDoctors
+                    if (drugs.DrugIds[i] != 0)
                     {
-                        idHAD = newIdHAD,
-                        idDoctor = doctors.DocIds[i],
-                        ExtraInfo = doctors.Infos[i]
-                    };
-                    db_cont.HAD_NextDoctors.AddObject(newHADDoc);
-                    db_cont.SaveChanges();
+                        var newHADDrug = new HAD_Drugs
+                        {
+                            idHAD = newIdHAD,
+                            idDrug = drugs.DrugIds[i],
+                            Doze = drugs.DrugDozes[i],
+                            ConsumingFormat = drugs.DrugFormats[i]
+                        };
+                        db_cont.HAD_Drugs.AddObject(newHADDrug);
+                        db_cont.SaveChanges();
+                    }
                 }
-            }
 
-            this.Close();
+                for (int i = 0; i < 5; i++)
+                {
+                    if (procs.ProcIds[i] != 0)
+                    {
+                        var newHADProc = new HAD_Procedures
+                        {
+                            idHAD = newIdHAD,
+                            idProc = procs.ProcIds[i]
+                        };
+                        db_cont.HAD_Procedures.AddObject(newHADProc);
+                        db_cont.SaveChanges();
+                    }
+                }
+
+                for (int i = 0; i < 3; i++)
+                {
+                    if (doctors.DocIds[i] != 0)
+                    {
+                        var newHADDoc = new HAD_NextDoctors
+                        {
+                            idHAD = newIdHAD,
+                            idDoctor = doctors.DocIds[i],
+                            ExtraInfo = doctors.Infos[i]
+                        };
+                        db_cont.HAD_NextDoctors.AddObject(newHADDoc);
+                        db_cont.SaveChanges();
+                    }
+                }
+
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}");
+            }
         }
 
         private void App_cb_DropDownClosed(object sender, EventArgs e)

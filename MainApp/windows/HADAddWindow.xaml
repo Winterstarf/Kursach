@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.windows"
         mc:Ignorable="d"
-        Title="Добавление" Height="600" Width="560" WindowStartupLocation="CenterScreen">
+        Title="Добавление" Height="600" Width="560" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid>
         <Button x:Name="Save_btn" Content="Добавить" Click="Save_btn_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15" Height="30" Width="90"/>
         <TextBlock x:Name="CurrentPat_tbk" Text="Текущий пациент:" Height="52" Width="248" FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,5,0,0" TextWrapping="Wrap"/>
@@ -40,6 +40,7 @@
             <Button x:Name="ProcsAdd_btn" Content="Добавить процедуры" Height="30" Width="150" Margin="10" HorizontalAlignment="Left" Click="ProcsAdd_btn_Click"/>
             <Button x:Name="DocsAdd_btn" Content="Добавить след. докторов" Height="30" Width="150" Margin="10" HorizontalAlignment="Left" Click="DocsAdd_btn_Click"/>
         </StackPanel>
+        
         <StackPanel Margin="271,0,0,50">
             <Image Source="\assets\images\shrek.png"/>
             <TextBlock Text="тут пустое место!" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="30"/>

@@ -1,19 +1,8 @@
 ﻿using MainApp.assets.models;
 using MainApp.windows;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MainApp.pages
 {
@@ -22,10 +11,12 @@ namespace MainApp.pages
     /// </summary>
     public partial class HospitalizationsPage : Page
     {
-        BigBoarsEntities db_cont = new BigBoarsEntities();
+        readonly BigBoarsEntities db_cont = new BigBoarsEntities();
+
         public HospitalizationsPage()
         {
             InitializeComponent();
+
             DG_Hosps.ItemsSource = db_cont.Hospitalizations.ToList();
         }
 
@@ -59,7 +50,6 @@ namespace MainApp.pages
                 var selectedData = (dynamic)DG_Hosps.SelectedItem;
 
                 MessageBoxResult res = MessageBox.Show("Подтвердите удаление", "Удаление строки", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-
                 if (res == MessageBoxResult.Yes)
                 {
                     db_cont.DeleteObject(selectedData);
@@ -74,6 +64,7 @@ namespace MainApp.pages
         {
             var win = new HospitalizationsAddWindow();
             win.ShowDialog();
+
             DG_Hosps.ItemsSource = db_cont.Hospitalizations.ToList();
         }
 
