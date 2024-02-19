@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6f5bf9d585ea4eb7bff75cbd7b84a56b" Name="Diagram1">
+      <Diagram DiagramId="6f5bf9d585ea4eb7bff75cbd7b84a56b" Name="Diagram1" ZoomLevel="95">
         <EntityTypeShape EntityType="BigBoarsModel.Addresses" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="BigBoarsModel.Doctors" Width="1.5" PointX="9.75" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BigBoarsModel.Drugs" Width="1.5" PointX="17.25" PointY="13.75" IsExpanded="true" />
@@ -26,7 +26,7 @@
         <EntityTypeShape EntityType="BigBoarsModel.Patients" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="BigBoarsModel.Phones" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BigBoarsModel.ProcedureTypes" Width="1.5" PointX="15" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="BigBoarsModel.Roles" Width="1.5" PointX="7.5" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigBoarsModel.Roles" Width="1.5" PointX="12" PointY="3.625" IsExpanded="true" />
         <AssociationConnector Association="BigBoarsModel.fk_idAddress_Patients" ManuallyRouted="false" />
         <AssociationConnector Association="BigBoarsModel.fk_idDoctor_HAD" ManuallyRouted="false" />
         <AssociationConnector Association="BigBoarsModel.fk_idDoctor_HADND" ManuallyRouted="false" />

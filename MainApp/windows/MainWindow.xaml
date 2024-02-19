@@ -39,9 +39,10 @@
         </Button>
 
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1">
-            <Button x:Name="Patients_btn" Height="35" Margin="10,10,10,5" FontSize="14" Content="Пациенты" Click="Patients_btn_Click"></Button>
-            <Button x:Name="Hospitalizations_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Госпит." Click="Hospitalizations_btn_Click"></Button>
-            <Button x:Name="HAD_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Леч.-диаг." Click="HAD_btn_Click"></Button>
+            <Button x:Name="Patients_btn" Height="35" Margin="10,10,10,5" FontSize="14" Content="Пациенты" Click="Patients_btn_Click"/>
+            <Button x:Name="Hospitalizations_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Госпит." Click="Hospitalizations_btn_Click"/>
+            <Button x:Name="HAD_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Леч.-диаг." Click="HAD_btn_Click"/>
+            <Button x:Name="Medcards_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Медкарты" Click="Medcards_btn_Click"/>
         </StackPanel>
 
         <Border x:Name="DG_brd" BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,10,10,50">
