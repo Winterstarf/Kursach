@@ -17,7 +17,6 @@ namespace MainApp
         readonly PatientsPage pap;
         readonly HospitalizationsPage hop;
         readonly HADPage hap;
-        readonly MedcardsPage map;
 
         public MainWindow()
         {
@@ -26,7 +25,6 @@ namespace MainApp
             pap = new PatientsPage();
             hop = new HospitalizationsPage();
             hap = new HADPage();
-            map = new MedcardsPage();
         }
 
         private void Patients_btn_Click(object sender, RoutedEventArgs e)
@@ -45,12 +43,6 @@ namespace MainApp
         {
             CurrentPage_tb.Text = "Лечение и диагностика";
             DG_frm.NavigationService.Navigate(hap);
-        }
-
-        private void Medcards_btn_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPage_tb.Text = "Медкарты";
-            DG_frm.NavigationService.Navigate(map);
         }
 
         private async void SecretSurprise_btn_Click(object sender, RoutedEventArgs e)

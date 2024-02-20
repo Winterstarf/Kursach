@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BigBoarsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище BigBoarsModel" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Addresses">
           <Key>
             <PropertyRef Name="id" />
@@ -283,7 +283,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idHAD_HADD">
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1" />
+          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HAD_Drugs" Type="Self.HAD_Drugs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HealingAndDiagnostics">
@@ -295,7 +297,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idHAD_HADND">
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1" />
+          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HAD_NextDoctors" Type="Self.HAD_NextDoctors" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HealingAndDiagnostics">
@@ -307,7 +311,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idHAD_HADP">
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1" />
+          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HAD_Procedures" Type="Self.HAD_Procedures" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HealingAndDiagnostics">
@@ -355,7 +361,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idMedApp_HAD">
-          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="1" />
+          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MedAppointments">
@@ -367,7 +375,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idMedApp_Hosp">
-          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="1" />
+          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Hospitalizations" Type="Self.Hospitalizations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MedAppointments">
@@ -379,7 +389,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idMedcard_MedAppointments">
-          <End Role="Medcards" Type="Self.Medcards" Multiplicity="1" />
+          <End Role="Medcards" Type="Self.Medcards" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Medcards">
@@ -391,7 +403,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idPassport_InsurancePolicies">
-          <End Role="Passports" Type="Self.Passports" Multiplicity="1" />
+          <End Role="Passports" Type="Self.Passports" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="InsurancePolicies" Type="Self.InsurancePolicies" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Passports">
@@ -403,7 +417,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idPatient_Emails">
-          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patients">
@@ -415,7 +431,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idPatient_Passports">
-          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Passports" Type="Self.Passports" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patients">
@@ -427,7 +445,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idPatient_Phones">
-          <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Phones" Type="Self.Phones" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patients">
@@ -439,7 +459,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idPolicy_Medcards">
-          <End Role="InsurancePolicies" Type="Self.InsurancePolicies" Multiplicity="1" />
+          <End Role="InsurancePolicies" Type="Self.InsurancePolicies" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Medcards" Type="Self.Medcards" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="InsurancePolicies">
@@ -486,7 +508,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BigBoarsModelStoreContainer">
+        <EntityContainer Name="Хранилище BigBoarsModelContainer">
           <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Doctors" EntityType="Self.Doctors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Drugs" EntityType="Self.Drugs" Schema="dbo" store:Type="Tables" />
@@ -931,8 +953,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idPatient_Emails">
-          <End Role="Patients" Type="Self.Patients" Multiplicity="1" ></End>
-          <End Role="Emails" Type="Self.Emails" Multiplicity="*" ></End>
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patients">
               <PropertyRef Name="id" />
@@ -955,7 +979,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idHAD_HADD">
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1" />
+          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HAD_Drugs" Type="Self.HAD_Drugs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HealingAndDiagnostics">
@@ -967,7 +993,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idHAD_HADND">
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1" />
+          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HAD_NextDoctors" Type="Self.HAD_NextDoctors" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HealingAndDiagnostics">
@@ -979,7 +1007,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idHAD_HADP">
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1" />
+          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HAD_Procedures" Type="Self.HAD_Procedures" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HealingAndDiagnostics">
@@ -1003,7 +1033,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idMedApp_HAD">
-          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="1" />
+          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MedAppointments">
@@ -1039,7 +1071,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idMedApp_Hosp">
-          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="1" />
+          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Hospitalizations" Type="Self.Hospitalizations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MedAppointments">
@@ -1063,7 +1097,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idPassport_InsurancePolicies">
-          <End Role="Passports" Type="Self.Passports" Multiplicity="1" />
+          <End Role="Passports" Type="Self.Passports" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="InsurancePolicies" Type="Self.InsurancePolicies" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Passports">
@@ -1075,7 +1111,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idPolicy_Medcards">
-          <End Role="InsurancePolicies" Type="Self.InsurancePolicies" Multiplicity="1" />
+          <End Role="InsurancePolicies" Type="Self.InsurancePolicies" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Medcards" Type="Self.Medcards" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="InsurancePolicies">
@@ -1087,7 +1125,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idMedcard_MedAppointments">
-          <End Role="Medcards" Type="Self.Medcards" Multiplicity="1" />
+          <End Role="Medcards" Type="Self.Medcards" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Medcards">
@@ -1111,8 +1151,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idPatient_Passports">
-          <End Role="Patients" Type="Self.Patients" Multiplicity="1" ></End>
-          <End Role="Passports" Type="Self.Passports" Multiplicity="*" ></End>
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Passports" Type="Self.Passports" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patients">
               <PropertyRef Name="id" />
@@ -1123,8 +1165,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_idPatient_Phones">
-          <End Role="Patients" Type="Self.Patients" Multiplicity="1" ></End>
-          <End Role="Phones" Type="Self.Phones" Multiplicity="*" ></End>
+          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Phones" Type="Self.Phones" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patients">
               <PropertyRef Name="id" />
@@ -1255,7 +1299,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BigBoarsModelStoreContainer" CdmEntityContainer="BigBoarsEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище BigBoarsModelContainer" CdmEntityContainer="BigBoarsEntities">
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="BigBoarsModel.Addresses">
               <MappingFragment StoreEntitySet="Addresses">

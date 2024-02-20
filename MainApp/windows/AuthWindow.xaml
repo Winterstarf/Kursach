@@ -7,18 +7,9 @@
         SizeToContent="WidthAndHeight"
         Title="Вход в систему" Height="255" Width="356" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock Margin="14,23,93,169" Text="Большие Кабаны" FontSize="30" FontWeight="Medium" RenderTransformOrigin="0.5,0.5">
-            <TextBlock.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="0.988"/>
-                    <SkewTransform AngleX="-21.318" AngleY="1.792"/>
-                    <RotateTransform Angle="3.431"/>
-                    <TranslateTransform X="6.274" Y="2.441"/>
-                </TransformGroup>
-            </TextBlock.RenderTransform>
-        </TextBlock>
-        
-        <Image Height="104" Width="99" HorizontalAlignment="Right" VerticalAlignment="Top" Source="\assets\images\hog.png"/>
+        <TextBlock Margin="18,21,54,171" Text="ГКБ Большие Кабаны" FontSize="26" FontWeight="Medium" RenderTransformOrigin="0.5,0.5"/>
+
+        <Image Height="104" Width="99" HorizontalAlignment="Right" VerticalAlignment="Top" Source="\assets\images\cross.png" Opacity="100"/>
 
         <StackPanel Margin="100,74,100,66">
             <TextBlock Height="25" Width="55" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Логин" FontSize="13" TextAlignment="Left"/>

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Xml;
 
 namespace MainApp.windows
 {
@@ -13,7 +15,6 @@ namespace MainApp.windows
     public partial class PatientsAddWindow : Window
     {
         readonly BigBoarsEntities db_cont = new BigBoarsEntities();
-        readonly CultureInfo us = new CultureInfo("en-US");
         private int Manual;
 
         public PatientsAddWindow()
@@ -38,8 +39,8 @@ namespace MainApp.windows
                 var newPatientData = (NewPatientData)this.DataContext;
                 int ActualIdInsuranceCompany;
 
-                if (LastName_tb.Text == string.Empty || FirstName_tb.Text == string.Empty || Gender_cb.SelectedItem == null || BirthDate_tb.Text == string.Empty 
-                    || !DateTime.TryParseExact(BirthDate_tb.Text, "yyyy-MM-dd", us, DateTimeStyles.None, out DateTime birthDateRes) || City_tb.Text == string.Empty 
+                if (LastName_tb.Text == string.Empty || FirstName_tb.Text == string.Empty || Gender_cb.SelectedItem == null
+                    || BirthDate_dp.SelectedDate == null || City_tb.Text == string.Empty 
                     || Street_tb.Text == string.Empty || HouseNumber_tb.Text == string.Empty || InsPolicy_tb.Text == string.Empty || !ulong.TryParse(InsPolicy_tb.Text, out ulong insPolicyRes) 
                     || InsPolicy_tb.Text.Length != 16 || (Manual == 0 && InsComp_cb.SelectedItem == null) || (Manual == 1 && InsComp_tb.Text == string.Empty) 
                     || Email_tb.Text == string.Empty || Phone_tb.Text == string.Empty || Passport_tb.Text == string.Empty || !uint.TryParse(Passport_tb.Text, out uint passportRes) || Passport_tb.Text.Length != 10)
@@ -79,7 +80,7 @@ namespace MainApp.windows
                     FirstName = newPatientData.FirstName,
                     MiddleName = newPatientData.MiddleName,
                     idGender = newPatientData.SelectedGender.id,
-                    BirthDate = DateTime.ParseExact(newPatientData.BirthDate, "yyyy-MM-dd", us),
+                    BirthDate = (DateTime)BirthDate_dp.SelectedDate,
                     idAddress = newAddressId,
                     WorkPlace = newPatientData.WorkPlace
                 };
@@ -116,21 +117,19 @@ namespace MainApp.windows
                 {
                     idInsuranceCompany = ActualIdInsuranceCompany,
                     PolicyNumber = newPatientData.PolicyNumber,
-                    ExpiryDate = DateTime.ParseExact("2100-01-01", "yyyy-MM-dd", us),
+                    ExpiryDate = DateTime.Parse("2100-01-01"),
                     idPassport = newPassportId
                 };
                 db_cont.InsurancePolicies.AddObject(newInsurancePolicy);
                 db_cont.SaveChanges();
                 int newInsurancePolicyId = newInsurancePolicy.id;
 
-                Random rnd = new Random();
-                int mn = rnd.Next(100000, 999999);
-                DateTime di = DateTime.Now;
+                int mn = Convert.ToInt32(db_cont.Medcards.Max(p => p.MedcardNumber)) + 1;
                 var newMedcard = new Medcards
                 {
                     MedcardNumber = Convert.ToString(mn),
                     idPolicy = newInsurancePolicyId,
-                    DateIssued = di
+                    DateIssued = DateTime.Now
                 };
                 db_cont.Medcards.AddObject(newMedcard);
                 db_cont.SaveChanges();

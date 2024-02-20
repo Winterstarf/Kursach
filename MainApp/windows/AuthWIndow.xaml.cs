@@ -20,7 +20,7 @@ namespace MainApp
             string username = Convert.ToString(UsernameTB.Text);
             string password = Convert.ToString(PassPB.Password);
 
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-QLMK9N;Initial Catalog=BigBoars;Integrated Security=SSPI");
+            SqlConnection con = new SqlConnection(@"Data Source=201-04\SQLEXPRESS;Initial Catalog=BigBoars;Integrated Security=SSPI");
             con.Open();
 
             SqlCommand cmd = new SqlCommand("select * from Doctors where Username='" + username + "' and Passwrd='" + password + "'", con)

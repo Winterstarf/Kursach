@@ -86,7 +86,7 @@
         </StackPanel>
         
         <Button x:Name="Save_btn" Content="Добавить" Click="Save_btn_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15" Height="30" Width="90"/>
-        <Image Source="\assets\images\shrek.png" Margin="0,341,352,60"/>
-        <Image Source="\assets\images\shrek.png" Margin="352,341,0,60"/>
+        <Image Source="\assets\images\shrek.png" Margin="0,341,352,60" Opacity="0"/>
+        <Image Source="\assets\images\shrek.png" Margin="352,341,0,60" Opacity="0"/>
     </Grid>
 </Window>

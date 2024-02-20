@@ -41,7 +41,7 @@
             <Button x:Name="DocsAdd_btn" Content="Добавить след. докторов" Height="30" Width="150" Margin="10" HorizontalAlignment="Left" Click="DocsAdd_btn_Click"/>
         </StackPanel>
         
-        <StackPanel Margin="271,0,0,50">
+        <StackPanel Margin="271,0,0,50" Opacity="0">
             <Image Source="\assets\images\shrek.png"/>
             <TextBlock Text="тут пустое место!" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="30"/>
         </StackPanel>

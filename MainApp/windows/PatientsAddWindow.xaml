@@ -10,32 +10,38 @@
         <Button x:Name="Save_btn" Content="Добавить" Click="Save_btn_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15" Height="30" Width="90"/>
 
         <StackPanel Margin="0,0,271,50">
-            <TextBlock Text="Фамилия" Height="20" Width="70" HorizontalAlignment="Left" Margin="10,10,10,2" FontSize="14"/>
+            <TextBlock Height="20" Width="86" HorizontalAlignment="Left" Margin="10,10,10,2" FontSize="14"><Run Text="Фамилия"/><Run Language="ru-ru" Text=" "/><Run Text="*"/></TextBlock>
             <TextBox x:Name="LastName_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding LastName}"/>
-            <TextBlock Text="Имя" Height="20" Width="70" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Text="Имя *" Height="20" Width="70" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <TextBox x:Name="FirstName_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding FirstName}"/>
-            <TextBlock Text="Отчество (необ.)" Height="20" Width="120" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Height="20" Width="120" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"><Run Text="Отчество"/><LineBreak/><Run/></TextBlock>
             <TextBox x:Name="MiddleName_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding MiddleName}"/>
-            <TextBlock Text="Пол" Height="20" Width="70" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Text="Пол *" Height="20" Width="70" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <ComboBox x:Name="Gender_cb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding SelectedGender}" DisplayMemberPath="GenderName"/>
-            <TextBlock Text="Дата рождения (ГГГГ-ММ-ДД)" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
-            <TextBox x:Name="BirthDate_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding BirthDate}"/>
-            <TextBlock Text="Город" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"><Run Text="Дата рождения "/><Run Language="ru-ru" Text="*"/></TextBlock>
+            <DatePicker x:Name="BirthDate_dp" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left">
+                <DatePicker.Resources>
+                    <Style TargetType="DatePickerTextBox">
+                        <Setter Property="IsReadOnly" Value="True"/>
+                    </Style>
+                </DatePicker.Resources>
+            </DatePicker>
+            <TextBlock Text="Город *" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <TextBox x:Name="City_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding City}"/>
-            <TextBlock Text="Улица" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Text="Улица *" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <TextBox x:Name="Street_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding Street}"/>
-            <TextBlock Text="Дом" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Text="Дом *" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <TextBox x:Name="HouseNumber_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding HouseNumber}"/>
-            <TextBlock Text="Квартира (необ.)" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Text="Квартира" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <TextBox x:Name="FlatNumber_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding FlatNumber}"/>
         </StackPanel>
         
         <StackPanel Margin="271,0,0,50">
-            <TextBlock Text="Место работы (необ.)" Height="20" Width="150" HorizontalAlignment="Left" Margin="10,10,10,2" FontSize="14"/>
+            <TextBlock Text="Место работы" Height="20" Width="150" HorizontalAlignment="Left" Margin="10,10,10,2" FontSize="14"/>
             <TextBox x:Name="WorkPlace_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding WorkPlace}"/>
-            <TextBlock Text="Ст. полис" Height="20" Width="70" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Text="Ст. полис *" Height="20" Width="82" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <TextBox x:Name="InsPolicy_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding PolicyNumber}"/>
-            <TextBlock Text="Ст. комп." Height="20" Width="120" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Text="Ст. комп. *" Height="20" Width="120" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <StackPanel Height="20" Width="230" HorizontalAlignment="Left" Margin="10,0,10,2" Orientation="Horizontal">
                 <RadioButton x:Name="InsCompDroplist_rb" Height="20" Width="120" HorizontalAlignment="Left" FontSize="12" Checked="InsCompDroplist_rb_Checked">
                     <TextBlock Text="Из подбора" Height="20" Width="70"/>
@@ -46,11 +52,11 @@
             </StackPanel>
             <ComboBox x:Name="InsComp_cb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Visibility="Hidden" ItemsSource="{Binding CompanyOptions}" SelectedItem="{Binding SelectedCompany}" DisplayMemberPath="CompanyName"/>
             <TextBox x:Name="InsComp_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Visibility="Hidden"/>
-            <TextBlock Text="Почта" Height="20" Width="70" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Text="Почта *" Height="20" Width="70" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <TextBox x:Name="Email_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding Email}"/>
-            <TextBlock Text="Телефон" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Text="Телефон *" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <TextBox x:Name="Phone_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding Phone}"/>
-            <TextBlock Text="Паспорт" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <TextBlock Text="Паспорт *" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <TextBox x:Name="Passport_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding SerialNumber}"/>
             <TextBlock Height="20" Width="208" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"><Run Text="Медкарта (авто"/><Run Language="ru-ru" Text="выдача"/><Run Text=")"/></TextBlock>
             <TextBox x:Name="Medcard_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" IsEnabled="False" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
