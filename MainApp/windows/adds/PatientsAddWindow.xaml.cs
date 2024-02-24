@@ -1,11 +1,8 @@
 ﻿using MainApp.assets.models;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Xml;
 
 namespace MainApp.windows
 {
@@ -164,7 +161,6 @@ namespace MainApp.windows
         public string MiddleName { get; set; }
         public Genders SelectedGender { get; set; }
         public List<Genders> GenderOptions { get; set; }
-        public string BirthDate { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
         public string HouseNumber { get; set; }
@@ -176,7 +172,5 @@ namespace MainApp.windows
         public string Email { get; set; }
         public string Phone { get; set; }
         public string SerialNumber { get; set; }
-        public string MedcardNumber { get; set; }
-        public string MedcardDateIssued { get; set; }
     }
 }

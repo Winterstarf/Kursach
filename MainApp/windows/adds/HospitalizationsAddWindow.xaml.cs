@@ -1,7 +1,6 @@
 ﻿using MainApp.assets.models;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,7 +13,6 @@ namespace MainApp.windows
     public partial class HospitalizationsAddWindow : Window
     {
         readonly BigBoarsEntities db_cont = new BigBoarsEntities();
-        readonly CultureInfo us = new CultureInfo("en-US");
 
         public HospitalizationsAddWindow()
         {
@@ -37,15 +35,26 @@ namespace MainApp.windows
             {
                 var newHospData = (NewHospitalizationData)this.DataContext;
 
-                if (App_cb.SelectedItem == null || Goal_tb.Text == string.Empty || Price_tb.Text == string.Empty || !float.TryParse(Price_tb.Text, out float priceRes)
-                    || priceRes < 0 || Blocks_cb.SelectedItem == null || Status_сb.SelectedItem == null || TherapistCode_tb.Text == string.Empty || !uint.TryParse(TherapistCode_tb.Text, out uint therapistCodeRes)
-                    || therapistCodeRes == 0 || therapistCodeRes > 999999 || Bed_tb.Text == string.Empty || !uint.TryParse(Bed_tb.Text, out uint bedRes) || bedRes == 0 || bedRes > 999
-                    || HospDate_tb.Text == string.Empty || !DateTime.TryParseExact(HospDate_tb.Text, "yyyy-MM-dd", us, DateTimeStyles.None, out DateTime hospDateRes)
-                    || PlannedDehospDate_tb.Text == string.Empty || !DateTime.TryParseExact(PlannedDehospDate_tb.Text, "yyyy-MM-dd", us, DateTimeStyles.None, out DateTime plannedDehospDateRes))
+                if ((DateTime)HospDate_dp.SelectedDate < DateTime.UtcNow || (DateTime)HospDate_dp.SelectedDate > (DateTime)PlannedDehospDate_dp.SelectedDate || (DateTime)PlannedDehospDate_dp.SelectedDate < DateTime.UtcNow || (DateTime)HospDate_dp.SelectedDate == (DateTime)PlannedDehospDate_dp.SelectedDate)
                 {
                     throw new Exception("Некоторые обязательные поля не указаны или содержат неправильный тип данных!");
                 }
 
+                if (App_cb.SelectedItem == null || Goal_tb.Text == string.Empty || Blocks_cb.SelectedItem == null || Status_сb.SelectedItem == null || Bed_tb.Text == string.Empty || !uint.TryParse(Bed_tb.Text, out uint bedRes) || bedRes == 0 || bedRes > 999 || HospDate_dp.SelectedDate == null || PlannedDehospDate_dp.SelectedDate == null)
+                {
+                    throw new Exception("Некоторые обязательные поля не указаны или содержат неправильный тип данных!");
+                }
+
+                if (Price_tb.Text == string.Empty)
+                {
+                    newHospData.Price = Convert.ToString(0);
+                }
+                else if (!float.TryParse(Price_tb.Text, out float priceRes) || priceRes < 0)
+                {
+                    throw new Exception("Некоторые обязательные поля не указаны или содержат неправильный тип данных!");
+                }
+
+                int tc = Convert.ToInt32(db_cont.Hospitalizations.Max(p => p.TherapistCode)) + 1;
                 var newHosp = new Hospitalizations
                 {
                     idMedApp = newHospData.SelectedApp.id,
@@ -53,10 +62,10 @@ namespace MainApp.windows
                     idHospBlock = newHospData.SelectedBlock.id,
                     HospPrice = Convert.ToDouble(newHospData.Price),
                     idHospStatus = newHospData.SelectedStatus.id,
-                    HospDate = DateTime.ParseExact(newHospData.HospDate, "yyyy-MM-dd", us),
-                    PlannedDehospDate = DateTime.ParseExact(newHospData.PlannedDehospDate, "yyyy-MM-dd", us),
+                    HospDate = (DateTime)HospDate_dp.SelectedDate,
+                    PlannedDehospDate = (DateTime)PlannedDehospDate_dp.SelectedDate,
                     BedNumber = newHospData.Bed,
-                    TherapistCode = newHospData.TherapistCode
+                    TherapistCode = Convert.ToString(tc)
                 };
                 db_cont.Hospitalizations.AddObject(newHosp);
                 db_cont.SaveChanges();
@@ -93,9 +102,6 @@ namespace MainApp.windows
         public List<HospBlocks> BlockOptions { get; set; }
         public HospStatus SelectedStatus { get; set; }
         public List<HospStatus> StatusOptions { get; set; }
-        public string TherapistCode { get; set; }
         public string Bed { get; set; }
-        public string HospDate { get; set; }
-        public string PlannedDehospDate { get; set; }
     }
 }

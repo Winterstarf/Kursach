@@ -25,6 +25,7 @@
                 <DataGridTextColumn Header="Рекомендации" Binding="{Binding DoctorRecommendations}"/>
                 <DataGridTextColumn Header="Лечащий врач (фамилия)" Binding="{Binding MedAppointments.Doctors.LastName}"/>
                 <DataGridTextColumn Header="Лечащий врач (имя)" Binding="{Binding MedAppointments.Doctors.FirstName}"/>
+                <DataGridTextColumn Header="Роль врача" Binding="{Binding MedAppointments.Doctors.Roles.RoleName}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

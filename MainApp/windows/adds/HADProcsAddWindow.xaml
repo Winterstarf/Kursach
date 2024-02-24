@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.windows"
         mc:Ignorable="d"
-        Title="Добавление" Height="680" Width="590" WindowStartupLocation="CenterScreen" Closing="Window_Closing" ResizeMode="CanMinimize">
+        Title="Добавление" Height="552" Width="404" WindowStartupLocation="CenterScreen" Closing="Window_Closing" ResizeMode="CanMinimize">
     <Grid>
-        <StackPanel Margin="161,0,119,50">
+        <StackPanel Margin="67,56,10,45">
             <TextBlock Text="Процедура 1-я" Height="20" Width="110" HorizontalAlignment="Left" Margin="10,10,10,2" FontSize="14"/>
             <ComboBox x:Name="ProcName1_сb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding ProcOptions}" SelectedItem="{Binding SelectedProc1}">
                 <ComboBox.ItemTemplate>
@@ -86,7 +86,5 @@
         </StackPanel>
         
         <Button x:Name="Save_btn" Content="Добавить" Click="Save_btn_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15" Height="30" Width="90"/>
-        <Image Source="\assets\images\shrek.png" Margin="0,341,352,60" Opacity="0"/>
-        <Image Source="\assets\images\shrek.png" Margin="352,341,0,60" Opacity="0"/>
     </Grid>
 </Window>

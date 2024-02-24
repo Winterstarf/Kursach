@@ -7,9 +7,9 @@
         SizeToContent="WidthAndHeight"
         Title="Вход в систему" Height="255" Width="356" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock Margin="18,21,54,171" Text="ГКБ Большие Кабаны" FontSize="26" FontWeight="Medium" RenderTransformOrigin="0.5,0.5"/>
+        <TextBlock Margin="15,26,57,165" Text="ГКБ «Большие Кабаны»" FontSize="25" FontWeight="Medium" RenderTransformOrigin="0.5,0.5"/>
 
-        <Image Height="104" Width="99" HorizontalAlignment="Right" VerticalAlignment="Top" Source="\assets\images\cross.png" Opacity="100"/>
+        <Image Height="94" Width="85" HorizontalAlignment="Right" VerticalAlignment="Top" Source="\assets\images\cross.png" Opacity="100"/>
 
         <StackPanel Margin="100,74,100,66">
             <TextBlock Height="25" Width="55" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Логин" FontSize="13" TextAlignment="Left"/>

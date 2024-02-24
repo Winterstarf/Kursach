@@ -13,18 +13,48 @@
         <Button x:Name="Add_btn" Margin="5,5,70,5" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Добавить" Click="Add_btn_Click"/>
         <Button x:Name="Refresh_btn" Margin="5,5,135,5" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Обновить" Click="Refresh_btn_Click"/>
 
-        <DataGrid x:Name="DG_Patients" ColumnWidth="*" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,40,0,0">
+        <DataGrid x:Name="DG_Patients" ColumnWidth="*" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,40,0,0" SelectionUnit="FullRow">
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="0" Background="BlanchedAlmond" Padding="10">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="150" Height="150" Source="{Binding Medcard.InsurancePolicies.Passports.Patients.PatientPhotoLink}" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="12" Text="Город: " VerticalAlignment="Center" />
+                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding Medcard.InsurancePolicies.Passports.Patients.Addresses.City}" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="12" Text="Улица: " VerticalAlignment="Center" />
+                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding Medcard.InsurancePolicies.Passports.Patients.Addresses.Street}" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="12" Text="Дом: " VerticalAlignment="Center" />
+                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding Medcard.InsurancePolicies.Passports.Patients.Addresses.HouseNumber}" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="12" Text="Квартира (если есть): " VerticalAlignment="Center" />
+                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding Medcard.InsurancePolicies.Passports.Patients.Addresses.FlatNumber}" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="12" Text="Место работы (если есть): " VerticalAlignment="Center" />
+                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding Medcard.InsurancePolicies.Passports.Patients.WorkPlace}" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="12" Text="Паспорт: " VerticalAlignment="Center" />
+                                <TextBlock FontSize="16" Foreground="MidnightBlue" Text="{Binding Medcard.InsurancePolicies.Passports.PassportNumber}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.LastName}"/>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.FirstName}"/>
                 <DataGridTextColumn Header="Отчество" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.MiddleName}"/>
                 <DataGridTextColumn Header="Пол" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.Genders.GenderName}"/>
                 <DataGridTextColumn Header="Дата рождения" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.BirthDate}"/>
-                <DataGridTextColumn Header="Город" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.Addresses.City}"/>
-                <DataGridTextColumn Header="Улица" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.Addresses.Street}"/>
-                <DataGridTextColumn Header="Дом" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.Addresses.HouseNumber}"/>
-                <DataGridTextColumn Header="Квартира" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.Addresses.FlatNumber}"/>
-                <DataGridTextColumn Header="Место работы" Binding="{Binding Medcard.InsurancePolicies.Passports.Patients.WorkPlace}"/>
                 <DataGridTextColumn Header="Страховой полис" Binding="{Binding Medcard.InsurancePolicies.PolicyNumber}"/>
                 <DataGridTextColumn Header="Страховая компания" Binding="{Binding Medcard.InsurancePolicies.InsuranceCompanies.CompanyName}"/>
                 <DataGridTemplateColumn Header="Почта">
@@ -53,7 +83,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Паспорт" Binding="{Binding Medcard.InsurancePolicies.Passports.PassportNumber}"/>
                 <DataGridTextColumn Header="Медкарта" Binding="{Binding Medcard.MedcardNumber}"/>
                 <DataGridTextColumn Header="Дата выдачи медкарты" Binding="{Binding Medcard.DateIssued}"/>
             </DataGrid.Columns>
