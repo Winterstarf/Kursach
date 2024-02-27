@@ -12,6 +12,8 @@ namespace MainApp
         readonly HospitalizationsPage hop;
         readonly HADPage hap;
 
+        public string CurrentUserName { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();

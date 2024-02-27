@@ -33,10 +33,15 @@
             <ColumnDefinition Width="14"/>
         </Grid.ColumnDefinitions>
 
+        <StackPanel Orientation="Vertical" Margin="0,18,9,0" Height="90" Width="192" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
+            <TextBlock Text="Текущий пользователь:" FontSize="16" Height="35" Margin="5,5,5,0" Width="186"/>
+            <TextBlock x:Name="CurrentDoctor_tb" FontSize="20" Height="35" Margin="5,-10,5,5" Width="177"/>
+        </StackPanel>
+
         <TextBlock x:Name="CurrentPage_tb" FontSize="34" Grid.Column="2" Margin="5,26,0,0" Height="64" Width="378" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.RowSpan="2"><Run Language="ru-ru" Text="Не выбрана страница!"/></TextBlock>
         <Image x:Name="Logo_img" Height="90" Width="90" Source="\assets\images\cross.png" Margin="10,13,10,13" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
 
-            <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2">
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2">
             <Button x:Name="Patients_btn" Height="35" Margin="10,10,10,5" FontSize="14" Content="Пациенты" Click="Patients_btn_Click"/>
             <Button x:Name="Hospitalizations_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Госпит." Click="Hospitalizations_btn_Click"/>
             <Button x:Name="HAD_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Леч.-диаг." Click="HAD_btn_Click"/>

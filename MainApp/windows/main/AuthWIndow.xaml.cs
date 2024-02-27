@@ -20,7 +20,8 @@ namespace MainApp
             string username = Convert.ToString(UsernameTB.Text);
             string password = Convert.ToString(PassPB.Password);
 
-            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-QLMK9N;Initial Catalog=BigBoars;Integrated Security=SSPI");
+            //DESKTOP-QLMK9N or 201-04\SQLEXPRESS
+            SqlConnection con = new SqlConnection(@"Data Source=201-04\SQLEXPRESS;Initial Catalog=BigBoars;Integrated Security=SSPI");
             con.Open();
 
             SqlCommand cmd = new SqlCommand("select * from Doctors where Username='" + username + "' and Passwrd='" + password + "'", con)
@@ -38,6 +39,8 @@ namespace MainApp
             if (dataSet.Tables[0].Rows.Count > 0)
             {
                 MainWindow m = new MainWindow();
+                m.CurrentUserName = username.ToString();
+                m.CurrentDoctor_tb.Text = m.CurrentUserName.ToString();
                 m.Show();
                 this.Close();
             }
