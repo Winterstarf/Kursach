@@ -7,10 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="assets\images\cross.png" />
-    <None Remove="assets\images\hog.gif" />
-    <None Remove="assets\images\hog.png" />
-    <None Remove="assets\images\shrek.png" />
+    <None Remove="assets\images\logo.png" />
     <None Remove="assets\models\MainModel.edmx" />
   </ItemGroup>
 
@@ -34,10 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="assets\images\cross.png" />
-    <Resource Include="assets\images\hog.gif" />
-    <Resource Include="assets\images\hog.png" />
-    <Resource Include="assets\images\shrek.png" />
+    <Resource Include="assets\images\logo.png" />
   </ItemGroup>
 
   <ItemGroup>

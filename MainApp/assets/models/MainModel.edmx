@@ -4,211 +4,89 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BigBoarsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Addresses">
+      <Schema Namespace="HelixDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="clients">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Street" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="HouseNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="FlatNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="middle_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="id_gender" Type="int" Nullable="false" />
+          <Property Name="birth_date" Type="date" Nullable="false" />
+          <Property Name="phone_number" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="passport" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="card_number" Type="int" Nullable="false" />
+          <Property Name="card_balance" Type="float" Nullable="false" />
         </EntityType>
-        <EntityType Name="Doctors">
+        <EntityType Name="clients_services">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idRole" Type="int" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Username" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Passwrd" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_client" Type="int" Nullable="false" />
+          <Property Name="id_service" Type="int" Nullable="false" />
+          <Property Name="date_asked" Type="datetime" Nullable="false" />
+          <Property Name="date_made" Type="datetime" />
+          <Property Name="id_status" Type="int" Nullable="false" />
+          <Property Name="id_staff" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Drugs">
+        <EntityType Name="genders">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DrugFullName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="gender_name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="Emails">
+        <EntityType Name="medical_services">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idPatient" Type="int" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="id_type" Type="int" Nullable="false" />
+          <Property Name="mservice_name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="mservice_description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="mservice_icd" Type="nvarchar" MaxLength="50" />
+          <Property Name="mservice_price" Type="float" Nullable="false" />
+          <Property Name="extra_info" Type="nvarchar" MaxLength="1000" />
         </EntityType>
-        <EntityType Name="Genders">
+        <EntityType Name="service_types">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="GenderName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="stype_name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <EntityType Name="HAD_Drugs">
+        <EntityType Name="staff">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idHAD" Type="int" Nullable="false" />
-          <Property Name="idDrug" Type="int" Nullable="false" />
-          <Property Name="Doze" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ConsumingFormat" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="ExtraInfo" Type="nvarchar" MaxLength="500" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="middle_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="id_gender" Type="int" Nullable="false" />
+          <Property Name="birth_date" Type="date" Nullable="false" />
+          <Property Name="phone_number" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="id_role" Type="int" Nullable="false" />
+          <Property Name="staff_login" Type="nvarchar" MaxLength="20" />
+          <Property Name="staff_pwd" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="HAD_NextDoctors">
+        <EntityType Name="staff_roles">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idHAD" Type="int" Nullable="false" />
-          <Property Name="idDoctor" Type="int" Nullable="false" />
-          <Property Name="ExtraInfo" Type="nvarchar" MaxLength="200" />
+          <Property Name="role_name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <EntityType Name="HAD_Procedures">
+        <EntityType Name="statuses">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idHAD" Type="int" Nullable="false" />
-          <Property Name="idProc" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="HealingAndDiagnostics">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idMedApp" Type="int" Nullable="false" />
-          <Property Name="AnamnezHarvest" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Symptomatics" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="DoctorRecommendations" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="idDoctor" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="HospBlocks">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="BlockName" Type="nvarchar" MaxLength="20" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Hospitalizations">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idMedApp" Type="int" Nullable="false" />
-          <Property Name="HospGoal" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="idHospBlock" Type="int" Nullable="false" />
-          <Property Name="HospPrice" Type="float" />
-          <Property Name="idHospStatus" Type="int" Nullable="false" />
-          <Property Name="ExtraInfo" Type="nvarchar" MaxLength="500" />
-          <Property Name="HospDate" Type="datetime" Nullable="false" />
-          <Property Name="PlannedDehospDate" Type="datetime" Nullable="false" />
-          <Property Name="ActualDehospDate" Type="datetime" />
-          <Property Name="BedNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="TherapistCode" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="HospStatus">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StatusName" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="StatusReason" Type="nvarchar" MaxLength="100" />
-        </EntityType>
-        <EntityType Name="InsuranceCompanies">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CompanyName" Type="nvarchar" MaxLength="100" Nullable="false" />
-        </EntityType>
-        <EntityType Name="InsurancePolicies">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idInsuranceCompany" Type="int" Nullable="false" />
-          <Property Name="PolicyNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ExpiryDate" Type="date" Nullable="false" />
-          <Property Name="idPassport" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="MedAppointments">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idMedcard" Type="int" Nullable="false" />
-          <Property Name="AppointmentDate" Type="datetime" Nullable="false" />
-          <Property Name="NextAppointmentDate" Type="datetime" />
-          <Property Name="Diagnose" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="idDoctor" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Medcards">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MedcardNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="idPolicy" Type="int" Nullable="false" />
-          <Property Name="DateIssued" Type="date" Nullable="false" />
-        </EntityType>
-        <EntityType Name="MedProcedures">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProcedureName" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="idProcedureType" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Passports">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idPatient" Type="int" Nullable="false" />
-          <Property Name="PassportNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Patients">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="MiddleName" Type="nvarchar" MaxLength="20" />
-          <Property Name="PatientPhotoLink" Type="nvarchar" MaxLength="200" />
-          <Property Name="idGender" Type="int" Nullable="false" />
-          <Property Name="BirthDate" Type="date" Nullable="false" />
-          <Property Name="idAddress" Type="int" Nullable="false" />
-          <Property Name="WorkPlace" Type="nvarchar" MaxLength="100" />
-        </EntityType>
-        <EntityType Name="Phones">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idPatient" Type="int" Nullable="false" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="30" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ProcedureTypes">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TypeName" Type="nvarchar" MaxLength="100" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Roles">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="status_name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -220,707 +98,252 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="fk_idAddress_Patients">
-          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
-          <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
+        <Association Name="clients_genders">
+          <End Role="genders" Type="Self.genders" Multiplicity="1" />
+          <End Role="clients" Type="Self.clients" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Addresses">
+            <Principal Role="genders">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Patients">
-              <PropertyRef Name="idAddress" />
+            <Dependent Role="clients">
+              <PropertyRef Name="id_gender" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idDoctor_HAD">
-          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Doctors">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HealingAndDiagnostics">
-              <PropertyRef Name="idDoctor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idDoctor_HADND">
-          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
-          <End Role="HAD_NextDoctors" Type="Self.HAD_NextDoctors" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Doctors">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HAD_NextDoctors">
-              <PropertyRef Name="idDoctor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idDoctor_MedAppointments">
-          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
-          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Doctors">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="MedAppointments">
-              <PropertyRef Name="idDoctor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idDrug_HADD">
-          <End Role="Drugs" Type="Self.Drugs" Multiplicity="1" />
-          <End Role="HAD_Drugs" Type="Self.HAD_Drugs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Drugs">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HAD_Drugs">
-              <PropertyRef Name="idDrug" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idGender_Patients">
-          <End Role="Genders" Type="Self.Genders" Multiplicity="1" />
-          <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Genders">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Patients">
-              <PropertyRef Name="idGender" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idHAD_HADD">
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1">
+        <Association Name="clsrv_clients">
+          <End Role="clients" Type="Self.clients" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="HAD_Drugs" Type="Self.HAD_Drugs" Multiplicity="*" />
+          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HealingAndDiagnostics">
+            <Principal Role="clients">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="HAD_Drugs">
-              <PropertyRef Name="idHAD" />
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_client" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idHAD_HADND">
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1">
+        <Association Name="clsrv_msrv">
+          <End Role="medical_services" Type="Self.medical_services" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="HAD_NextDoctors" Type="Self.HAD_NextDoctors" Multiplicity="*" />
+          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HealingAndDiagnostics">
+            <Principal Role="medical_services">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="HAD_NextDoctors">
-              <PropertyRef Name="idHAD" />
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_service" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idHAD_HADP">
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="HAD_Procedures" Type="Self.HAD_Procedures" Multiplicity="*" />
+        <Association Name="clsrv_staff">
+          <End Role="staff" Type="Self.staff" Multiplicity="1" />
+          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HealingAndDiagnostics">
+            <Principal Role="staff">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="HAD_Procedures">
-              <PropertyRef Name="idHAD" />
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_staff" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idHospBlock_Hosp">
-          <End Role="HospBlocks" Type="Self.HospBlocks" Multiplicity="1" />
-          <End Role="Hospitalizations" Type="Self.Hospitalizations" Multiplicity="*" />
+        <Association Name="clsrv_statuses">
+          <End Role="statuses" Type="Self.statuses" Multiplicity="1" />
+          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HospBlocks">
+            <Principal Role="statuses">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Hospitalizations">
-              <PropertyRef Name="idHospBlock" />
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_status" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idHospStatus_Hosp">
-          <End Role="HospStatus" Type="Self.HospStatus" Multiplicity="1" />
-          <End Role="Hospitalizations" Type="Self.Hospitalizations" Multiplicity="*" />
+        <Association Name="medsrvcs_types">
+          <End Role="service_types" Type="Self.service_types" Multiplicity="1" />
+          <End Role="medical_services" Type="Self.medical_services" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HospStatus">
+            <Principal Role="service_types">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Hospitalizations">
-              <PropertyRef Name="idHospStatus" />
+            <Dependent Role="medical_services">
+              <PropertyRef Name="id_type" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idInsuranceCompany_InsurancePolicies">
-          <End Role="InsuranceCompanies" Type="Self.InsuranceCompanies" Multiplicity="1" />
-          <End Role="InsurancePolicies" Type="Self.InsurancePolicies" Multiplicity="*" />
+        <Association Name="staff_genders">
+          <End Role="genders" Type="Self.genders" Multiplicity="1" />
+          <End Role="staff" Type="Self.staff" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="InsuranceCompanies">
+            <Principal Role="genders">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="InsurancePolicies">
-              <PropertyRef Name="idInsuranceCompany" />
+            <Dependent Role="staff">
+              <PropertyRef Name="id_gender" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idMedApp_HAD">
-          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="*" />
+        <Association Name="staff_staff_roles">
+          <End Role="staff_roles" Type="Self.staff_roles" Multiplicity="1" />
+          <End Role="staff" Type="Self.staff" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MedAppointments">
+            <Principal Role="staff_roles">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="HealingAndDiagnostics">
-              <PropertyRef Name="idMedApp" />
+            <Dependent Role="staff">
+              <PropertyRef Name="id_role" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idMedApp_Hosp">
-          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Hospitalizations" Type="Self.Hospitalizations" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MedAppointments">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Hospitalizations">
-              <PropertyRef Name="idMedApp" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idMedcard_MedAppointments">
-          <End Role="Medcards" Type="Self.Medcards" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Medcards">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="MedAppointments">
-              <PropertyRef Name="idMedcard" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idPassport_InsurancePolicies">
-          <End Role="Passports" Type="Self.Passports" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InsurancePolicies" Type="Self.InsurancePolicies" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Passports">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="InsurancePolicies">
-              <PropertyRef Name="idPassport" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idPatient_Emails">
-          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patients">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Emails">
-              <PropertyRef Name="idPatient" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idPatient_Passports">
-          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Passports" Type="Self.Passports" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patients">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Passports">
-              <PropertyRef Name="idPatient" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idPatient_Phones">
-          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Phones" Type="Self.Phones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patients">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Phones">
-              <PropertyRef Name="idPatient" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idPolicy_Medcards">
-          <End Role="InsurancePolicies" Type="Self.InsurancePolicies" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Medcards" Type="Self.Medcards" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InsurancePolicies">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Medcards">
-              <PropertyRef Name="idPolicy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idProc_HADP">
-          <End Role="MedProcedures" Type="Self.MedProcedures" Multiplicity="1" />
-          <End Role="HAD_Procedures" Type="Self.HAD_Procedures" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MedProcedures">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HAD_Procedures">
-              <PropertyRef Name="idProc" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idProcType_MedProcs">
-          <End Role="ProcedureTypes" Type="Self.ProcedureTypes" Multiplicity="1" />
-          <End Role="MedProcedures" Type="Self.MedProcedures" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProcedureTypes">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="MedProcedures">
-              <PropertyRef Name="idProcedureType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idRole_Doctors">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="Doctors" Type="Self.Doctors" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Roles">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Doctors">
-              <PropertyRef Name="idRole" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="BigBoarsModelStoreContainer">
-          <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Doctors" EntityType="Self.Doctors" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Drugs" EntityType="Self.Drugs" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Emails" EntityType="Self.Emails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Genders" EntityType="Self.Genders" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HAD_Drugs" EntityType="Self.HAD_Drugs" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HAD_NextDoctors" EntityType="Self.HAD_NextDoctors" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HAD_Procedures" EntityType="Self.HAD_Procedures" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HealingAndDiagnostics" EntityType="Self.HealingAndDiagnostics" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HospBlocks" EntityType="Self.HospBlocks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Hospitalizations" EntityType="Self.Hospitalizations" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HospStatus" EntityType="Self.HospStatus" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="InsuranceCompanies" EntityType="Self.InsuranceCompanies" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="InsurancePolicies" EntityType="Self.InsurancePolicies" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MedAppointments" EntityType="Self.MedAppointments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Medcards" EntityType="Self.Medcards" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MedProcedures" EntityType="Self.MedProcedures" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Passports" EntityType="Self.Passports" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Phones" EntityType="Self.Phones" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProcedureTypes" EntityType="Self.ProcedureTypes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="HelixDBModelStoreContainer">
+          <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="clients_services" EntityType="Self.clients_services" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="genders" EntityType="Self.genders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="medical_services" EntityType="Self.medical_services" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="service_types" EntityType="Self.service_types" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="staff" EntityType="Self.staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="staff_roles" EntityType="Self.staff_roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="statuses" EntityType="Self.statuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="fk_idAddress_Patients" Association="Self.fk_idAddress_Patients">
-            <End Role="Addresses" EntitySet="Addresses" />
-            <End Role="Patients" EntitySet="Patients" />
+          <AssociationSet Name="clients_genders" Association="Self.clients_genders">
+            <End Role="genders" EntitySet="genders" />
+            <End Role="clients" EntitySet="clients" />
           </AssociationSet>
-          <AssociationSet Name="fk_idDoctor_HAD" Association="Self.fk_idDoctor_HAD">
-            <End Role="Doctors" EntitySet="Doctors" />
-            <End Role="HealingAndDiagnostics" EntitySet="HealingAndDiagnostics" />
+          <AssociationSet Name="clsrv_clients" Association="Self.clsrv_clients">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_idDoctor_HADND" Association="Self.fk_idDoctor_HADND">
-            <End Role="Doctors" EntitySet="Doctors" />
-            <End Role="HAD_NextDoctors" EntitySet="HAD_NextDoctors" />
+          <AssociationSet Name="clsrv_msrv" Association="Self.clsrv_msrv">
+            <End Role="medical_services" EntitySet="medical_services" />
+            <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_idDoctor_MedAppointments" Association="Self.fk_idDoctor_MedAppointments">
-            <End Role="Doctors" EntitySet="Doctors" />
-            <End Role="MedAppointments" EntitySet="MedAppointments" />
+          <AssociationSet Name="clsrv_staff" Association="Self.clsrv_staff">
+            <End Role="staff" EntitySet="staff" />
+            <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_idDrug_HADD" Association="Self.fk_idDrug_HADD">
-            <End Role="Drugs" EntitySet="Drugs" />
-            <End Role="HAD_Drugs" EntitySet="HAD_Drugs" />
+          <AssociationSet Name="clsrv_statuses" Association="Self.clsrv_statuses">
+            <End Role="statuses" EntitySet="statuses" />
+            <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_idGender_Patients" Association="Self.fk_idGender_Patients">
-            <End Role="Genders" EntitySet="Genders" />
-            <End Role="Patients" EntitySet="Patients" />
+          <AssociationSet Name="medsrvcs_types" Association="Self.medsrvcs_types">
+            <End Role="service_types" EntitySet="service_types" />
+            <End Role="medical_services" EntitySet="medical_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_idHAD_HADD" Association="Self.fk_idHAD_HADD">
-            <End Role="HealingAndDiagnostics" EntitySet="HealingAndDiagnostics" />
-            <End Role="HAD_Drugs" EntitySet="HAD_Drugs" />
+          <AssociationSet Name="staff_genders" Association="Self.staff_genders">
+            <End Role="genders" EntitySet="genders" />
+            <End Role="staff" EntitySet="staff" />
           </AssociationSet>
-          <AssociationSet Name="fk_idHAD_HADND" Association="Self.fk_idHAD_HADND">
-            <End Role="HealingAndDiagnostics" EntitySet="HealingAndDiagnostics" />
-            <End Role="HAD_NextDoctors" EntitySet="HAD_NextDoctors" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idHAD_HADP" Association="Self.fk_idHAD_HADP">
-            <End Role="HealingAndDiagnostics" EntitySet="HealingAndDiagnostics" />
-            <End Role="HAD_Procedures" EntitySet="HAD_Procedures" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idHospBlock_Hosp" Association="Self.fk_idHospBlock_Hosp">
-            <End Role="HospBlocks" EntitySet="HospBlocks" />
-            <End Role="Hospitalizations" EntitySet="Hospitalizations" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idHospStatus_Hosp" Association="Self.fk_idHospStatus_Hosp">
-            <End Role="HospStatus" EntitySet="HospStatus" />
-            <End Role="Hospitalizations" EntitySet="Hospitalizations" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idInsuranceCompany_InsurancePolicies" Association="Self.fk_idInsuranceCompany_InsurancePolicies">
-            <End Role="InsuranceCompanies" EntitySet="InsuranceCompanies" />
-            <End Role="InsurancePolicies" EntitySet="InsurancePolicies" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idMedApp_HAD" Association="Self.fk_idMedApp_HAD">
-            <End Role="MedAppointments" EntitySet="MedAppointments" />
-            <End Role="HealingAndDiagnostics" EntitySet="HealingAndDiagnostics" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idMedApp_Hosp" Association="Self.fk_idMedApp_Hosp">
-            <End Role="MedAppointments" EntitySet="MedAppointments" />
-            <End Role="Hospitalizations" EntitySet="Hospitalizations" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idMedcard_MedAppointments" Association="Self.fk_idMedcard_MedAppointments">
-            <End Role="Medcards" EntitySet="Medcards" />
-            <End Role="MedAppointments" EntitySet="MedAppointments" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idPassport_InsurancePolicies" Association="Self.fk_idPassport_InsurancePolicies">
-            <End Role="Passports" EntitySet="Passports" />
-            <End Role="InsurancePolicies" EntitySet="InsurancePolicies" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idPatient_Emails" Association="Self.fk_idPatient_Emails">
-            <End Role="Patients" EntitySet="Patients" />
-            <End Role="Emails" EntitySet="Emails" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idPatient_Passports" Association="Self.fk_idPatient_Passports">
-            <End Role="Patients" EntitySet="Patients" />
-            <End Role="Passports" EntitySet="Passports" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idPatient_Phones" Association="Self.fk_idPatient_Phones">
-            <End Role="Patients" EntitySet="Patients" />
-            <End Role="Phones" EntitySet="Phones" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idPolicy_Medcards" Association="Self.fk_idPolicy_Medcards">
-            <End Role="InsurancePolicies" EntitySet="InsurancePolicies" />
-            <End Role="Medcards" EntitySet="Medcards" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idProc_HADP" Association="Self.fk_idProc_HADP">
-            <End Role="MedProcedures" EntitySet="MedProcedures" />
-            <End Role="HAD_Procedures" EntitySet="HAD_Procedures" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idProcType_MedProcs" Association="Self.fk_idProcType_MedProcs">
-            <End Role="ProcedureTypes" EntitySet="ProcedureTypes" />
-            <End Role="MedProcedures" EntitySet="MedProcedures" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idRole_Doctors" Association="Self.fk_idRole_Doctors">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="Doctors" EntitySet="Doctors" />
+          <AssociationSet Name="staff_staff_roles" Association="Self.staff_staff_roles">
+            <End Role="staff_roles" EntitySet="staff_roles" />
+            <End Role="staff" EntitySet="staff" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="BigBoarsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Addresses">
+      <Schema Namespace="HelixDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="clients">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="HouseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FlatNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Patients" Relationship="Self.fk_idAddress_Patients" FromRole="Addresses" ToRole="Patients" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="middle_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_gender" Type="Int32" Nullable="false" />
+          <Property Name="birth_date" Type="DateTime" Nullable="false" />
+          <Property Name="phone_number" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="passport" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="card_number" Type="Int32" Nullable="false" />
+          <Property Name="card_balance" Type="Double" Nullable="false" />
+          <NavigationProperty Name="genders" Relationship="Self.clients_genders" FromRole="clients" ToRole="genders" />
+          <NavigationProperty Name="clients_services" Relationship="Self.clsrv_clients" FromRole="clients" ToRole="clients_services" />
         </EntityType>
-        <EntityType Name="Doctors">
+        <EntityType Name="clients_services">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idRole" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Passwrd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="HealingAndDiagnostics" Relationship="Self.fk_idDoctor_HAD" FromRole="Doctors" ToRole="HealingAndDiagnostics" />
-          <NavigationProperty Name="HAD_NextDoctors" Relationship="Self.fk_idDoctor_HADND" FromRole="Doctors" ToRole="HAD_NextDoctors" />
-          <NavigationProperty Name="MedAppointments" Relationship="Self.fk_idDoctor_MedAppointments" FromRole="Doctors" ToRole="MedAppointments" />
-          <NavigationProperty Name="Roles" Relationship="Self.fk_idRole_Doctors" FromRole="Doctors" ToRole="Roles" />
+          <Property Name="id_client" Type="Int32" Nullable="false" />
+          <Property Name="id_service" Type="Int32" Nullable="false" />
+          <Property Name="date_asked" Type="DateTime" Nullable="false" />
+          <Property Name="date_made" Type="DateTime" />
+          <Property Name="id_status" Type="Int32" Nullable="false" />
+          <Property Name="id_staff" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="clients" Relationship="Self.clsrv_clients" FromRole="clients_services" ToRole="clients" />
+          <NavigationProperty Name="medical_services" Relationship="Self.clsrv_msrv" FromRole="clients_services" ToRole="medical_services" />
+          <NavigationProperty Name="staff" Relationship="Self.clsrv_staff" FromRole="clients_services" ToRole="staff" />
+          <NavigationProperty Name="statuses" Relationship="Self.clsrv_statuses" FromRole="clients_services" ToRole="statuses" />
         </EntityType>
-        <EntityType Name="Drugs">
+        <EntityType Name="genders">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DrugFullName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="HAD_Drugs" Relationship="Self.fk_idDrug_HADD" FromRole="Drugs" ToRole="HAD_Drugs" />
+          <Property Name="gender_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="clients" Relationship="Self.clients_genders" FromRole="genders" ToRole="clients" />
+          <NavigationProperty Name="staff" Relationship="Self.staff_genders" FromRole="genders" ToRole="staff" />
         </EntityType>
-        <EntityType Name="Emails">
+        <EntityType Name="medical_services">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idPatient" Type="Int32" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Patients" Relationship="Self.fk_idPatient_Emails" FromRole="Emails" ToRole="Patients" />
+          <Property Name="id_type" Type="Int32" Nullable="false" />
+          <Property Name="mservice_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mservice_description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mservice_icd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mservice_price" Type="Double" Nullable="false" />
+          <Property Name="extra_info" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="clients_services" Relationship="Self.clsrv_msrv" FromRole="medical_services" ToRole="clients_services" />
+          <NavigationProperty Name="service_types" Relationship="Self.medsrvcs_types" FromRole="medical_services" ToRole="service_types" />
         </EntityType>
-        <EntityType Name="Genders">
+        <EntityType Name="service_types">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GenderName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Patients" Relationship="Self.fk_idGender_Patients" FromRole="Genders" ToRole="Patients" />
+          <Property Name="stype_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="medical_services" Relationship="Self.medsrvcs_types" FromRole="service_types" ToRole="medical_services" />
         </EntityType>
-        <EntityType Name="HAD_Drugs">
+        <EntityType Name="staff">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idHAD" Type="Int32" Nullable="false" />
-          <Property Name="idDrug" Type="Int32" Nullable="false" />
-          <Property Name="Doze" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ConsumingFormat" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ExtraInfo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Drugs" Relationship="Self.fk_idDrug_HADD" FromRole="HAD_Drugs" ToRole="Drugs" />
-          <NavigationProperty Name="HealingAndDiagnostics" Relationship="Self.fk_idHAD_HADD" FromRole="HAD_Drugs" ToRole="HealingAndDiagnostics" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="middle_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_gender" Type="Int32" Nullable="false" />
+          <Property Name="birth_date" Type="DateTime" Nullable="false" />
+          <Property Name="phone_number" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_role" Type="Int32" Nullable="false" />
+          <Property Name="staff_login" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="staff_pwd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="clients_services" Relationship="Self.clsrv_staff" FromRole="staff" ToRole="clients_services" />
+          <NavigationProperty Name="genders" Relationship="Self.staff_genders" FromRole="staff" ToRole="genders" />
+          <NavigationProperty Name="staff_roles" Relationship="Self.staff_staff_roles" FromRole="staff" ToRole="staff_roles" />
         </EntityType>
-        <EntityType Name="HAD_NextDoctors">
+        <EntityType Name="staff_roles">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idHAD" Type="Int32" Nullable="false" />
-          <Property Name="idDoctor" Type="Int32" Nullable="false" />
-          <Property Name="ExtraInfo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Doctors" Relationship="Self.fk_idDoctor_HADND" FromRole="HAD_NextDoctors" ToRole="Doctors" />
-          <NavigationProperty Name="HealingAndDiagnostics" Relationship="Self.fk_idHAD_HADND" FromRole="HAD_NextDoctors" ToRole="HealingAndDiagnostics" />
+          <Property Name="role_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="staff" Relationship="Self.staff_staff_roles" FromRole="staff_roles" ToRole="staff" />
         </EntityType>
-        <EntityType Name="HAD_Procedures">
+        <EntityType Name="statuses">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idHAD" Type="Int32" Nullable="false" />
-          <Property Name="idProc" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="HealingAndDiagnostics" Relationship="Self.fk_idHAD_HADP" FromRole="HAD_Procedures" ToRole="HealingAndDiagnostics" />
-          <NavigationProperty Name="MedProcedures" Relationship="Self.fk_idProc_HADP" FromRole="HAD_Procedures" ToRole="MedProcedures" />
-        </EntityType>
-        <EntityType Name="HealingAndDiagnostics">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idMedApp" Type="Int32" Nullable="false" />
-          <Property Name="AnamnezHarvest" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Symptomatics" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DoctorRecommendations" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="idDoctor" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Doctors" Relationship="Self.fk_idDoctor_HAD" FromRole="HealingAndDiagnostics" ToRole="Doctors" />
-          <NavigationProperty Name="HAD_Drugs" Relationship="Self.fk_idHAD_HADD" FromRole="HealingAndDiagnostics" ToRole="HAD_Drugs" />
-          <NavigationProperty Name="HAD_NextDoctors" Relationship="Self.fk_idHAD_HADND" FromRole="HealingAndDiagnostics" ToRole="HAD_NextDoctors" />
-          <NavigationProperty Name="HAD_Procedures" Relationship="Self.fk_idHAD_HADP" FromRole="HealingAndDiagnostics" ToRole="HAD_Procedures" />
-          <NavigationProperty Name="MedAppointments" Relationship="Self.fk_idMedApp_HAD" FromRole="HealingAndDiagnostics" ToRole="MedAppointments" />
-        </EntityType>
-        <EntityType Name="HospBlocks">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BlockName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Hospitalizations" Relationship="Self.fk_idHospBlock_Hosp" FromRole="HospBlocks" ToRole="Hospitalizations" />
-        </EntityType>
-        <EntityType Name="Hospitalizations">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idMedApp" Type="Int32" Nullable="false" />
-          <Property Name="HospGoal" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="idHospBlock" Type="Int32" Nullable="false" />
-          <Property Name="HospPrice" Type="Double" />
-          <Property Name="idHospStatus" Type="Int32" Nullable="false" />
-          <Property Name="ExtraInfo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="HospDate" Type="DateTime" Nullable="false" />
-          <Property Name="PlannedDehospDate" Type="DateTime" Nullable="false" />
-          <Property Name="ActualDehospDate" Type="DateTime" />
-          <Property Name="BedNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TherapistCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="HospBlocks" Relationship="Self.fk_idHospBlock_Hosp" FromRole="Hospitalizations" ToRole="HospBlocks" />
-          <NavigationProperty Name="HospStatus" Relationship="Self.fk_idHospStatus_Hosp" FromRole="Hospitalizations" ToRole="HospStatus" />
-          <NavigationProperty Name="MedAppointments" Relationship="Self.fk_idMedApp_Hosp" FromRole="Hospitalizations" ToRole="MedAppointments" />
-        </EntityType>
-        <EntityType Name="HospStatus">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StatusName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StatusReason" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Hospitalizations" Relationship="Self.fk_idHospStatus_Hosp" FromRole="HospStatus" ToRole="Hospitalizations" />
-        </EntityType>
-        <EntityType Name="InsuranceCompanies">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="InsurancePolicies" Relationship="Self.fk_idInsuranceCompany_InsurancePolicies" FromRole="InsuranceCompanies" ToRole="InsurancePolicies" />
-        </EntityType>
-        <EntityType Name="InsurancePolicies">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idInsuranceCompany" Type="Int32" Nullable="false" />
-          <Property Name="PolicyNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ExpiryDate" Type="DateTime" Nullable="false" />
-          <Property Name="idPassport" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="InsuranceCompanies" Relationship="Self.fk_idInsuranceCompany_InsurancePolicies" FromRole="InsurancePolicies" ToRole="InsuranceCompanies" />
-          <NavigationProperty Name="Passports" Relationship="Self.fk_idPassport_InsurancePolicies" FromRole="InsurancePolicies" ToRole="Passports" />
-          <NavigationProperty Name="Medcards" Relationship="Self.fk_idPolicy_Medcards" FromRole="InsurancePolicies" ToRole="Medcards" />
-        </EntityType>
-        <EntityType Name="MedAppointments">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idMedcard" Type="Int32" Nullable="false" />
-          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" />
-          <Property Name="NextAppointmentDate" Type="DateTime" />
-          <Property Name="Diagnose" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="idDoctor" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Doctors" Relationship="Self.fk_idDoctor_MedAppointments" FromRole="MedAppointments" ToRole="Doctors" />
-          <NavigationProperty Name="HealingAndDiagnostics" Relationship="Self.fk_idMedApp_HAD" FromRole="MedAppointments" ToRole="HealingAndDiagnostics" />
-          <NavigationProperty Name="Hospitalizations" Relationship="Self.fk_idMedApp_Hosp" FromRole="MedAppointments" ToRole="Hospitalizations" />
-          <NavigationProperty Name="Medcards" Relationship="Self.fk_idMedcard_MedAppointments" FromRole="MedAppointments" ToRole="Medcards" />
-        </EntityType>
-        <EntityType Name="Medcards">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MedcardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="idPolicy" Type="Int32" Nullable="false" />
-          <Property Name="DateIssued" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="InsurancePolicies" Relationship="Self.fk_idPolicy_Medcards" FromRole="Medcards" ToRole="InsurancePolicies" />
-          <NavigationProperty Name="MedAppointments" Relationship="Self.fk_idMedcard_MedAppointments" FromRole="Medcards" ToRole="MedAppointments" />
-        </EntityType>
-        <EntityType Name="MedProcedures">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProcedureName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="idProcedureType" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="HAD_Procedures" Relationship="Self.fk_idProc_HADP" FromRole="MedProcedures" ToRole="HAD_Procedures" />
-          <NavigationProperty Name="ProcedureTypes" Relationship="Self.fk_idProcType_MedProcs" FromRole="MedProcedures" ToRole="ProcedureTypes" />
-        </EntityType>
-        <EntityType Name="Passports">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idPatient" Type="Int32" Nullable="false" />
-          <Property Name="PassportNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="InsurancePolicies" Relationship="Self.fk_idPassport_InsurancePolicies" FromRole="Passports" ToRole="InsurancePolicies" />
-          <NavigationProperty Name="Patients" Relationship="Self.fk_idPatient_Passports" FromRole="Passports" ToRole="Patients" />
-        </EntityType>
-        <EntityType Name="Patients">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MiddleName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="PatientPhotoLink" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="idGender" Type="Int32" Nullable="false" />
-          <Property Name="BirthDate" Type="DateTime" Nullable="false" />
-          <Property Name="idAddress" Type="Int32" Nullable="false" />
-          <Property Name="WorkPlace" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Addresses" Relationship="Self.fk_idAddress_Patients" FromRole="Patients" ToRole="Addresses" />
-          <NavigationProperty Name="Emails" Relationship="Self.fk_idPatient_Emails" FromRole="Patients" ToRole="Emails" />
-          <NavigationProperty Name="Genders" Relationship="Self.fk_idGender_Patients" FromRole="Patients" ToRole="Genders" />
-          <NavigationProperty Name="Passports" Relationship="Self.fk_idPatient_Passports" FromRole="Patients" ToRole="Passports" />
-          <NavigationProperty Name="Phones" Relationship="Self.fk_idPatient_Phones" FromRole="Patients" ToRole="Phones" />
-        </EntityType>
-        <EntityType Name="Phones">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idPatient" Type="Int32" Nullable="false" />
-          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Patients" Relationship="Self.fk_idPatient_Phones" FromRole="Phones" ToRole="Patients" />
-        </EntityType>
-        <EntityType Name="ProcedureTypes">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="MedProcedures" Relationship="Self.fk_idProcType_MedProcs" FromRole="ProcedureTypes" ToRole="MedProcedures" />
-        </EntityType>
-        <EntityType Name="Roles">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Doctors" Relationship="Self.fk_idRole_Doctors" FromRole="Roles" ToRole="Doctors" />
+          <Property Name="status_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="clients_services" Relationship="Self.clsrv_statuses" FromRole="statuses" ToRole="clients_services" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -932,419 +355,147 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="fk_idAddress_Patients">
-          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
-          <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
+        <Association Name="clients_genders">
+          <End Role="genders" Type="Self.genders" Multiplicity="1" />
+          <End Role="clients" Type="Self.clients" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Addresses">
+            <Principal Role="genders">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Patients">
-              <PropertyRef Name="idAddress" />
+            <Dependent Role="clients">
+              <PropertyRef Name="id_gender" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idDoctor_HAD">
-          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Doctors">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HealingAndDiagnostics">
-              <PropertyRef Name="idDoctor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idDoctor_HADND">
-          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
-          <End Role="HAD_NextDoctors" Type="Self.HAD_NextDoctors" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Doctors">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HAD_NextDoctors">
-              <PropertyRef Name="idDoctor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idDoctor_MedAppointments">
-          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
-          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Doctors">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="MedAppointments">
-              <PropertyRef Name="idDoctor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idRole_Doctors">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="Doctors" Type="Self.Doctors" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Roles">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Doctors">
-              <PropertyRef Name="idRole" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idDrug_HADD">
-          <End Role="Drugs" Type="Self.Drugs" Multiplicity="1" />
-          <End Role="HAD_Drugs" Type="Self.HAD_Drugs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Drugs">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HAD_Drugs">
-              <PropertyRef Name="idDrug" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idPatient_Emails">
-          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
+        <Association Name="clsrv_clients">
+          <End Role="clients" Type="Self.clients" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Emails" Type="Self.Emails" Multiplicity="*" />
+          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Patients">
+            <Principal Role="clients">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Emails">
-              <PropertyRef Name="idPatient" />
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_client" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idGender_Patients">
-          <End Role="Genders" Type="Self.Genders" Multiplicity="1" />
-          <End Role="Patients" Type="Self.Patients" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Genders">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Patients">
-              <PropertyRef Name="idGender" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idHAD_HADD">
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1">
+        <Association Name="clsrv_msrv">
+          <End Role="medical_services" Type="Self.medical_services" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="HAD_Drugs" Type="Self.HAD_Drugs" Multiplicity="*" />
+          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HealingAndDiagnostics">
+            <Principal Role="medical_services">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="HAD_Drugs">
-              <PropertyRef Name="idHAD" />
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_service" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idHAD_HADND">
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="HAD_NextDoctors" Type="Self.HAD_NextDoctors" Multiplicity="*" />
+        <Association Name="clsrv_staff">
+          <End Role="staff" Type="Self.staff" Multiplicity="1" />
+          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HealingAndDiagnostics">
+            <Principal Role="staff">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="HAD_NextDoctors">
-              <PropertyRef Name="idHAD" />
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_staff" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idHAD_HADP">
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="HAD_Procedures" Type="Self.HAD_Procedures" Multiplicity="*" />
+        <Association Name="clsrv_statuses">
+          <End Role="statuses" Type="Self.statuses" Multiplicity="1" />
+          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HealingAndDiagnostics">
+            <Principal Role="statuses">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="HAD_Procedures">
-              <PropertyRef Name="idHAD" />
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_status" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idProc_HADP">
-          <End Role="MedProcedures" Type="Self.MedProcedures" Multiplicity="1" />
-          <End Role="HAD_Procedures" Type="Self.HAD_Procedures" Multiplicity="*" />
+        <Association Name="staff_genders">
+          <End Role="genders" Type="Self.genders" Multiplicity="1" />
+          <End Role="staff" Type="Self.staff" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MedProcedures">
+            <Principal Role="genders">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="HAD_Procedures">
-              <PropertyRef Name="idProc" />
+            <Dependent Role="staff">
+              <PropertyRef Name="id_gender" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idMedApp_HAD">
-          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="HealingAndDiagnostics" Type="Self.HealingAndDiagnostics" Multiplicity="*" />
+        <Association Name="medsrvcs_types">
+          <End Role="service_types" Type="Self.service_types" Multiplicity="1" />
+          <End Role="medical_services" Type="Self.medical_services" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MedAppointments">
+            <Principal Role="service_types">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="HealingAndDiagnostics">
-              <PropertyRef Name="idMedApp" />
+            <Dependent Role="medical_services">
+              <PropertyRef Name="id_type" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idHospBlock_Hosp">
-          <End Role="HospBlocks" Type="Self.HospBlocks" Multiplicity="1" />
-          <End Role="Hospitalizations" Type="Self.Hospitalizations" Multiplicity="*" />
+        <Association Name="staff_staff_roles">
+          <End Role="staff_roles" Type="Self.staff_roles" Multiplicity="1" />
+          <End Role="staff" Type="Self.staff" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HospBlocks">
+            <Principal Role="staff_roles">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Hospitalizations">
-              <PropertyRef Name="idHospBlock" />
+            <Dependent Role="staff">
+              <PropertyRef Name="id_role" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_idHospStatus_Hosp">
-          <End Role="HospStatus" Type="Self.HospStatus" Multiplicity="1" />
-          <End Role="Hospitalizations" Type="Self.Hospitalizations" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="HospStatus">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Hospitalizations">
-              <PropertyRef Name="idHospStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idMedApp_Hosp">
-          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Hospitalizations" Type="Self.Hospitalizations" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MedAppointments">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Hospitalizations">
-              <PropertyRef Name="idMedApp" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idInsuranceCompany_InsurancePolicies">
-          <End Role="InsuranceCompanies" Type="Self.InsuranceCompanies" Multiplicity="1" />
-          <End Role="InsurancePolicies" Type="Self.InsurancePolicies" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InsuranceCompanies">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="InsurancePolicies">
-              <PropertyRef Name="idInsuranceCompany" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idPassport_InsurancePolicies">
-          <End Role="Passports" Type="Self.Passports" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InsurancePolicies" Type="Self.InsurancePolicies" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Passports">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="InsurancePolicies">
-              <PropertyRef Name="idPassport" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idPolicy_Medcards">
-          <End Role="InsurancePolicies" Type="Self.InsurancePolicies" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Medcards" Type="Self.Medcards" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InsurancePolicies">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Medcards">
-              <PropertyRef Name="idPolicy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idMedcard_MedAppointments">
-          <End Role="Medcards" Type="Self.Medcards" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="MedAppointments" Type="Self.MedAppointments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Medcards">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="MedAppointments">
-              <PropertyRef Name="idMedcard" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idProcType_MedProcs">
-          <End Role="ProcedureTypes" Type="Self.ProcedureTypes" Multiplicity="1" />
-          <End Role="MedProcedures" Type="Self.MedProcedures" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProcedureTypes">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="MedProcedures">
-              <PropertyRef Name="idProcedureType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idPatient_Passports">
-          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Passports" Type="Self.Passports" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patients">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Passports">
-              <PropertyRef Name="idPatient" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_idPatient_Phones">
-          <End Role="Patients" Type="Self.Patients" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Phones" Type="Self.Phones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patients">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Phones">
-              <PropertyRef Name="idPatient" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="BigBoarsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Addresses" EntityType="Self.Addresses" />
-          <EntitySet Name="Doctors" EntityType="Self.Doctors" />
-          <EntitySet Name="Drugs" EntityType="Self.Drugs" />
-          <EntitySet Name="Emails" EntityType="Self.Emails" />
-          <EntitySet Name="Genders" EntityType="Self.Genders" />
-          <EntitySet Name="HAD_Drugs" EntityType="Self.HAD_Drugs" />
-          <EntitySet Name="HAD_NextDoctors" EntityType="Self.HAD_NextDoctors" />
-          <EntitySet Name="HAD_Procedures" EntityType="Self.HAD_Procedures" />
-          <EntitySet Name="HealingAndDiagnostics" EntityType="Self.HealingAndDiagnostics" />
-          <EntitySet Name="HospBlocks" EntityType="Self.HospBlocks" />
-          <EntitySet Name="Hospitalizations" EntityType="Self.Hospitalizations" />
-          <EntitySet Name="HospStatus" EntityType="Self.HospStatus" />
-          <EntitySet Name="InsuranceCompanies" EntityType="Self.InsuranceCompanies" />
-          <EntitySet Name="InsurancePolicies" EntityType="Self.InsurancePolicies" />
-          <EntitySet Name="MedAppointments" EntityType="Self.MedAppointments" />
-          <EntitySet Name="Medcards" EntityType="Self.Medcards" />
-          <EntitySet Name="MedProcedures" EntityType="Self.MedProcedures" />
-          <EntitySet Name="Passports" EntityType="Self.Passports" />
-          <EntitySet Name="Patients" EntityType="Self.Patients" />
-          <EntitySet Name="Phones" EntityType="Self.Phones" />
-          <EntitySet Name="ProcedureTypes" EntityType="Self.ProcedureTypes" />
-          <EntitySet Name="Roles" EntityType="Self.Roles" />
+        <EntityContainer Name="HelixDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="clients" EntityType="Self.clients" />
+          <EntitySet Name="clients_services" EntityType="Self.clients_services" />
+          <EntitySet Name="genders" EntityType="Self.genders" />
+          <EntitySet Name="medical_services" EntityType="Self.medical_services" />
+          <EntitySet Name="service_types" EntityType="Self.service_types" />
+          <EntitySet Name="staff" EntityType="Self.staff" />
+          <EntitySet Name="staff_roles" EntityType="Self.staff_roles" />
+          <EntitySet Name="statuses" EntityType="Self.statuses" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <AssociationSet Name="fk_idAddress_Patients" Association="Self.fk_idAddress_Patients">
-            <End Role="Addresses" EntitySet="Addresses" />
-            <End Role="Patients" EntitySet="Patients" />
+          <AssociationSet Name="clients_genders" Association="Self.clients_genders">
+            <End Role="genders" EntitySet="genders" />
+            <End Role="clients" EntitySet="clients" />
           </AssociationSet>
-          <AssociationSet Name="fk_idDoctor_HAD" Association="Self.fk_idDoctor_HAD">
-            <End Role="Doctors" EntitySet="Doctors" />
-            <End Role="HealingAndDiagnostics" EntitySet="HealingAndDiagnostics" />
+          <AssociationSet Name="clsrv_clients" Association="Self.clsrv_clients">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_idDoctor_HADND" Association="Self.fk_idDoctor_HADND">
-            <End Role="Doctors" EntitySet="Doctors" />
-            <End Role="HAD_NextDoctors" EntitySet="HAD_NextDoctors" />
+          <AssociationSet Name="clsrv_msrv" Association="Self.clsrv_msrv">
+            <End Role="medical_services" EntitySet="medical_services" />
+            <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_idDoctor_MedAppointments" Association="Self.fk_idDoctor_MedAppointments">
-            <End Role="Doctors" EntitySet="Doctors" />
-            <End Role="MedAppointments" EntitySet="MedAppointments" />
+          <AssociationSet Name="clsrv_staff" Association="Self.clsrv_staff">
+            <End Role="staff" EntitySet="staff" />
+            <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_idRole_Doctors" Association="Self.fk_idRole_Doctors">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="Doctors" EntitySet="Doctors" />
+          <AssociationSet Name="clsrv_statuses" Association="Self.clsrv_statuses">
+            <End Role="statuses" EntitySet="statuses" />
+            <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_idDrug_HADD" Association="Self.fk_idDrug_HADD">
-            <End Role="Drugs" EntitySet="Drugs" />
-            <End Role="HAD_Drugs" EntitySet="HAD_Drugs" />
+          <AssociationSet Name="staff_genders" Association="Self.staff_genders">
+            <End Role="genders" EntitySet="genders" />
+            <End Role="staff" EntitySet="staff" />
           </AssociationSet>
-          <AssociationSet Name="fk_idPatient_Emails" Association="Self.fk_idPatient_Emails">
-            <End Role="Patients" EntitySet="Patients" />
-            <End Role="Emails" EntitySet="Emails" />
+          <AssociationSet Name="medsrvcs_types" Association="Self.medsrvcs_types">
+            <End Role="service_types" EntitySet="service_types" />
+            <End Role="medical_services" EntitySet="medical_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_idGender_Patients" Association="Self.fk_idGender_Patients">
-            <End Role="Genders" EntitySet="Genders" />
-            <End Role="Patients" EntitySet="Patients" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idHAD_HADD" Association="Self.fk_idHAD_HADD">
-            <End Role="HealingAndDiagnostics" EntitySet="HealingAndDiagnostics" />
-            <End Role="HAD_Drugs" EntitySet="HAD_Drugs" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idHAD_HADND" Association="Self.fk_idHAD_HADND">
-            <End Role="HealingAndDiagnostics" EntitySet="HealingAndDiagnostics" />
-            <End Role="HAD_NextDoctors" EntitySet="HAD_NextDoctors" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idHAD_HADP" Association="Self.fk_idHAD_HADP">
-            <End Role="HealingAndDiagnostics" EntitySet="HealingAndDiagnostics" />
-            <End Role="HAD_Procedures" EntitySet="HAD_Procedures" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idProc_HADP" Association="Self.fk_idProc_HADP">
-            <End Role="MedProcedures" EntitySet="MedProcedures" />
-            <End Role="HAD_Procedures" EntitySet="HAD_Procedures" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idMedApp_HAD" Association="Self.fk_idMedApp_HAD">
-            <End Role="MedAppointments" EntitySet="MedAppointments" />
-            <End Role="HealingAndDiagnostics" EntitySet="HealingAndDiagnostics" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idHospBlock_Hosp" Association="Self.fk_idHospBlock_Hosp">
-            <End Role="HospBlocks" EntitySet="HospBlocks" />
-            <End Role="Hospitalizations" EntitySet="Hospitalizations" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idHospStatus_Hosp" Association="Self.fk_idHospStatus_Hosp">
-            <End Role="HospStatus" EntitySet="HospStatus" />
-            <End Role="Hospitalizations" EntitySet="Hospitalizations" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idMedApp_Hosp" Association="Self.fk_idMedApp_Hosp">
-            <End Role="MedAppointments" EntitySet="MedAppointments" />
-            <End Role="Hospitalizations" EntitySet="Hospitalizations" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idInsuranceCompany_InsurancePolicies" Association="Self.fk_idInsuranceCompany_InsurancePolicies">
-            <End Role="InsuranceCompanies" EntitySet="InsuranceCompanies" />
-            <End Role="InsurancePolicies" EntitySet="InsurancePolicies" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idPassport_InsurancePolicies" Association="Self.fk_idPassport_InsurancePolicies">
-            <End Role="Passports" EntitySet="Passports" />
-            <End Role="InsurancePolicies" EntitySet="InsurancePolicies" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idPolicy_Medcards" Association="Self.fk_idPolicy_Medcards">
-            <End Role="InsurancePolicies" EntitySet="InsurancePolicies" />
-            <End Role="Medcards" EntitySet="Medcards" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idMedcard_MedAppointments" Association="Self.fk_idMedcard_MedAppointments">
-            <End Role="Medcards" EntitySet="Medcards" />
-            <End Role="MedAppointments" EntitySet="MedAppointments" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idProcType_MedProcs" Association="Self.fk_idProcType_MedProcs">
-            <End Role="ProcedureTypes" EntitySet="ProcedureTypes" />
-            <End Role="MedProcedures" EntitySet="MedProcedures" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idPatient_Passports" Association="Self.fk_idPatient_Passports">
-            <End Role="Patients" EntitySet="Patients" />
-            <End Role="Passports" EntitySet="Passports" />
-          </AssociationSet>
-          <AssociationSet Name="fk_idPatient_Phones" Association="Self.fk_idPatient_Phones">
-            <End Role="Patients" EntitySet="Patients" />
-            <End Role="Phones" EntitySet="Phones" />
+          <AssociationSet Name="staff_staff_roles" Association="Self.staff_staff_roles">
+            <End Role="staff_roles" EntitySet="staff_roles" />
+            <End Role="staff" EntitySet="staff" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -1352,236 +503,100 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BigBoarsModelStoreContainer" CdmEntityContainer="BigBoarsEntities">
-          <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="BigBoarsModel.Addresses">
-              <MappingFragment StoreEntitySet="Addresses">
+        <EntityContainerMapping StorageEntityContainer="HelixDBModelStoreContainer" CdmEntityContainer="HelixDBEntities">
+          <EntitySetMapping Name="clients">
+            <EntityTypeMapping TypeName="HelixDBModel.clients">
+              <MappingFragment StoreEntitySet="clients">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
-                <ScalarProperty Name="FlatNumber" ColumnName="FlatNumber" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="id_gender" ColumnName="id_gender" />
+                <ScalarProperty Name="birth_date" ColumnName="birth_date" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="passport" ColumnName="passport" />
+                <ScalarProperty Name="card_number" ColumnName="card_number" />
+                <ScalarProperty Name="card_balance" ColumnName="card_balance" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Doctors">
-            <EntityTypeMapping TypeName="BigBoarsModel.Doctors">
-              <MappingFragment StoreEntitySet="Doctors">
+          <EntitySetMapping Name="clients_services">
+            <EntityTypeMapping TypeName="HelixDBModel.clients_services">
+              <MappingFragment StoreEntitySet="clients_services">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idRole" ColumnName="idRole" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Passwrd" ColumnName="Passwrd" />
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+                <ScalarProperty Name="id_service" ColumnName="id_service" />
+                <ScalarProperty Name="date_asked" ColumnName="date_asked" />
+                <ScalarProperty Name="date_made" ColumnName="date_made" />
+                <ScalarProperty Name="id_status" ColumnName="id_status" />
+                <ScalarProperty Name="id_staff" ColumnName="id_staff" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Drugs">
-            <EntityTypeMapping TypeName="BigBoarsModel.Drugs">
-              <MappingFragment StoreEntitySet="Drugs">
+          <EntitySetMapping Name="genders">
+            <EntityTypeMapping TypeName="HelixDBModel.genders">
+              <MappingFragment StoreEntitySet="genders">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="DrugFullName" ColumnName="DrugFullName" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="gender_name" ColumnName="gender_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Emails">
-            <EntityTypeMapping TypeName="BigBoarsModel.Emails">
-              <MappingFragment StoreEntitySet="Emails">
+          <EntitySetMapping Name="medical_services">
+            <EntityTypeMapping TypeName="HelixDBModel.medical_services">
+              <MappingFragment StoreEntitySet="medical_services">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idPatient" ColumnName="idPatient" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="id_type" ColumnName="id_type" />
+                <ScalarProperty Name="mservice_name" ColumnName="mservice_name" />
+                <ScalarProperty Name="mservice_description" ColumnName="mservice_description" />
+                <ScalarProperty Name="mservice_icd" ColumnName="mservice_icd" />
+                <ScalarProperty Name="mservice_price" ColumnName="mservice_price" />
+                <ScalarProperty Name="extra_info" ColumnName="extra_info" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Genders">
-            <EntityTypeMapping TypeName="BigBoarsModel.Genders">
-              <MappingFragment StoreEntitySet="Genders">
+          <EntitySetMapping Name="service_types">
+            <EntityTypeMapping TypeName="HelixDBModel.service_types">
+              <MappingFragment StoreEntitySet="service_types">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="GenderName" ColumnName="GenderName" />
+                <ScalarProperty Name="stype_name" ColumnName="stype_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HAD_Drugs">
-            <EntityTypeMapping TypeName="BigBoarsModel.HAD_Drugs">
-              <MappingFragment StoreEntitySet="HAD_Drugs">
+          <EntitySetMapping Name="staff">
+            <EntityTypeMapping TypeName="HelixDBModel.staff">
+              <MappingFragment StoreEntitySet="staff">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idHAD" ColumnName="idHAD" />
-                <ScalarProperty Name="idDrug" ColumnName="idDrug" />
-                <ScalarProperty Name="Doze" ColumnName="Doze" />
-                <ScalarProperty Name="ConsumingFormat" ColumnName="ConsumingFormat" />
-                <ScalarProperty Name="ExtraInfo" ColumnName="ExtraInfo" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="id_gender" ColumnName="id_gender" />
+                <ScalarProperty Name="birth_date" ColumnName="birth_date" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+                <ScalarProperty Name="staff_login" ColumnName="staff_login" />
+                <ScalarProperty Name="staff_pwd" ColumnName="staff_pwd" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HAD_NextDoctors">
-            <EntityTypeMapping TypeName="BigBoarsModel.HAD_NextDoctors">
-              <MappingFragment StoreEntitySet="HAD_NextDoctors">
+          <EntitySetMapping Name="staff_roles">
+            <EntityTypeMapping TypeName="HelixDBModel.staff_roles">
+              <MappingFragment StoreEntitySet="staff_roles">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idHAD" ColumnName="idHAD" />
-                <ScalarProperty Name="idDoctor" ColumnName="idDoctor" />
-                <ScalarProperty Name="ExtraInfo" ColumnName="ExtraInfo" />
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HAD_Procedures">
-            <EntityTypeMapping TypeName="BigBoarsModel.HAD_Procedures">
-              <MappingFragment StoreEntitySet="HAD_Procedures">
+          <EntitySetMapping Name="statuses">
+            <EntityTypeMapping TypeName="HelixDBModel.statuses">
+              <MappingFragment StoreEntitySet="statuses">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idHAD" ColumnName="idHAD" />
-                <ScalarProperty Name="idProc" ColumnName="idProc" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HealingAndDiagnostics">
-            <EntityTypeMapping TypeName="BigBoarsModel.HealingAndDiagnostics">
-              <MappingFragment StoreEntitySet="HealingAndDiagnostics">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idMedApp" ColumnName="idMedApp" />
-                <ScalarProperty Name="AnamnezHarvest" ColumnName="AnamnezHarvest" />
-                <ScalarProperty Name="Symptomatics" ColumnName="Symptomatics" />
-                <ScalarProperty Name="DoctorRecommendations" ColumnName="DoctorRecommendations" />
-                <ScalarProperty Name="idDoctor" ColumnName="idDoctor" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HospBlocks">
-            <EntityTypeMapping TypeName="BigBoarsModel.HospBlocks">
-              <MappingFragment StoreEntitySet="HospBlocks">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="BlockName" ColumnName="BlockName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Hospitalizations">
-            <EntityTypeMapping TypeName="BigBoarsModel.Hospitalizations">
-              <MappingFragment StoreEntitySet="Hospitalizations">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idMedApp" ColumnName="idMedApp" />
-                <ScalarProperty Name="HospGoal" ColumnName="HospGoal" />
-                <ScalarProperty Name="idHospBlock" ColumnName="idHospBlock" />
-                <ScalarProperty Name="HospPrice" ColumnName="HospPrice" />
-                <ScalarProperty Name="idHospStatus" ColumnName="idHospStatus" />
-                <ScalarProperty Name="ExtraInfo" ColumnName="ExtraInfo" />
-                <ScalarProperty Name="HospDate" ColumnName="HospDate" />
-                <ScalarProperty Name="PlannedDehospDate" ColumnName="PlannedDehospDate" />
-                <ScalarProperty Name="ActualDehospDate" ColumnName="ActualDehospDate" />
-                <ScalarProperty Name="BedNumber" ColumnName="BedNumber" />
-                <ScalarProperty Name="TherapistCode" ColumnName="TherapistCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HospStatus">
-            <EntityTypeMapping TypeName="BigBoarsModel.HospStatus">
-              <MappingFragment StoreEntitySet="HospStatus">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
-                <ScalarProperty Name="StatusReason" ColumnName="StatusReason" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="InsuranceCompanies">
-            <EntityTypeMapping TypeName="BigBoarsModel.InsuranceCompanies">
-              <MappingFragment StoreEntitySet="InsuranceCompanies">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="InsurancePolicies">
-            <EntityTypeMapping TypeName="BigBoarsModel.InsurancePolicies">
-              <MappingFragment StoreEntitySet="InsurancePolicies">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idInsuranceCompany" ColumnName="idInsuranceCompany" />
-                <ScalarProperty Name="PolicyNumber" ColumnName="PolicyNumber" />
-                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
-                <ScalarProperty Name="idPassport" ColumnName="idPassport" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MedAppointments">
-            <EntityTypeMapping TypeName="BigBoarsModel.MedAppointments">
-              <MappingFragment StoreEntitySet="MedAppointments">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idMedcard" ColumnName="idMedcard" />
-                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
-                <ScalarProperty Name="NextAppointmentDate" ColumnName="NextAppointmentDate" />
-                <ScalarProperty Name="Diagnose" ColumnName="Diagnose" />
-                <ScalarProperty Name="idDoctor" ColumnName="idDoctor" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Medcards">
-            <EntityTypeMapping TypeName="BigBoarsModel.Medcards">
-              <MappingFragment StoreEntitySet="Medcards">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="MedcardNumber" ColumnName="MedcardNumber" />
-                <ScalarProperty Name="idPolicy" ColumnName="idPolicy" />
-                <ScalarProperty Name="DateIssued" ColumnName="DateIssued" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MedProcedures">
-            <EntityTypeMapping TypeName="BigBoarsModel.MedProcedures">
-              <MappingFragment StoreEntitySet="MedProcedures">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="ProcedureName" ColumnName="ProcedureName" />
-                <ScalarProperty Name="idProcedureType" ColumnName="idProcedureType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Passports">
-            <EntityTypeMapping TypeName="BigBoarsModel.Passports">
-              <MappingFragment StoreEntitySet="Passports">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idPatient" ColumnName="idPatient" />
-                <ScalarProperty Name="PassportNumber" ColumnName="PassportNumber" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Patients">
-            <EntityTypeMapping TypeName="BigBoarsModel.Patients">
-              <MappingFragment StoreEntitySet="Patients">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="PatientPhotoLink" ColumnName="PatientPhotoLink" />
-                <ScalarProperty Name="idGender" ColumnName="idGender" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="idAddress" ColumnName="idAddress" />
-                <ScalarProperty Name="WorkPlace" ColumnName="WorkPlace" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Phones">
-            <EntityTypeMapping TypeName="BigBoarsModel.Phones">
-              <MappingFragment StoreEntitySet="Phones">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idPatient" ColumnName="idPatient" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProcedureTypes">
-            <EntityTypeMapping TypeName="BigBoarsModel.ProcedureTypes">
-              <MappingFragment StoreEntitySet="ProcedureTypes">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="BigBoarsModel.Roles">
-              <MappingFragment StoreEntitySet="Roles">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="status_name" ColumnName="status_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="BigBoarsModel.sysdiagrams">
+            <EntityTypeMapping TypeName="HelixDBModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -1607,7 +622,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

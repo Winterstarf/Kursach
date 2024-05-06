@@ -1,5 +1,6 @@
 ﻿using MainApp.pages;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace MainApp
 {
@@ -8,9 +9,9 @@ namespace MainApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        readonly PatientsPage pap;
-        readonly HospitalizationsPage hop;
-        readonly HADPage hap;
+        readonly ClientsPage clientsPage;
+        readonly ServicesPage servicesPage;
+        readonly FulfillmentsPage fulfillmentsPage;
 
         public string CurrentUserName { get; set; }
 
@@ -18,27 +19,29 @@ namespace MainApp
         {
             InitializeComponent();
 
-            pap = new PatientsPage();
-            hop = new HospitalizationsPage();
-            hap = new HADPage();
+            clientsPage = new ClientsPage();
+            servicesPage = new ServicesPage();
+            fulfillmentsPage = new FulfillmentsPage();
+
+            Clients_btn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
 
-        private void Patients_btn_Click(object sender, RoutedEventArgs e)
+        private void Clients_btn_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPage_tb.Text = "Пациенты";
-            DG_frm.NavigationService.Navigate(pap);
+            CurrentPage_tb.Text = "Клиенты";
+            DG_frm.NavigationService.Navigate(clientsPage);
         }
 
-        private void Hospitalizations_btn_Click(object sender, RoutedEventArgs e)
+        private void Services_btn_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPage_tb.Text = "Госпитализации";
-            DG_frm.NavigationService.Navigate(hop);
+            CurrentPage_tb.Text = "Услуги";
+            DG_frm.NavigationService.Navigate(servicesPage);
         }
 
-        private void HAD_btn_Click(object sender, RoutedEventArgs e)
+        private void Fulfillments_btn_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPage_tb.Text = "Лечение и диагностика";
-            DG_frm.NavigationService.Navigate(hap);
+            CurrentPage_tb.Text = "Договоры";
+            DG_frm.NavigationService.Navigate(fulfillmentsPage);
         }
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)

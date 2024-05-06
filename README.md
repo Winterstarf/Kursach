@@ -1,1 +1,1 @@
-* App to interact with the BigBoars database
+* App to interact with the HelixDB database

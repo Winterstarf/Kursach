@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         SizeToContent="Manual"
-        Title="База данных" MinHeight="700" MinWidth="1000" Height="700" Width="1000" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" SizeChanged="MainWindow_SizeChanged" Closed="Window_Closed">
+        Title="База данных" MinHeight="700" MinWidth="1000" Height="700" Width="1000" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" SizeChanged="MainWindow_SizeChanged" Closed="Window_Closed" Icon="/assets/images/logo.png">
     <Window.Resources>
         <Style x:Key="NoFocusStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
@@ -35,16 +35,16 @@
 
         <StackPanel Orientation="Vertical" Margin="0,18,9,0" Height="90" Width="192" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
             <TextBlock Text="Текущий пользователь:" FontSize="16" Height="35" Margin="5,5,5,0" Width="186"/>
-            <TextBlock x:Name="CurrentDoctor_tb" FontSize="20" Height="35" Margin="5,-10,5,5" Width="177"/>
+            <TextBlock x:Name="CurrentDoctor_tb" FontSize="20" Height="35" Margin="1,-10,5,5" Width="177"/>
         </StackPanel>
 
         <TextBlock x:Name="CurrentPage_tb" FontSize="34" Grid.Column="2" Margin="5,26,0,0" Height="64" Width="378" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.RowSpan="2"><Run Language="ru-ru" Text="Не выбрана страница!"/></TextBlock>
-        <Image x:Name="Logo_img" Height="90" Width="90" Source="\assets\images\cross.png" Margin="10,13,10,13" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
+        <Image x:Name="Logo_img" Height="90" Width="90" Source="/assets/images/logo.png" Margin="10,13,10,13" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
 
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2">
-            <Button x:Name="Patients_btn" Height="35" Margin="10,10,10,5" FontSize="14" Content="Пациенты" Click="Patients_btn_Click"/>
-            <Button x:Name="Hospitalizations_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Госпит." Click="Hospitalizations_btn_Click"/>
-            <Button x:Name="HAD_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Леч.-диаг." Click="HAD_btn_Click"/>
+            <Button x:Name="Clients_btn" Height="35" Margin="10,10,10,5" FontSize="14" Content="Клиенты" Click="Clients_btn_Click"/>
+            <Button x:Name="Services_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Услуги" Click="Services_btn_Click"/>
+            <Button x:Name="Fulfillments_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Договоры" Click="Fulfillments_btn_Click"/>
         </StackPanel>
 
         <Border x:Name="DG_brd" BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="2" Margin="5,10,10,50">

@@ -21,10 +21,10 @@ namespace MainApp
             string password = Convert.ToString(PassPB.Password);
 
             //DESKTOP-QLMK9N or 201-04\SQLEXPRESS
-            SqlConnection con = new SqlConnection(@"Data Source=201-04\SQLEXPRESS;Initial Catalog=BigBoars;Integrated Security=SSPI");
+            SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-QLMK9N;Initial Catalog=HelixDB;Integrated Security=SSPI");
             con.Open();
 
-            SqlCommand cmd = new SqlCommand("select * from Doctors where Username='" + username + "' and Passwrd='" + password + "'", con)
+            SqlCommand cmd = new SqlCommand("select * from staff where staff_login='" + username + "' and staff_pwd='" + password + "'", con)
             {
                 CommandType = CommandType.Text
             };
