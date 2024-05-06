@@ -20,7 +20,7 @@ namespace MainApp
             string username = Convert.ToString(UsernameTB.Text);
             string password = Convert.ToString(PassPB.Password);
 
-            //DESKTOP-QLMK9N or 201-04\SQLEXPRESS
+            //DESKTOP-QLMK9N or 201-04\SQLEXPRESS (2nd if college pc the program is deployed on)
             SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-QLMK9N;Initial Catalog=HelixDB;Integrated Security=SSPI");
             con.Open();
 
