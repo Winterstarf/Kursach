@@ -12,9 +12,10 @@
         <TextBox x:Name="Search_tb" Margin="5,5,5,5" Width="250" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center" TextChanged="Search_TextChanged"/>
         <Button x:Name="Del_btn" Margin="5" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Удалить" Click="Del_btn_Click"/>
         <Button x:Name="Add_btn" Margin="5,5,70,5" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Добавить" Click="Add_btn_Click"/>
-        <Button x:Name="Refresh_btn" Margin="5,5,135,5" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Обновить" Click="Refresh_btn_Click"/>
+        <Button x:Name="Update_btn" Margin="5,5,135,5" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Изменить" Click="Update_btn_Click"/>
+        <Button x:Name="Refresh_btn" Margin="5,5,200,5" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Обновить" Click="Refresh_btn_Click"/>
 
-        <DataGrid x:Name="DG_Clients" ColumnWidth="*" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,40,0,0" SelectionUnit="FullRow">
+        <DataGrid x:Name="DG_Clients" ColumnWidth="*" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,40,0,0" SelectionUnit="FullRow" MouseDoubleClick="DG_Clients_MouseDoubleClick">
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <Border BorderThickness="0" Background="BlanchedAlmond" Padding="10">

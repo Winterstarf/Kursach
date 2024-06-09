@@ -1,8 +1,10 @@
 ﻿using MainApp.assets.models;
 using MainApp.windows.adds;
+using MainApp.windows.edits;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MainApp.pages
 {
@@ -27,11 +29,11 @@ namespace MainApp.pages
             if (string.IsNullOrEmpty(searchText)) DG_Fulfillments.ItemsSource = db_cont.clients_services.ToList();
             else
             {
-                if (int.TryParse(searchText, out int clientId))
+                if (int.TryParse(searchText, out int fulfillmentId))
                 {
                     DG_Fulfillments.ItemsSource = db_cont.clients_services.ToList()
                     .Where(x =>
-                        x.id_client == clientId)
+                        x.id == fulfillmentId)
                     .ToList();
                 }
             }
@@ -71,6 +73,29 @@ namespace MainApp.pages
         private void Refresh_btn_Click(object sender, RoutedEventArgs e)
         {
             DG_Fulfillments.ItemsSource = db_cont.clients_services.ToList();
+        }
+
+        private void Update_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DG_Fulfillments.SelectedItem == null)
+            {
+                MessageBox.Show("Не выбрана строка для изменения!");
+                return;
+            }
+            else
+            {
+                var selectedData = (clients_services)DG_Fulfillments.SelectedItem;
+                FulfillmentsEditWindow few = new FulfillmentsEditWindow(selectedData);
+
+                few.ShowDialog();
+
+                DG_Fulfillments.ItemsSource = db_cont.clients_services.ToList();
+            }
+        }
+
+        private void DG_Clients_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DG_Fulfillments.SelectedItem = null;
         }
     }
 }

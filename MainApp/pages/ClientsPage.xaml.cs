@@ -1,8 +1,11 @@
 ﻿using MainApp.assets.models;
 using MainApp.windows.adds;
+using MainApp.windows.edits;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MainApp.pages
 {
@@ -23,16 +26,21 @@ namespace MainApp.pages
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchText = Search_tb.Text.Trim();
+            string[] searchWords = searchText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (string.IsNullOrEmpty(searchText)) DG_Clients.ItemsSource = db_cont.clients.ToList();
+            if (searchWords.Length == 0)
+            {
+                DG_Clients.ItemsSource = db_cont.clients.ToList();
+            }
             else
             {
                 DG_Clients.ItemsSource = db_cont.clients.ToList()
                     .Where(x =>
-                        x.last_name.Contains(searchText) ||
-                        x.first_name.Contains(searchText) ||
-                        x.middle_name.Contains(searchText) ||
-                        x.phone_number.Contains(searchText))
+                        searchWords.All(word =>
+                            x.last_name.ToLower().Contains(word.ToLower()) ||
+                            x.first_name.ToLower().Contains(word.ToLower()) ||
+                            x.middle_name.ToLower().Contains(word.ToLower()) ||
+                            x.phone_number.Contains(word)))
                     .ToList();
             }
         }
@@ -71,6 +79,29 @@ namespace MainApp.pages
         private void Refresh_btn_Click(object sender, RoutedEventArgs e)
         {
             DG_Clients.ItemsSource = db_cont.clients.ToList();
+        }
+
+        private void Update_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DG_Clients.SelectedItem == null)
+            {
+                MessageBox.Show("Не выбрана строка для изменения!");
+                return;
+            }
+            else
+            {
+                var selectedData = (clients)DG_Clients.SelectedItem;
+                ClientsEditWindow cew = new ClientsEditWindow(selectedData);
+
+                cew.ShowDialog();
+
+                DG_Clients.ItemsSource = db_cont.clients.ToList();
+            }
+        }
+
+        private void DG_Clients_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DG_Clients.SelectedItem = null;
         }
     }
 }

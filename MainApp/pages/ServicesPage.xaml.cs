@@ -1,8 +1,10 @@
 ﻿using MainApp.assets.models;
 using MainApp.windows.adds;
+using MainApp.windows.edits;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MainApp.pages
 {
@@ -68,6 +70,29 @@ namespace MainApp.pages
         private void Refresh_btn_Click(object sender, RoutedEventArgs e)
         {
             DG_Services.ItemsSource = db_cont.medical_services.ToList();
+        }
+
+        private void Update_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DG_Services.SelectedItem == null)
+            {
+                MessageBox.Show("Не выбрана строка для изменения!");
+                return;
+            }
+            else
+            {
+                var selectedData = (medical_services)DG_Services.SelectedItem; // Преобразование напрямую в medical_services
+                ServicesEditWindow sew = new ServicesEditWindow(selectedData); // Передача услуги в конструктор
+
+                sew.ShowDialog();
+
+                DG_Services.ItemsSource = db_cont.medical_services.ToList();
+            }
+        }
+
+        private void DG_Clients_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DG_Services.SelectedItem = null;
         }
     }
 }
