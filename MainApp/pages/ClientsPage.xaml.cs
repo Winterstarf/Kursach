@@ -1,6 +1,7 @@
 ﻿using MainApp.assets.models;
 using MainApp.windows.adds;
 using MainApp.windows.edits;
+using MainApp.windows.main;
 using System;
 using System.Linq;
 using System.Windows;
@@ -37,11 +38,12 @@ namespace MainApp.pages
                 DG_Clients.ItemsSource = db_cont.clients.ToList()
                     .Where(x =>
                         searchWords.All(word =>
-                            x.last_name.ToLower().Contains(word.ToLower()) ||
-                            x.first_name.ToLower().Contains(word.ToLower()) ||
-                            x.middle_name.ToLower().Contains(word.ToLower()) ||
-                            x.phone_number.Contains(word)))
-                    .ToList();
+                            (x.last_name != null && x.last_name.ToLower().Contains(word.ToLower())) ||
+                            (x.first_name != null && x.first_name.ToLower().Contains(word.ToLower())) ||
+                            (x.middle_name != null && x.middle_name.ToLower().Contains(word.ToLower())) ||
+                            (x.phone_number != null && x.phone_number.Contains(word))
+                        )
+                    ).ToList();
             }
         }
 
@@ -49,7 +51,7 @@ namespace MainApp.pages
         {
             if (DG_Clients.SelectedItem == null)
             {
-                MessageBox.Show("Не выбрана строка для удаления!");
+                MessageBox.Show("Не выбрана строка для удаления");
                 return;
             }
             else
@@ -78,22 +80,38 @@ namespace MainApp.pages
 
         private void Refresh_btn_Click(object sender, RoutedEventArgs e)
         {
-            DG_Clients.ItemsSource = db_cont.clients.ToList();
+            DG_Clients.ItemsSource = db_cont.clients.ToList(); 
         }
 
         private void Update_btn_Click(object sender, RoutedEventArgs e)
         {
             if (DG_Clients.SelectedItem == null)
             {
-                MessageBox.Show("Не выбрана строка для изменения!");
+                MessageBox.Show("Не выбрана строка для изменения");
                 return;
             }
             else
             {
                 var selectedData = (clients)DG_Clients.SelectedItem;
                 ClientsEditWindow cew = new ClientsEditWindow(selectedData);
-
                 cew.ShowDialog();
+
+                DG_Clients.ItemsSource = db_cont.clients.ToList();
+            }
+        }
+
+        private void Medcard_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (DG_Clients.SelectedItem == null)
+            {
+                MessageBox.Show("Не выбран клиент");
+                return;
+            }
+            else
+            {
+                var selectedData = (clients)DG_Clients.SelectedItem;
+                MedcardWindow mw = new MedcardWindow(selectedData);
+                mw.ShowDialog();
 
                 DG_Clients.ItemsSource = db_cont.clients.ToList();
             }

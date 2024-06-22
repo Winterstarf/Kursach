@@ -2,16 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MainApp.windows.edits
 {
@@ -21,7 +12,7 @@ namespace MainApp.windows.edits
     public partial class ClientsEditWindow : Window
     {
         readonly HelixDBEntities db_cont = new HelixDBEntities();
-        private clients _selectedClient;
+        readonly private clients _selectedClient;
 
         public ClientsEditWindow(clients client)
         {

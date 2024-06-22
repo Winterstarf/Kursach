@@ -7,7 +7,7 @@
         SizeToContent="WidthAndHeight"
         Title="Вход в систему" Height="255" Width="356" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/assets/images/logo.png">
     <Grid>
-        <TextBlock Margin="20,23,81,174" FontSize="23" FontWeight="Medium" FontFamily="Bahnschrift"><Run Language="ru-ru" Text="Лаборатория"/><Run Text=" «Helix"/><Run Text="»"/></TextBlock>
+        <TextBlock Margin="20,22,81,174" FontSize="23" FontWeight="Medium" FontFamily="Bahnschrift"><Run Language="ru-ru" Text="Лаборатория"/><Run Text=" «Helix"/><Run Text="»"/></TextBlock>
 
         <Image Height="81" Width="85" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/assets/images/logo.png" Opacity="100" Margin="0,10,10,0"/>
 

@@ -11,7 +11,6 @@ namespace MainApp
     {
         readonly ClientsPage clientsPage;
         readonly ServicesPage servicesPage;
-        readonly FulfillmentsPage fulfillmentsPage;
 
         public string CurrentUserName { get; set; }
 
@@ -21,7 +20,6 @@ namespace MainApp
 
             clientsPage = new ClientsPage();
             servicesPage = new ServicesPage();
-            fulfillmentsPage = new FulfillmentsPage();
 
             Clients_btn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
@@ -36,12 +34,6 @@ namespace MainApp
         {
             CurrentPage_tb.Text = "Услуги";
             DG_frm.NavigationService.Navigate(servicesPage);
-        }
-
-        private void Fulfillments_btn_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPage_tb.Text = "Договоры";
-            DG_frm.NavigationService.Navigate(fulfillmentsPage);
         }
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)

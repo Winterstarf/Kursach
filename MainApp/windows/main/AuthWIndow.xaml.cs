@@ -38,23 +38,24 @@ namespace MainApp
 
             if (dataSet.Tables[0].Rows.Count > 0)
             {
-                MainWindow m = new MainWindow();
-                m.CurrentUserName = username.ToString();
+                
+
+                MainWindow m = new MainWindow{CurrentUserName = username.ToString()};
                 m.CurrentDoctor_tb.Text = m.CurrentUserName.ToString();
                 m.Show();
                 this.Close();
             }
-            else if ((username == "" || username == null) && (password == "" || password == null)) MessageBox.Show("Логин и пароль не введены!");
-            else if (username == "" || username == null) MessageBox.Show("Логин не введён!");
-            else if (password == "" || password == null) MessageBox.Show("Пароль не введён!");
-            else MessageBox.Show("Аккаунт не найден!");
+            else if ((username == "" || username == null) && (password == "" || password == null)) MessageBox.Show("Логин и пароль не введены");
+            else if (username == "" || username == null) MessageBox.Show("Логин не введён");
+            else if (password == "" || password == null) MessageBox.Show("Пароль не введён");
+            else MessageBox.Show("Аккаунт не найден");
 
             con.Close();
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("НЕЧЕГО ОТМЕНЯТЬ!!!!!!!!!!");
+            Environment.Exit(0);
         }
     }
 }

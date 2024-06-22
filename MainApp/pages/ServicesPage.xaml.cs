@@ -1,6 +1,7 @@
 ﻿using MainApp.assets.models;
 using MainApp.windows.adds;
 using MainApp.windows.edits;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,14 +26,21 @@ namespace MainApp.pages
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchText = Search_tb.Text.Trim();
+            string[] searchWords = searchText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (string.IsNullOrEmpty(searchText)) DG_Services.ItemsSource = db_cont.medical_services.ToList();
+            if (searchWords.Length == 0)
+            {
+                DG_Services.ItemsSource = db_cont.medical_services.ToList();
+            }
             else
             {
                 DG_Services.ItemsSource = db_cont.medical_services.ToList()
                     .Where(x =>
-                        x.mservice_name.Contains(searchText))
-                    .ToList();
+                        searchWords.All(word =>
+                            (x.mservice_name != null && x.mservice_name.ToLower().Contains(word.ToLower())) ||
+                            (x.mservice_icd != null && x.mservice_icd.ToLower().Contains(word.ToLower()))
+                        )
+                    ).ToList();
             }
         }
 
@@ -40,7 +48,7 @@ namespace MainApp.pages
         {
             if (DG_Services.SelectedItem == null)
             {
-                MessageBox.Show("Не выбрана строка для удаления!");
+                MessageBox.Show("Не выбрана строка для удаления");
                 return;
             }
             else
@@ -76,7 +84,7 @@ namespace MainApp.pages
         {
             if (DG_Services.SelectedItem == null)
             {
-                MessageBox.Show("Не выбрана строка для изменения!");
+                MessageBox.Show("Не выбрана строка для изменения");
                 return;
             }
             else
