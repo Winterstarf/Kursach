@@ -889,6 +889,30 @@ namespace MainApp.assets.models
         private global::System.Int32 _id_staff;
         partial void Onid_staffChanging(global::System.Int32 value);
         partial void Onid_staffChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> id_order
+        {
+            get
+            {
+                return _id_order;
+            }
+            set
+            {
+                Onid_orderChanging(value);
+                ReportPropertyChanging("id_order");
+                _id_order = StructuralObject.SetValidValue(value, "id_order");
+                ReportPropertyChanged("id_order");
+                Onid_orderChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _id_order;
+        partial void Onid_orderChanging(Nullable<global::System.Int32> value);
+        partial void Onid_orderChanged();
 
         #endregion
 

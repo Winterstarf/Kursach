@@ -32,6 +32,7 @@
           <Property Name="date_made" Type="datetime" />
           <Property Name="id_status" Type="int" Nullable="false" />
           <Property Name="id_staff" Type="int" Nullable="false" />
+          <Property Name="id_order" Type="int" />
         </EntityType>
         <EntityType Name="genders">
           <Key>
@@ -275,6 +276,7 @@
           <Property Name="date_made" Type="DateTime" />
           <Property Name="id_status" Type="Int32" Nullable="false" />
           <Property Name="id_staff" Type="Int32" Nullable="false" />
+          <Property Name="id_order" Type="Int32" />
           <NavigationProperty Name="clients" Relationship="Self.clsrv_clients" FromRole="clients_services" ToRole="clients" />
           <NavigationProperty Name="medical_services" Relationship="Self.clsrv_msrv" FromRole="clients_services" ToRole="medical_services" />
           <NavigationProperty Name="staff" Relationship="Self.clsrv_staff" FromRole="clients_services" ToRole="staff" />
@@ -396,7 +398,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="clsrv_staff">
-          <End Role="staff" Type="Self.staff" Multiplicity="1" />
+          <End Role="staff" Type="HelixDBModel.staff" Multiplicity="1" />
           <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="staff">
@@ -421,7 +423,7 @@
         </Association>
         <Association Name="staff_genders">
           <End Role="genders" Type="Self.genders" Multiplicity="1" />
-          <End Role="staff" Type="Self.staff" Multiplicity="*" />
+          <End Role="staff" Type="HelixDBModel.staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="genders">
               <PropertyRef Name="id" />
@@ -445,7 +447,7 @@
         </Association>
         <Association Name="staff_staff_roles">
           <End Role="staff_roles" Type="Self.staff_roles" Multiplicity="1" />
-          <End Role="staff" Type="Self.staff" Multiplicity="*" />
+          <End Role="staff" Type="HelixDBModel.staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="staff_roles">
               <PropertyRef Name="id" />
@@ -461,7 +463,7 @@
           <EntitySet Name="genders" EntityType="Self.genders" />
           <EntitySet Name="medical_services" EntityType="Self.medical_services" />
           <EntitySet Name="service_types" EntityType="Self.service_types" />
-          <EntitySet Name="staff" EntityType="Self.staff" />
+          <EntitySet Name="staff" EntityType="HelixDBModel.staff" />
           <EntitySet Name="staff_roles" EntityType="Self.staff_roles" />
           <EntitySet Name="statuses" EntityType="Self.statuses" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
@@ -531,6 +533,7 @@
                 <ScalarProperty Name="date_made" ColumnName="date_made" />
                 <ScalarProperty Name="id_status" ColumnName="id_status" />
                 <ScalarProperty Name="id_staff" ColumnName="id_staff" />
+                <ScalarProperty Name="id_order" ColumnName="id_order" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -622,7 +625,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

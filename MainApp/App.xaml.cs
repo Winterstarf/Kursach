@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.Globalization;
+using System;
+using System.Windows;
+using System.Windows.Data;
 
 namespace MainApp
 {
@@ -8,5 +11,4 @@ namespace MainApp
     public partial class App : Application
     {
     }
-
 }
