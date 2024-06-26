@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="85d6da9831c44ea3bafd17cf94abd4f3" Name="Diagram1" ZoomLevel="97">
+      <Diagram DiagramId="85d6da9831c44ea3bafd17cf94abd4f3" Name="Diagram1" ZoomLevel="82">
         <EntityTypeShape EntityType="HelixDBModel.clients" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HelixDBModel.clients_services" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HelixDBModel.genders" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="HelixDBModel.medical_services" Width="1.5" PointX="3.25" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="HelixDBModel.service_types" Width="1.5" PointX="1" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HelixDBModel.staff" Width="1.5" PointX="3.125" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelixDBModel.staff" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="HelixDBModel.staff_roles" Width="1.5" PointX="0.5" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="HelixDBModel.statuses" Width="1.5" PointX="7.375" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HelixDBModel.sysdiagrams" Width="1.5" PointX="9.375" PointY="1.125" IsExpanded="true" />

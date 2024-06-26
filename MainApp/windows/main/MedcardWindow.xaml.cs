@@ -125,13 +125,12 @@ namespace MainApp.windows.main
             }
             else
             {
-                var selectedOrder = (Order)OrdersListBox.SelectedItem;
-                var selectedService = selectedOrder.Services.FirstOrDefault();
-                FulfillmentsEditWindow few = new FulfillmentsEditWindow(selectedService);
+                var selectedOrder = OrdersListBox.SelectedItem as Order;
+                FulfillmentsEditWindow few = new FulfillmentsEditWindow(selectedOrder);
                 few.ShowDialog();
 
                 LoadOrders();
-            }    
+            }
         }
 
         private void OrdersListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
