@@ -14,3 +14,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0019:Use pattern matching", Justification = "<Pending>", Scope = "member", Target = "~M:MainApp.windows.main.MedcardWindow.DeleteOrderButton_Click(System.Object,System.Windows.RoutedEventArgs)")]
 [assembly: SuppressMessage("Style", "IDE0019:Use pattern matching", Justification = "<Pending>", Scope = "member", Target = "~M:MainApp.windows.main.MedcardWindow.OrdersListBox_SelectionChanged(System.Object,System.Windows.Controls.SelectionChangedEventArgs)")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "member", Target = "~P:MainApp.windows.main.ServiceDetail.mservice_icd")]
+[assembly: SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>", Scope = "member", Target = "~M:MainApp.windows.edits.FulfillmentsEditWindow.#ctor(MainApp.assets.models.clients_services)")]

@@ -125,8 +125,11 @@ namespace MainApp.windows.main
             }
             else
             {
-                var editOrderWindow = new FulfillmentsEditWindow(_selectedFulfillment);
-                editOrderWindow.ShowDialog();
+                var selectedOrder = (Order)OrdersListBox.SelectedItem;
+                var selectedService = selectedOrder.Services.FirstOrDefault();
+                FulfillmentsEditWindow few = new FulfillmentsEditWindow(selectedService);
+                few.ShowDialog();
+
                 LoadOrders();
             }    
         }

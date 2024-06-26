@@ -13,7 +13,7 @@ namespace MainApp.windows.edits
     public partial class FulfillmentsEditWindow : Window
     {
         readonly HelixDBEntities db_cont = new HelixDBEntities();
-        private clients_services _selectedFulfillment;
+        readonly private clients_services _selectedFulfillment;
 
         public FulfillmentsEditWindow(clients_services selectedFulfillment)
         {
@@ -178,3 +178,4 @@ namespace MainApp.windows.edits
         public List<medical_services> SelectedServices { get; set; }
     }
 }
+ 
