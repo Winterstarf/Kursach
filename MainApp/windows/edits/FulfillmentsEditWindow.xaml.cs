@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System;
 using MainApp.windows.main;
+using MainApp.windows.adds;
 
 namespace MainApp.windows.edits
 {
@@ -88,7 +89,7 @@ namespace MainApp.windows.edits
         {
             var query = SearchService_tb.Text.ToLower();
             editFulfillmentData.FilteredServiceOptions = editFulfillmentData.ServiceOptions
-                .Where(s => s.mservice_name.ToLower().Contains(query) || s.mservice_icd.ToLower().Contains(query))
+                .Where(s => (s.mservice_name?.ToLower().Contains(query) ?? false) || (s.mservice_icd?.ToLower().Contains(query) ?? false))
                 .ToList();
         }
 
@@ -102,6 +103,12 @@ namespace MainApp.windows.edits
                     || editFulfillmentData.SelectedStatus == null || editFulfillmentData.SelectedStaff == null || DatePaid_dp.SelectedDate == null)
                 {
                     throw new Exception("Некоторые поля не заполнены или заполнены неверными данными");
+                }
+
+                if (editFulfillmentData.SelectedStatus.id != 2 && DateMade_dp.SelectedDate != null)
+                {
+                    DateMade_dp.SelectedDate = null;
+                    throw new Exception("Нельзя указывать дату выполнения при статусе Выполняется или Отменено");
                 }
 
                 // Delete existing services for the order
@@ -129,8 +136,6 @@ namespace MainApp.windows.edits
                 }
 
                 db_cont.SaveChanges();
-
-                MessageBox.Show("Запись успешно изменена!");
                 this.Close();
             }
             catch (Exception ex)

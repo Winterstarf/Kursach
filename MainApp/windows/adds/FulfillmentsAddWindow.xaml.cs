@@ -57,7 +57,7 @@ namespace MainApp.windows.adds
         {
             var query = SearchService_tb.Text.ToLower();
             newFulfillmentData.FilteredServiceOptions = newFulfillmentData.ServiceOptions
-                .Where(s => s.mservice_name.ToLower().Contains(query) || s.mservice_icd.ToLower().Contains(query))
+                .Where(s => (s.mservice_name?.ToLower().Contains(query) ?? false) || (s.mservice_icd?.ToLower().Contains(query) ?? false))
                 .ToList();
         }
 
@@ -71,6 +71,12 @@ namespace MainApp.windows.adds
                     || newFulfillmentData.SelectedStatus == null || newFulfillmentData.SelectedStaff == null || DatePaid_dp.SelectedDate == null)
                 {
                     throw new Exception("Некоторые поля не заполнены или заполнены неверными данными");
+                }
+
+                if (newFulfillmentData.SelectedStatus.id != 2 && DateMade_dp.SelectedDate != null)
+                {
+                    DateMade_dp.SelectedDate = null;
+                    throw new Exception("Нельзя указывать дату выполнения при статусе Выполняется или Отменено");
                 }
 
                 var newOrderId = db_cont.clients_services.Max(cs => cs.id_order) + 1;
