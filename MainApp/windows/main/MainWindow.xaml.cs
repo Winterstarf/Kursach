@@ -1,4 +1,5 @@
-﻿using MainApp.pages;
+﻿using MainApp.assets.models;
+using MainApp.pages;
 using System.Windows;
 using System.Windows.Controls;
 

@@ -3,6 +3,7 @@ using MainApp.windows.adds;
 using MainApp.windows.edits;
 using MainApp.windows.main;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,27 +16,25 @@ namespace MainApp.pages
     /// </summary>
     public partial class ClientsPage : Page
     {
-        readonly HelixDBEntities db_cont = new HelixDBEntities();
+        internal HelixDBEntities db_cont = new HelixDBEntities();
 
         public ClientsPage()
         {
             InitializeComponent();
-
             DG_Clients.ItemsSource = db_cont.clients.ToList();
         }
 
-        private void Search_TextChanged(object sender, TextChangedEventArgs e)
+        public List<clients> SearchClients(string searchText)
         {
-            string searchText = Search_tb.Text.Trim();
             string[] searchWords = searchText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (searchWords.Length == 0)
             {
-                DG_Clients.ItemsSource = db_cont.clients.ToList();
+                return db_cont.clients.ToList();
             }
             else
             {
-                DG_Clients.ItemsSource = db_cont.clients.ToList()
+                return db_cont.clients.ToList()
                     .Where(x =>
                         searchWords.All(word =>
                             (x.last_name != null && x.last_name.ToLower().Contains(word.ToLower())) ||
@@ -45,6 +44,12 @@ namespace MainApp.pages
                         )
                     ).ToList();
             }
+        }
+
+        public void Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = Search_tb.Text.Trim();
+            DG_Clients.ItemsSource = SearchClients(searchText);
         }
 
         private void Del_btn_Click(object sender, RoutedEventArgs e)
