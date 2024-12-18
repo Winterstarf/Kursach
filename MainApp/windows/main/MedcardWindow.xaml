@@ -6,7 +6,58 @@
         mc:Ignorable="d"
         SizeToContent="Manual"
         Title="Медкарта" Height="527" Width="688" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/assets/images/logo.png">
-    <Grid>
+
+    <Window.Resources>
+        <!-- Стиль для кнопок с эффектами -->
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="ForestGreen"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Padding" Value="5,2"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                            BorderBrush="ForestGreen"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                                Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Стиль для TextBox -->
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="4">
+                            <!-- Set CornerRadius here -->
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#F7F7F7">
         <Grid.RowDefinitions>
             <RowDefinition Height="225*"/>
             <RowDefinition Height="286*"/>
@@ -16,7 +67,9 @@
             <ColumnDefinition Width="15*"/>
             <ColumnDefinition Width="340*"/>
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" Margin="10,10,4,6">
+
+        <!-- Блок информации о клиенте -->
+        <Border BorderBrush="Black" BorderThickness="1" Margin="10,10,4,6" Background="WhiteSmoke" CornerRadius="6">
             <ScrollViewer>
                 <StackPanel Orientation="Vertical" Margin="5">
                     <StackPanel Orientation="Horizontal">
@@ -64,12 +117,13 @@
             </ScrollViewer>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Margin="10,10,4,10" Grid.Row="1">
+        <!-- Блок заказов -->
+        <Border BorderBrush="Black" BorderThickness="1" Margin="10,10,4,10" Grid.Row="1" Background="WhiteSmoke" CornerRadius="6">
             <StackPanel Margin="5">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                    <Button x:Name="AddOrderButton" Content="Новый заказ" Click="AddOrderButton_Click" Margin="5,5,5,5" Width="80" Height="22"/>
-                    <Button x:Name="EditOrderButton" Content="Изменить" Click="EditOrderButton_Click" Margin="65,5,5,5" Width="70" Height="22"/>
-                    <Button x:Name="DeleteOrderButton" Content="Удалить" Click="DeleteOrderButton_Click" Margin="0,5,5,5" Height="22" Width="65"/>
+                    <Button x:Name="AddOrderButton" Content="Новый заказ" Click="AddOrderButton_Click" Margin="5,5,5,5" Width="100" Height="23"/>
+                    <Button x:Name="EditOrderButton" Content="Изменить" Click="EditOrderButton_Click" Width="70" Height="23" Margin="45,0,0,0"/>
+                    <Button x:Name="DeleteOrderButton" Content="Удалить" Click="DeleteOrderButton_Click" Margin="7,5,5,5" Height="23" Width="65"/>
                 </StackPanel>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ListBox x:Name="OrdersListBox" DisplayMemberPath="OrderSummary" SelectionChanged="OrdersListBox_SelectionChanged" SelectionMode="Single" Height="212" MouseDoubleClick="OrdersListBox_MouseDoubleClick"/>
@@ -77,7 +131,8 @@
             </StackPanel>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1" Margin="1,10,10,10" Grid.Column="2" Grid.RowSpan="2">
+        <!-- Детали заказа -->
+        <Border BorderBrush="Black" BorderThickness="1" Margin="1,10,10,10" Grid.Column="2" Grid.RowSpan="2" Background="WhiteSmoke" CornerRadius="6">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel x:Name="OrderDetailsPanel" Margin="5">
                     <TextBlock x:Name="OrderIdTextBlock" FontWeight="Bold" FontSize="14"/>

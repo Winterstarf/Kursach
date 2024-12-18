@@ -3,35 +3,119 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp.windows.adds"
         mc:Ignorable="d"
-        Title="Добавление" Height="600" Width="380" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/assets/images/logo.png">
-    <Grid>
-        <Button x:Name="Save_btn" Content="Добавить" Click="Save_btn_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15" Height="30" Width="90"/>
+        Title="Добавление" Height="540" Width="380" 
+        WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/assets/images/logo.png">
+    <Window.Resources>
+        <!-- Стиль для кнопок -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="ForestGreen"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="5,2"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-        <StackPanel Margin="10,10,49,71">
-            <TextBlock Height="20" Width="86" HorizontalAlignment="Left" Margin="10,10,10,2" FontSize="14"><Run Text="Фамилия"/><Run Language="ru-ru" Text=" "/><Run Text="*"/></TextBlock>
-            <TextBox x:Name="LastName_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding LastName}"/>
-            <TextBlock Text="Имя *" Height="20" Width="70" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
-            <TextBox x:Name="FirstName_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding FirstName}"/>
-            <TextBlock Height="20" Width="120" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"><Run Text="Отчество"/><LineBreak/><Run/></TextBlock>
-            <TextBox x:Name="MiddleName_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding MiddleName}"/>
-            <TextBlock Text="Пол *" Height="20" Width="70" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
-            <ComboBox x:Name="Gender_cb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding SelectedGender}" DisplayMemberPath="gender_name"/>
-            <TextBlock Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"><Run Text="Дата рождения "/><Run Language="ru-ru" Text="*"/></TextBlock>
-            <DatePicker x:Name="BirthDate_dp" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left">
+        <!-- Стиль для текстовых полей -->
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="White" 
+                                BorderBrush="Black"
+                                BorderThickness="1" 
+                                CornerRadius="4">
+                            <ScrollViewer Margin="0" 
+                                          x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <!-- Основная разметка -->
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,39,0,0" Height="375">
+            <!-- Разметка строк и столбцов -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <!-- Отступ между строками -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <!-- Отступ между строками -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <!-- Отступ между строками -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <!-- Отступ между строками -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <!-- Отступ между строками -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <!-- Отступ между строками -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="40"/>
+                <!-- Увеличенный отступ перед кнопкой -->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Поля для ввода -->
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Фамилия *" FontSize="14" VerticalAlignment="Center" Margin="5"/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="LastName_tb" Width="200" Text="{Binding LastName}" VerticalContentAlignment="Center"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Имя *" FontSize="14" VerticalAlignment="Center" Margin="5"/>
+            <TextBox Grid.Row="2" Grid.Column="1" x:Name="FirstName_tb" Width="200" Text="{Binding FirstName}" VerticalContentAlignment="Center"/>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Отчество" FontSize="14" VerticalAlignment="Center" Margin="5"/>
+            <TextBox Grid.Row="4" Grid.Column="1" x:Name="MiddleName_tb" Width="200" Text="{Binding MiddleName}" VerticalContentAlignment="Center"/>
+
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Пол *" FontSize="14" VerticalAlignment="Center" Margin="5"/>
+            <ComboBox Grid.Row="6" Grid.Column="1" x:Name="Gender_cb" Width="200" ItemsSource="{Binding GenderOptions}" SelectedItem="{Binding SelectedGender}" DisplayMemberPath="gender_name"/>
+
+            <TextBlock Grid.Row="8" Grid.Column="0" Text="Дата рождения *" FontSize="14" VerticalAlignment="Center" Margin="5"/>
+            <DatePicker Grid.Row="8" Grid.Column="1" x:Name="BirthDate_dp" Width="200">
                 <DatePicker.Resources>
                     <Style TargetType="DatePickerTextBox">
                         <Setter Property="IsReadOnly" Value="True"/>
                     </Style>
                 </DatePicker.Resources>
             </DatePicker>
-            <TextBlock Text="Номер телефона *" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
-            <TextBox x:Name="Phone_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding Phone}"/>
-            <TextBlock Text="Эл. почта *" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
-            <TextBox x:Name="Email_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding Email}"/>
-            <TextBlock Text="Паспорт *" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
-            <TextBox x:Name="Passport_tb" FontSize="14" Margin="10,0,10,5" Height="25" Width="250" VerticalContentAlignment="Center" HorizontalAlignment="Left" Text="{Binding Passport}"/>
-        </StackPanel>
+
+            <TextBlock Grid.Row="10" Grid.Column="0" Text="Номер телефона *" FontSize="14" VerticalAlignment="Center" Margin="5"/>
+            <TextBox Grid.Row="10" Grid.Column="1" x:Name="Phone_tb" Width="200" Text="{Binding Phone}" VerticalContentAlignment="Center"/>
+
+            <TextBlock Grid.Row="12" Grid.Column="0" Text="Эл. почта *" FontSize="14" VerticalAlignment="Center" Margin="5"/>
+            <TextBox Grid.Row="12" Grid.Column="1" x:Name="Email_tb" Width="200" Text="{Binding Email}" VerticalContentAlignment="Center"/>
+
+            <TextBlock Grid.Row="14" Grid.Column="0" Text="Паспорт *" FontSize="14" VerticalAlignment="Center" Margin="5"/>
+            <TextBox Grid.Row="14" Grid.Column="1" x:Name="Passport_tb" Width="200" Text="{Binding Passport}" VerticalContentAlignment="Center"/>
+
+            <!-- Кнопка добавления -->
+        </Grid>
+        <Button x:Name="Save_btn" Content="Добавить" Click="Save_btn_Click" Height="30" Width="100" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,40"/>
     </Grid>
 </Window>
