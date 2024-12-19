@@ -38,8 +38,6 @@ namespace MainApp
 
             if (dataSet.Tables[0].Rows.Count > 0)
             {
-                
-
                 MainWindow m = new MainWindow{CurrentUserName = username.ToString()};
                 m.CurrentDoctor_tb.Text = m.CurrentUserName.ToString();
                 m.Show();
