@@ -88,9 +88,24 @@ namespace MainApp.windows.edits
         private void SearchService_tb_TextChanged(object sender, TextChangedEventArgs e)
         {
             var query = SearchService_tb.Text.ToLower();
+
+            // Preserve selected services
+            var selectedServices = editFulfillmentData.SelectedServices;
+
+            // Filter services based on the search query
             editFulfillmentData.FilteredServiceOptions = editFulfillmentData.ServiceOptions
-                .Where(s => (s.mservice_name?.ToLower().Contains(query) ?? false) || (s.mservice_icd?.ToLower().Contains(query) ?? false))
+                .Where(s => (s.mservice_name?.ToLower().Contains(query) ?? false) || (s.mservice_icd?.ToLower().Contains(query) ?? false)
+                            || selectedServices.Contains(s)) // Keep selected services in the filtered list
                 .ToList();
+
+            // Reapply selected services in the ListBox
+            foreach (var service in selectedServices)
+            {
+                if (!Services_lb.SelectedItems.Contains(service))
+                {
+                    Services_lb.SelectedItems.Add(service);
+                }
+            }
         }
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)
@@ -105,7 +120,7 @@ namespace MainApp.windows.edits
                     throw new Exception("Некоторые поля не заполнены или заполнены неверными данными");
                 }
 
-                if (editFulfillmentData.SelectedStatus.id != 2 && DateMade_dp.SelectedDate != null)
+                if ((editFulfillmentData.SelectedStatus.id != 1 && DateMade_dp.SelectedDate != null) || (editFulfillmentData.SelectedStatus.id != 2 && DateMade_dp.SelectedDate != null))
                 {
                     DateMade_dp.SelectedDate = null;
                     throw new Exception("Нельзя указывать дату выполнения при статусе Выполняется или Отменено");

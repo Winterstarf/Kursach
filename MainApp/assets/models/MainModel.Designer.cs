@@ -19,14 +19,14 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("HelixDBModel", "clients_genders", "genders", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.genders), "clients", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients), true)]
-[assembly: EdmRelationshipAttribute("HelixDBModel", "clsrv_clients", "clients", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.clients), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
-[assembly: EdmRelationshipAttribute("HelixDBModel", "clsrv_msrv", "medical_services", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.medical_services), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
-[assembly: EdmRelationshipAttribute("HelixDBModel", "clsrv_staff", "staff", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.staff), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
-[assembly: EdmRelationshipAttribute("HelixDBModel", "clsrv_statuses", "statuses", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.statuses), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
-[assembly: EdmRelationshipAttribute("HelixDBModel", "staff_genders", "genders", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.genders), "staff", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.staff), true)]
-[assembly: EdmRelationshipAttribute("HelixDBModel", "medsrvcs_types", "service_types", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.service_types), "medical_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.medical_services), true)]
-[assembly: EdmRelationshipAttribute("HelixDBModel", "staff_staff_roles", "staff_roles", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.staff_roles), "staff", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.staff), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_clients_services_clients", "clients", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.clients), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_genders_clients", "genders", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.genders), "clients", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_clients_services_medical_services", "medical_services", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.medical_services), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_clients_services_staff", "staff", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.staff), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_clients_services_statuses", "statuses", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.statuses), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_staff_genders", "genders", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.genders), "staff", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.staff), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_medical_services_service_types", "service_types", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.service_types), "medical_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.medical_services), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_staff_staff_roles", "staff_roles", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.staff_roles), "staff", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.staff), true)]
 
 #endregion
 
@@ -626,16 +626,38 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "clients_genders", "genders")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_clients", "clients_services")]
+        public EntityCollection<clients_services> clients_services
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_clients", "clients_services");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_clients", "clients_services", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_genders_clients", "genders")]
         public genders genders
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<genders>("HelixDBModel.clients_genders", "genders").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<genders>("HelixDBModel.fk_genders_clients", "genders").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<genders>("HelixDBModel.clients_genders", "genders").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<genders>("HelixDBModel.fk_genders_clients", "genders").Value = value;
             }
         }
         /// <summary>
@@ -647,35 +669,13 @@ namespace MainApp.assets.models
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<genders>("HelixDBModel.clients_genders", "genders");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<genders>("HelixDBModel.fk_genders_clients", "genders");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<genders>("HelixDBModel.clients_genders", "genders", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "clsrv_clients", "clients_services")]
-        public EntityCollection<clients_services> clients_services
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.clsrv_clients", "clients_services");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.clsrv_clients", "clients_services", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<genders>("HelixDBModel.fk_genders_clients", "genders", value);
                 }
             }
         }
@@ -703,7 +703,8 @@ namespace MainApp.assets.models
         /// <param name="date_asked">Initial value of the date_asked property.</param>
         /// <param name="id_status">Initial value of the id_status property.</param>
         /// <param name="id_staff">Initial value of the id_staff property.</param>
-        public static clients_services Createclients_services(global::System.Int32 id, global::System.Int32 id_client, global::System.Int32 id_service, global::System.DateTime date_asked, global::System.Int32 id_status, global::System.Int32 id_staff)
+        /// <param name="id_order">Initial value of the id_order property.</param>
+        public static clients_services Createclients_services(global::System.Int32 id, global::System.Int32 id_client, global::System.Int32 id_service, global::System.DateTime date_asked, global::System.Int32 id_status, global::System.Int32 id_staff, global::System.Int32 id_order)
         {
             clients_services clients_services = new clients_services();
             clients_services.id = id;
@@ -712,6 +713,7 @@ namespace MainApp.assets.models
             clients_services.date_asked = date_asked;
             clients_services.id_status = id_status;
             clients_services.id_staff = id_staff;
+            clients_services.id_order = id_order;
             return clients_services;
         }
 
@@ -893,9 +895,9 @@ namespace MainApp.assets.models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> id_order
+        public global::System.Int32 id_order
         {
             get
             {
@@ -910,8 +912,8 @@ namespace MainApp.assets.models
                 Onid_orderChanged();
             }
         }
-        private Nullable<global::System.Int32> _id_order;
-        partial void Onid_orderChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _id_order;
+        partial void Onid_orderChanging(global::System.Int32 value);
         partial void Onid_orderChanged();
 
         #endregion
@@ -924,16 +926,16 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "clsrv_clients", "clients")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_clients", "clients")]
         public clients clients
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clients>("HelixDBModel.clsrv_clients", "clients").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clients>("HelixDBModel.fk_clients_services_clients", "clients").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clients>("HelixDBModel.clsrv_clients", "clients").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clients>("HelixDBModel.fk_clients_services_clients", "clients").Value = value;
             }
         }
         /// <summary>
@@ -945,13 +947,13 @@ namespace MainApp.assets.models
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clients>("HelixDBModel.clsrv_clients", "clients");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clients>("HelixDBModel.fk_clients_services_clients", "clients");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<clients>("HelixDBModel.clsrv_clients", "clients", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<clients>("HelixDBModel.fk_clients_services_clients", "clients", value);
                 }
             }
         }
@@ -962,16 +964,16 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "clsrv_msrv", "medical_services")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_medical_services", "medical_services")]
         public medical_services medical_services
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<medical_services>("HelixDBModel.clsrv_msrv", "medical_services").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<medical_services>("HelixDBModel.fk_clients_services_medical_services", "medical_services").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<medical_services>("HelixDBModel.clsrv_msrv", "medical_services").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<medical_services>("HelixDBModel.fk_clients_services_medical_services", "medical_services").Value = value;
             }
         }
         /// <summary>
@@ -983,13 +985,13 @@ namespace MainApp.assets.models
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<medical_services>("HelixDBModel.clsrv_msrv", "medical_services");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<medical_services>("HelixDBModel.fk_clients_services_medical_services", "medical_services");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<medical_services>("HelixDBModel.clsrv_msrv", "medical_services", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<medical_services>("HelixDBModel.fk_clients_services_medical_services", "medical_services", value);
                 }
             }
         }
@@ -1000,16 +1002,16 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "clsrv_staff", "staff")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_staff", "staff")]
         public staff staff
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<staff>("HelixDBModel.clsrv_staff", "staff").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<staff>("HelixDBModel.fk_clients_services_staff", "staff").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<staff>("HelixDBModel.clsrv_staff", "staff").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<staff>("HelixDBModel.fk_clients_services_staff", "staff").Value = value;
             }
         }
         /// <summary>
@@ -1021,13 +1023,13 @@ namespace MainApp.assets.models
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<staff>("HelixDBModel.clsrv_staff", "staff");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<staff>("HelixDBModel.fk_clients_services_staff", "staff");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<staff>("HelixDBModel.clsrv_staff", "staff", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<staff>("HelixDBModel.fk_clients_services_staff", "staff", value);
                 }
             }
         }
@@ -1038,16 +1040,16 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "clsrv_statuses", "statuses")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_statuses", "statuses")]
         public statuses statuses
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<statuses>("HelixDBModel.clsrv_statuses", "statuses").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<statuses>("HelixDBModel.fk_clients_services_statuses", "statuses").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<statuses>("HelixDBModel.clsrv_statuses", "statuses").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<statuses>("HelixDBModel.fk_clients_services_statuses", "statuses").Value = value;
             }
         }
         /// <summary>
@@ -1059,13 +1061,13 @@ namespace MainApp.assets.models
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<statuses>("HelixDBModel.clsrv_statuses", "statuses");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<statuses>("HelixDBModel.fk_clients_services_statuses", "statuses");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<statuses>("HelixDBModel.clsrv_statuses", "statuses", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<statuses>("HelixDBModel.fk_clients_services_statuses", "statuses", value);
                 }
             }
         }
@@ -1162,18 +1164,18 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "clients_genders", "clients")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_genders_clients", "clients")]
         public EntityCollection<clients> clients
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients>("HelixDBModel.clients_genders", "clients");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients>("HelixDBModel.fk_genders_clients", "clients");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients>("HelixDBModel.clients_genders", "clients", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients>("HelixDBModel.fk_genders_clients", "clients", value);
                 }
             }
         }
@@ -1184,18 +1186,18 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "staff_genders", "staff")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_staff_genders", "staff")]
         public EntityCollection<staff> staff
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<staff>("HelixDBModel.staff_genders", "staff");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<staff>("HelixDBModel.fk_staff_genders", "staff");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<staff>("HelixDBModel.staff_genders", "staff", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<staff>("HelixDBModel.fk_staff_genders", "staff", value);
                 }
             }
         }
@@ -1418,18 +1420,18 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "clsrv_msrv", "clients_services")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_medical_services", "clients_services")]
         public EntityCollection<clients_services> clients_services
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.clsrv_msrv", "clients_services");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_medical_services", "clients_services");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.clsrv_msrv", "clients_services", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_medical_services", "clients_services", value);
                 }
             }
         }
@@ -1440,16 +1442,16 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "medsrvcs_types", "service_types")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_medical_services_service_types", "service_types")]
         public service_types service_types
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<service_types>("HelixDBModel.medsrvcs_types", "service_types").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<service_types>("HelixDBModel.fk_medical_services_service_types", "service_types").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<service_types>("HelixDBModel.medsrvcs_types", "service_types").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<service_types>("HelixDBModel.fk_medical_services_service_types", "service_types").Value = value;
             }
         }
         /// <summary>
@@ -1461,13 +1463,13 @@ namespace MainApp.assets.models
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<service_types>("HelixDBModel.medsrvcs_types", "service_types");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<service_types>("HelixDBModel.fk_medical_services_service_types", "service_types");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<service_types>("HelixDBModel.medsrvcs_types", "service_types", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<service_types>("HelixDBModel.fk_medical_services_service_types", "service_types", value);
                 }
             }
         }
@@ -1564,18 +1566,18 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "medsrvcs_types", "medical_services")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_medical_services_service_types", "medical_services")]
         public EntityCollection<medical_services> medical_services
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<medical_services>("HelixDBModel.medsrvcs_types", "medical_services");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<medical_services>("HelixDBModel.fk_medical_services_service_types", "medical_services");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<medical_services>("HelixDBModel.medsrvcs_types", "medical_services", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<medical_services>("HelixDBModel.fk_medical_services_service_types", "medical_services", value);
                 }
             }
         }
@@ -1874,18 +1876,18 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "clsrv_staff", "clients_services")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_staff", "clients_services")]
         public EntityCollection<clients_services> clients_services
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.clsrv_staff", "clients_services");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_staff", "clients_services");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.clsrv_staff", "clients_services", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_staff", "clients_services", value);
                 }
             }
         }
@@ -1896,16 +1898,16 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "staff_genders", "genders")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_staff_genders", "genders")]
         public genders genders
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<genders>("HelixDBModel.staff_genders", "genders").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<genders>("HelixDBModel.fk_staff_genders", "genders").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<genders>("HelixDBModel.staff_genders", "genders").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<genders>("HelixDBModel.fk_staff_genders", "genders").Value = value;
             }
         }
         /// <summary>
@@ -1917,13 +1919,13 @@ namespace MainApp.assets.models
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<genders>("HelixDBModel.staff_genders", "genders");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<genders>("HelixDBModel.fk_staff_genders", "genders");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<genders>("HelixDBModel.staff_genders", "genders", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<genders>("HelixDBModel.fk_staff_genders", "genders", value);
                 }
             }
         }
@@ -1934,16 +1936,16 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "staff_staff_roles", "staff_roles")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_staff_staff_roles", "staff_roles")]
         public staff_roles staff_roles
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<staff_roles>("HelixDBModel.staff_staff_roles", "staff_roles").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<staff_roles>("HelixDBModel.fk_staff_staff_roles", "staff_roles").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<staff_roles>("HelixDBModel.staff_staff_roles", "staff_roles").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<staff_roles>("HelixDBModel.fk_staff_staff_roles", "staff_roles").Value = value;
             }
         }
         /// <summary>
@@ -1955,13 +1957,13 @@ namespace MainApp.assets.models
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<staff_roles>("HelixDBModel.staff_staff_roles", "staff_roles");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<staff_roles>("HelixDBModel.fk_staff_staff_roles", "staff_roles");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<staff_roles>("HelixDBModel.staff_staff_roles", "staff_roles", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<staff_roles>("HelixDBModel.fk_staff_staff_roles", "staff_roles", value);
                 }
             }
         }
@@ -2058,18 +2060,18 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "staff_staff_roles", "staff")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_staff_staff_roles", "staff")]
         public EntityCollection<staff> staff
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<staff>("HelixDBModel.staff_staff_roles", "staff");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<staff>("HelixDBModel.fk_staff_staff_roles", "staff");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<staff>("HelixDBModel.staff_staff_roles", "staff", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<staff>("HelixDBModel.fk_staff_staff_roles", "staff", value);
                 }
             }
         }
@@ -2166,18 +2168,18 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "clsrv_statuses", "clients_services")]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_statuses", "clients_services")]
         public EntityCollection<clients_services> clients_services
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.clsrv_statuses", "clients_services");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_statuses", "clients_services");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.clsrv_statuses", "clients_services", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_statuses", "clients_services", value);
                 }
             }
         }

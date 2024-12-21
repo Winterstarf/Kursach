@@ -75,11 +75,11 @@
 
         <Image Height="81" Width="85" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/assets/images/logo.png" Opacity="100" Margin="0,10,10,0"/>
 
-        <StackPanel Margin="100,70,100,70">
+        <StackPanel Margin="100,70,100,61">
             <TextBlock Height="25" Width="55" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Логин" FontSize="13" TextAlignment="Left"/>
-            <TextBox x:Name="UsernameTB" Height="25" Width="145" Margin="5,-3,0,3" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="UsernameTB" Height="29" Width="145" Margin="5,-3,0,3" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
             <TextBlock Height="25" Width="55" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Пароль" FontSize="13" TextAlignment="Left"/>
-            <PasswordBox x:Name="PassPB" Height="25" Width="145" Margin="5,-3,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            <PasswordBox x:Name="PassPB" Height="29" Width="145" Margin="5,-3,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Margin="95,181,81,20" Orientation="Horizontal">

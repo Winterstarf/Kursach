@@ -37,6 +37,7 @@ namespace MainApp.windows.main
             this.DataContext = ClientData;
 
             LoadOrders();
+            LoadStatuses();
         }
 
         private void LoadOrders()
@@ -54,6 +55,12 @@ namespace MainApp.windows.main
                                }).ToList();
 
             OrdersListBox.ItemsSource = ordersData;
+        }
+
+        private void LoadStatuses()
+        {
+            var statuses = db_cont.statuses.ToList();
+            StatusComboBox.ItemsSource = statuses;
         }
 
         private void OrdersListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -75,14 +82,38 @@ namespace MainApp.windows.main
 
                 var total = services.Sum(s => s.mservice_price);
                 TotalPriceTextBlock.Text = $"Итог: {total:C}";
+
+                // Bind the selected status
+                StatusComboBox.SelectedValue = selectedOrder.Status;
             }
             else
             {
                 sepa_sep.Visibility = Visibility.Hidden;
                 OrderDetailsItemsControl.ItemsSource = null;
                 TotalPriceTextBlock.Text = string.Empty;
+
+                StatusComboBox.SelectedValue = null; // Clear ComboBox selection
             }
         }
+
+        private void StatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (OrdersListBox.SelectedItem != null && StatusComboBox.SelectedValue != null)
+            {
+                var selectedOrder = OrdersListBox.SelectedItem as Order;
+                var newStatusId = (int)StatusComboBox.SelectedValue;
+
+                // Update the status in the database
+                var orderToUpdate = db_cont.clients_services.FirstOrDefault(o => o.id == selectedOrder.OrderId);
+                if (orderToUpdate != null)
+                {
+                    orderToUpdate.id_status = newStatusId;
+                    db_cont.SaveChanges();
+                }
+            }
+        }
+
+
 
         private void AddOrderButton_Click(object sender, RoutedEventArgs e)
         {
@@ -158,6 +189,7 @@ namespace MainApp.windows.main
         public int OrderId { get; set; }
         public string OrderSummary { get; set; }
         public List<clients_services> Services { get; set; }
+        public string Status { get; set; }
     }
 
     public class ServiceDetail

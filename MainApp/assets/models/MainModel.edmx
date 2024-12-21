@@ -32,7 +32,7 @@
           <Property Name="date_made" Type="datetime" />
           <Property Name="id_status" Type="int" Nullable="false" />
           <Property Name="id_staff" Type="int" Nullable="false" />
-          <Property Name="id_order" Type="int" />
+          <Property Name="id_order" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="genders">
           <Key>
@@ -87,7 +87,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="status_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="status_name" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -99,22 +99,8 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="clients_genders">
-          <End Role="genders" Type="Self.genders" Multiplicity="1" />
-          <End Role="clients" Type="Self.clients" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genders">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="clients">
-              <PropertyRef Name="id_gender" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="clsrv_clients">
-          <End Role="clients" Type="Self.clients" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="fk_clients_services_clients">
+          <End Role="clients" Type="Self.clients" Multiplicity="1" />
           <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="clients">
@@ -125,10 +111,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="clsrv_msrv">
-          <End Role="medical_services" Type="Self.medical_services" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="fk_clients_services_medical_services">
+          <End Role="medical_services" Type="Self.medical_services" Multiplicity="1" />
           <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="medical_services">
@@ -139,7 +123,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="clsrv_staff">
+        <Association Name="fk_clients_services_staff">
           <End Role="staff" Type="Self.staff" Multiplicity="1" />
           <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
@@ -151,7 +135,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="clsrv_statuses">
+        <Association Name="fk_clients_services_statuses">
           <End Role="statuses" Type="Self.statuses" Multiplicity="1" />
           <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
@@ -163,7 +147,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="medsrvcs_types">
+        <Association Name="fk_genders_clients">
+          <End Role="genders" Type="Self.genders" Multiplicity="1" />
+          <End Role="clients" Type="Self.clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="clients">
+              <PropertyRef Name="id_gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_medical_services_service_types">
           <End Role="service_types" Type="Self.service_types" Multiplicity="1" />
           <End Role="medical_services" Type="Self.medical_services" Multiplicity="*" />
           <ReferentialConstraint>
@@ -175,7 +171,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="staff_genders">
+        <Association Name="fk_staff_genders">
           <End Role="genders" Type="Self.genders" Multiplicity="1" />
           <End Role="staff" Type="Self.staff" Multiplicity="*" />
           <ReferentialConstraint>
@@ -187,7 +183,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="staff_staff_roles">
+        <Association Name="fk_staff_staff_roles">
           <End Role="staff_roles" Type="Self.staff_roles" Multiplicity="1" />
           <End Role="staff" Type="Self.staff" Multiplicity="*" />
           <ReferentialConstraint>
@@ -209,35 +205,35 @@
           <EntitySet Name="staff_roles" EntityType="Self.staff_roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="statuses" EntityType="Self.statuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="clients_genders" Association="Self.clients_genders">
-            <End Role="genders" EntitySet="genders" />
-            <End Role="clients" EntitySet="clients" />
-          </AssociationSet>
-          <AssociationSet Name="clsrv_clients" Association="Self.clsrv_clients">
+          <AssociationSet Name="fk_clients_services_clients" Association="Self.fk_clients_services_clients">
             <End Role="clients" EntitySet="clients" />
             <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="clsrv_msrv" Association="Self.clsrv_msrv">
+          <AssociationSet Name="fk_clients_services_medical_services" Association="Self.fk_clients_services_medical_services">
             <End Role="medical_services" EntitySet="medical_services" />
             <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="clsrv_staff" Association="Self.clsrv_staff">
+          <AssociationSet Name="fk_clients_services_staff" Association="Self.fk_clients_services_staff">
             <End Role="staff" EntitySet="staff" />
             <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="clsrv_statuses" Association="Self.clsrv_statuses">
+          <AssociationSet Name="fk_clients_services_statuses" Association="Self.fk_clients_services_statuses">
             <End Role="statuses" EntitySet="statuses" />
             <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="medsrvcs_types" Association="Self.medsrvcs_types">
+          <AssociationSet Name="fk_genders_clients" Association="Self.fk_genders_clients">
+            <End Role="genders" EntitySet="genders" />
+            <End Role="clients" EntitySet="clients" />
+          </AssociationSet>
+          <AssociationSet Name="fk_medical_services_service_types" Association="Self.fk_medical_services_service_types">
             <End Role="service_types" EntitySet="service_types" />
             <End Role="medical_services" EntitySet="medical_services" />
           </AssociationSet>
-          <AssociationSet Name="staff_genders" Association="Self.staff_genders">
+          <AssociationSet Name="fk_staff_genders" Association="Self.fk_staff_genders">
             <End Role="genders" EntitySet="genders" />
             <End Role="staff" EntitySet="staff" />
           </AssociationSet>
-          <AssociationSet Name="staff_staff_roles" Association="Self.staff_staff_roles">
+          <AssociationSet Name="fk_staff_staff_roles" Association="Self.fk_staff_staff_roles">
             <End Role="staff_roles" EntitySet="staff_roles" />
             <End Role="staff" EntitySet="staff" />
           </AssociationSet>
@@ -262,8 +258,8 @@
           <Property Name="passport" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="card_number" Type="Int32" Nullable="false" />
           <Property Name="card_balance" Type="Double" Nullable="false" />
-          <NavigationProperty Name="genders" Relationship="Self.clients_genders" FromRole="clients" ToRole="genders" />
-          <NavigationProperty Name="clients_services" Relationship="Self.clsrv_clients" FromRole="clients" ToRole="clients_services" />
+          <NavigationProperty Name="clients_services" Relationship="Self.fk_clients_services_clients" FromRole="clients" ToRole="clients_services" />
+          <NavigationProperty Name="genders" Relationship="Self.fk_genders_clients" FromRole="clients" ToRole="genders" />
         </EntityType>
         <EntityType Name="clients_services">
           <Key>
@@ -276,11 +272,11 @@
           <Property Name="date_made" Type="DateTime" />
           <Property Name="id_status" Type="Int32" Nullable="false" />
           <Property Name="id_staff" Type="Int32" Nullable="false" />
-          <Property Name="id_order" Type="Int32" />
-          <NavigationProperty Name="clients" Relationship="Self.clsrv_clients" FromRole="clients_services" ToRole="clients" />
-          <NavigationProperty Name="medical_services" Relationship="Self.clsrv_msrv" FromRole="clients_services" ToRole="medical_services" />
-          <NavigationProperty Name="staff" Relationship="Self.clsrv_staff" FromRole="clients_services" ToRole="staff" />
-          <NavigationProperty Name="statuses" Relationship="Self.clsrv_statuses" FromRole="clients_services" ToRole="statuses" />
+          <Property Name="id_order" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="clients" Relationship="Self.fk_clients_services_clients" FromRole="clients_services" ToRole="clients" />
+          <NavigationProperty Name="medical_services" Relationship="Self.fk_clients_services_medical_services" FromRole="clients_services" ToRole="medical_services" />
+          <NavigationProperty Name="staff" Relationship="Self.fk_clients_services_staff" FromRole="clients_services" ToRole="staff" />
+          <NavigationProperty Name="statuses" Relationship="Self.fk_clients_services_statuses" FromRole="clients_services" ToRole="statuses" />
         </EntityType>
         <EntityType Name="genders">
           <Key>
@@ -288,8 +284,8 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="gender_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="clients" Relationship="Self.clients_genders" FromRole="genders" ToRole="clients" />
-          <NavigationProperty Name="staff" Relationship="Self.staff_genders" FromRole="genders" ToRole="staff" />
+          <NavigationProperty Name="clients" Relationship="Self.fk_genders_clients" FromRole="genders" ToRole="clients" />
+          <NavigationProperty Name="staff" Relationship="Self.fk_staff_genders" FromRole="genders" ToRole="staff" />
         </EntityType>
         <EntityType Name="medical_services">
           <Key>
@@ -302,8 +298,8 @@
           <Property Name="mservice_icd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="mservice_price" Type="Double" Nullable="false" />
           <Property Name="extra_info" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="clients_services" Relationship="Self.clsrv_msrv" FromRole="medical_services" ToRole="clients_services" />
-          <NavigationProperty Name="service_types" Relationship="Self.medsrvcs_types" FromRole="medical_services" ToRole="service_types" />
+          <NavigationProperty Name="clients_services" Relationship="Self.fk_clients_services_medical_services" FromRole="medical_services" ToRole="clients_services" />
+          <NavigationProperty Name="service_types" Relationship="Self.fk_medical_services_service_types" FromRole="medical_services" ToRole="service_types" />
         </EntityType>
         <EntityType Name="service_types">
           <Key>
@@ -311,7 +307,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="stype_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="medical_services" Relationship="Self.medsrvcs_types" FromRole="service_types" ToRole="medical_services" />
+          <NavigationProperty Name="medical_services" Relationship="Self.fk_medical_services_service_types" FromRole="service_types" ToRole="medical_services" />
         </EntityType>
         <EntityType Name="staff">
           <Key>
@@ -327,9 +323,9 @@
           <Property Name="id_role" Type="Int32" Nullable="false" />
           <Property Name="staff_login" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="staff_pwd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="clients_services" Relationship="Self.clsrv_staff" FromRole="staff" ToRole="clients_services" />
-          <NavigationProperty Name="genders" Relationship="Self.staff_genders" FromRole="staff" ToRole="genders" />
-          <NavigationProperty Name="staff_roles" Relationship="Self.staff_staff_roles" FromRole="staff" ToRole="staff_roles" />
+          <NavigationProperty Name="clients_services" Relationship="Self.fk_clients_services_staff" FromRole="staff" ToRole="clients_services" />
+          <NavigationProperty Name="genders" Relationship="Self.fk_staff_genders" FromRole="staff" ToRole="genders" />
+          <NavigationProperty Name="staff_roles" Relationship="Self.fk_staff_staff_roles" FromRole="staff" ToRole="staff_roles" />
         </EntityType>
         <EntityType Name="staff_roles">
           <Key>
@@ -337,15 +333,15 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="role_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="staff" Relationship="Self.staff_staff_roles" FromRole="staff_roles" ToRole="staff" />
+          <NavigationProperty Name="staff" Relationship="Self.fk_staff_staff_roles" FromRole="staff_roles" ToRole="staff" />
         </EntityType>
         <EntityType Name="statuses">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="status_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="clients_services" Relationship="Self.clsrv_statuses" FromRole="statuses" ToRole="clients_services" />
+          <Property Name="status_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="clients_services" Relationship="Self.fk_clients_services_statuses" FromRole="statuses" ToRole="clients_services" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -357,7 +353,19 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="clients_genders">
+        <Association Name="fk_clients_services_clients">
+          <End Role="clients" Type="Self.clients" Multiplicity="1" />
+          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_genders_clients">
           <End Role="genders" Type="Self.genders" Multiplicity="1" />
           <End Role="clients" Type="Self.clients" Multiplicity="*" />
           <ReferentialConstraint>
@@ -369,24 +377,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="clsrv_clients">
-          <End Role="clients" Type="Self.clients" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="clients">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="clients_services">
-              <PropertyRef Name="id_client" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="clsrv_msrv">
-          <End Role="medical_services" Type="Self.medical_services" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="fk_clients_services_medical_services">
+          <End Role="medical_services" Type="Self.medical_services" Multiplicity="1" />
           <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="medical_services">
@@ -397,8 +389,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="clsrv_staff">
-          <End Role="staff" Type="HelixDBModel.staff" Multiplicity="1" />
+        <Association Name="fk_clients_services_staff">
+          <End Role="staff" Type="Self.staff" Multiplicity="1" />
           <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="staff">
@@ -409,7 +401,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="clsrv_statuses">
+        <Association Name="fk_clients_services_statuses">
           <End Role="statuses" Type="Self.statuses" Multiplicity="1" />
           <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
           <ReferentialConstraint>
@@ -421,9 +413,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="staff_genders">
+        <Association Name="fk_staff_genders">
           <End Role="genders" Type="Self.genders" Multiplicity="1" />
-          <End Role="staff" Type="HelixDBModel.staff" Multiplicity="*" />
+          <End Role="staff" Type="Self.staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="genders">
               <PropertyRef Name="id" />
@@ -433,7 +425,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="medsrvcs_types">
+        <Association Name="fk_medical_services_service_types">
           <End Role="service_types" Type="Self.service_types" Multiplicity="1" />
           <End Role="medical_services" Type="Self.medical_services" Multiplicity="*" />
           <ReferentialConstraint>
@@ -445,9 +437,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="staff_staff_roles">
+        <Association Name="fk_staff_staff_roles">
           <End Role="staff_roles" Type="Self.staff_roles" Multiplicity="1" />
-          <End Role="staff" Type="HelixDBModel.staff" Multiplicity="*" />
+          <End Role="staff" Type="Self.staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="staff_roles">
               <PropertyRef Name="id" />
@@ -463,39 +455,39 @@
           <EntitySet Name="genders" EntityType="Self.genders" />
           <EntitySet Name="medical_services" EntityType="Self.medical_services" />
           <EntitySet Name="service_types" EntityType="Self.service_types" />
-          <EntitySet Name="staff" EntityType="HelixDBModel.staff" />
+          <EntitySet Name="staff" EntityType="Self.staff" />
           <EntitySet Name="staff_roles" EntityType="Self.staff_roles" />
           <EntitySet Name="statuses" EntityType="Self.statuses" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <AssociationSet Name="clients_genders" Association="Self.clients_genders">
+          <AssociationSet Name="fk_clients_services_clients" Association="Self.fk_clients_services_clients">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="clients_services" EntitySet="clients_services" />
+          </AssociationSet>
+          <AssociationSet Name="fk_genders_clients" Association="Self.fk_genders_clients">
             <End Role="genders" EntitySet="genders" />
             <End Role="clients" EntitySet="clients" />
           </AssociationSet>
-          <AssociationSet Name="clsrv_clients" Association="Self.clsrv_clients">
-            <End Role="clients" EntitySet="clients" />
-            <End Role="clients_services" EntitySet="clients_services" />
-          </AssociationSet>
-          <AssociationSet Name="clsrv_msrv" Association="Self.clsrv_msrv">
+          <AssociationSet Name="fk_clients_services_medical_services" Association="Self.fk_clients_services_medical_services">
             <End Role="medical_services" EntitySet="medical_services" />
             <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="clsrv_staff" Association="Self.clsrv_staff">
+          <AssociationSet Name="fk_clients_services_staff" Association="Self.fk_clients_services_staff">
             <End Role="staff" EntitySet="staff" />
             <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="clsrv_statuses" Association="Self.clsrv_statuses">
+          <AssociationSet Name="fk_clients_services_statuses" Association="Self.fk_clients_services_statuses">
             <End Role="statuses" EntitySet="statuses" />
             <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="staff_genders" Association="Self.staff_genders">
+          <AssociationSet Name="fk_staff_genders" Association="Self.fk_staff_genders">
             <End Role="genders" EntitySet="genders" />
             <End Role="staff" EntitySet="staff" />
           </AssociationSet>
-          <AssociationSet Name="medsrvcs_types" Association="Self.medsrvcs_types">
+          <AssociationSet Name="fk_medical_services_service_types" Association="Self.fk_medical_services_service_types">
             <End Role="service_types" EntitySet="service_types" />
             <End Role="medical_services" EntitySet="medical_services" />
           </AssociationSet>
-          <AssociationSet Name="staff_staff_roles" Association="Self.staff_staff_roles">
+          <AssociationSet Name="fk_staff_staff_roles" Association="Self.fk_staff_staff_roles">
             <End Role="staff_roles" EntitySet="staff_roles" />
             <End Role="staff" EntitySet="staff" />
           </AssociationSet>
@@ -625,7 +617,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

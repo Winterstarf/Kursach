@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System;
+using MainApp.windows.edits;
 
 namespace MainApp.windows.adds
 {
@@ -56,9 +57,35 @@ namespace MainApp.windows.adds
         private void SearchService_tb_TextChanged(object sender, TextChangedEventArgs e)
         {
             var query = SearchService_tb.Text.ToLower();
-            newFulfillmentData.FilteredServiceOptions = newFulfillmentData.ServiceOptions
+
+            // Preserve the currently selected services
+            var selectedServices = newFulfillmentData.SelectedServices ?? new List<medical_services>();
+
+            // Filter services based on the search query
+            var filteredServices = newFulfillmentData.ServiceOptions
                 .Where(s => (s.mservice_name?.ToLower().Contains(query) ?? false) || (s.mservice_icd?.ToLower().Contains(query) ?? false))
                 .ToList();
+
+            // Ensure selected services remain in the filtered list
+            foreach (var selectedService in selectedServices)
+            {
+                if (!filteredServices.Contains(selectedService))
+                {
+                    filteredServices.Add(selectedService);
+                }
+            }
+
+            // Update the filtered service options
+            newFulfillmentData.FilteredServiceOptions = filteredServices;
+
+            // Restore the selection in the ListBox
+            foreach (var selectedService in selectedServices)
+            {
+                if (!Services_lb.SelectedItems.Contains(selectedService))
+                {
+                    Services_lb.SelectedItems.Add(selectedService);
+                }
+            }
         }
 
         private void Save_btn_Click(object sender, RoutedEventArgs e)
@@ -73,13 +100,16 @@ namespace MainApp.windows.adds
                     throw new Exception("Некоторые поля не заполнены или заполнены неверными данными");
                 }
 
-                if (newFulfillmentData.SelectedStatus.id != 2 && DateMade_dp.SelectedDate != null)
+                if ((newFulfillmentData.SelectedStatus.id != 1 && DateMade_dp.SelectedDate != null) || (newFulfillmentData.SelectedStatus.id != 2 && DateMade_dp.SelectedDate != null))
                 {
                     DateMade_dp.SelectedDate = null;
                     throw new Exception("Нельзя указывать дату выполнения при статусе Выполняется или Отменено");
                 }
 
-                var newOrderId = db_cont.clients_services.Max(cs => cs.id_order) + 1;
+                // Handle case when the table is empty
+                var newOrderId = db_cont.clients_services.Any()
+                    ? db_cont.clients_services.Max(cs => cs.id_order) + 1
+                    : 1;
 
                 foreach (var selectedService in newFulfillmentData.SelectedServices)
                 {
