@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.windows.edits"
         mc:Ignorable="d"
-        Title="Изменение" Height="540" Width="380" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/assets/images/logo.png">
+        Title="Изменение" Height="540" Width="380" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/assets/images/logo.png" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <!-- Стиль для кнопок -->
         <Style TargetType="Button">
@@ -114,8 +114,8 @@
             <TextBlock Grid.Row="14" Grid.Column="0" Text="Паспорт *" FontSize="14" VerticalAlignment="Center" Margin="5"/>
             <TextBox Grid.Row="14" Grid.Column="1" x:Name="Passport_tb" Width="200" Text="{Binding Passport}" VerticalContentAlignment="Center"/>
 
-            <!-- Кнопка добавления -->
+            <!-- Кнопка изменения -->
         </Grid>
-        <Button x:Name="Save_btn" Content="Добавить" Click="Save_btn_Click" Height="30" Width="100" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,40"/>
+        <Button x:Name="Save_btn" Content="Изменить" Click="Save_btn_Click" Height="30" Width="100" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,40"/>
     </Grid>
 </Window>
