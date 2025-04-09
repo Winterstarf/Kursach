@@ -12,8 +12,11 @@ namespace MainApp
     {
         readonly ClientsPage clientsPage;
         readonly ServicesPage servicesPage;
+        readonly OrdersPage ordersPage;
 
         public string CurrentUserName { get; set; }
+        public string CurrentUserRole { get; set; }
+        public string CurrentUserFullName { get; set; }
 
         public MainWindow()
         {
@@ -21,6 +24,7 @@ namespace MainApp
 
             clientsPage = new ClientsPage();
             servicesPage = new ServicesPage();
+            ordersPage = new OrdersPage();
 
             Clients_btn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
@@ -45,6 +49,12 @@ namespace MainApp
         private void Window_Closed(object sender, System.EventArgs e)
         {
             System.Environment.Exit(0);
+        }
+
+        private void Orders_btn_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPage_tb.Text = "Архив заказов";
+            DG_frm.NavigationService.Navigate(ordersPage);
         }
     }
 }

@@ -7,7 +7,7 @@
         SizeToContent="WidthAndHeight"
         Title="Вход в систему" Height="264" Width="363" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/assets/images/logo.png">
     <Window.Resources>
-        <!-- Стиль для кнопок -->
+        <!-- Button style -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="ForestGreen"/>
             <Setter Property="Foreground" Value="White"/>
@@ -30,7 +30,7 @@
             </Setter>
         </Style>
 
-        <!-- Стиль для текстовых полей -->
+        <!-- TextBox style -->
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="5"/>
@@ -50,6 +50,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
 
         <Style TargetType="PasswordBox">
             <Setter Property="FontSize" Value="14"/>
@@ -71,19 +72,23 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <TextBlock Margin="20,22,81,174" FontSize="23" FontWeight="Medium" FontFamily="Bahnschrift"><Run Language="ru-ru" Text="Лаборатория"/><Run Text=" «Helix"/><Run Text="»"/></TextBlock>
-
+        <TextBlock Margin="20,20,81,176" FontSize="21.9" FontWeight="Medium" FontFamily="Bahnschrift"><Run Language="ru-ru" Text="Лаборатория"/><Run Text=" «Helix"/><Run Text="»"/></TextBlock>
         <Image Height="81" Width="85" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/assets/images/logo.png" Opacity="100" Margin="0,10,10,0"/>
 
-        <StackPanel Margin="100,70,100,57">
+        <StackPanel Margin="81,74,120,115">
             <TextBlock Height="25" Width="55" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Логин" FontSize="13" TextAlignment="Left"/>
-            <TextBox x:Name="UsernameTB" Height="30" Width="145" Margin="5,-3,0,3" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-            <TextBlock Height="25" Width="55" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Пароль" FontSize="13" TextAlignment="Left"/>
-            <PasswordBox x:Name="PassPB" Height="30" Width="145" Margin="5,-3,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="UsernameTB" Height="30" Width="145" Margin="5,-4,0,3" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
         </StackPanel>
 
-        <StackPanel Margin="95,181,81,10" Orientation="Horizontal">
-            <Button x:Name="CancelBtn" Height="25" Width="80" Margin="0,0,15,0" Content="Отмена" FontSize="14" VerticalContentAlignment="Center" Click="CancelBtn_Click"/>
+        <TextBlock Height="25" Width="55" Margin="86,132,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Пароль" FontSize="13" TextAlignment="Left"/>
+        <PasswordBox x:Name="PassPB" Height="30" Width="146" Margin="86,153,131,65" PasswordChanged="PassPB_PasswordChanged" Visibility="Visible"/>
+        <TextBox x:Name="PassTB" Height="30" Width="146" Margin="86,153,131,65" VerticalContentAlignment="Center" Visibility="Collapsed"/>
+        <Button x:Name="eye_btn" Height="25" Width="25" Margin="238,156,100,67" Click="eye_btn_Click">
+            <Image x:Name="eye_btn_img" Height="25" Width="15" Source="/assets/images/eye_open.png"/>
+        </Button>
+
+        <StackPanel Margin="75,183,100,8" Orientation="Horizontal">
+            <Button x:Name="CancelBtn" Height="25" Width="80" Margin="10,0,10,0" Content="Отмена" FontSize="14" VerticalContentAlignment="Center" Click="CancelBtn_Click"/>
             <Button x:Name="LoginBtn" Height="25" Width="80" Content="Вход" FontSize="14" VerticalAlignment="Center" Click="LoginBtn_Click"/>
         </StackPanel>
     </Grid>

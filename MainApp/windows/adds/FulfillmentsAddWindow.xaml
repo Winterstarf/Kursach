@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.windows.adds"
         mc:Ignorable="d"
-        SizeToContent="WidthAndHeight"
+        SizeToContent="Manual"
         Title="Добавление" Height="570" Width="360" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/assets/images/logo.png">
     <Window.Resources>
         <!-- Стиль для кнопок -->

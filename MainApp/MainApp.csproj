@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="assets\images\eye_closed.png" />
+    <None Remove="assets\images\eye_open.png" />
     <None Remove="assets\images\logo.png" />
     <None Remove="assets\images\shrek.png" />
     <None Remove="assets\models\MainModel.edmx" />
@@ -32,6 +34,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="assets\images\eye_closed.png" />
+    <Resource Include="assets\images\eye_open.png" />
     <Resource Include="assets\images\logo.png" />
     <Resource Include="assets\images\shrek.png" />
   </ItemGroup>

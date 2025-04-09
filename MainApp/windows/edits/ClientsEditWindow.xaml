@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.windows.edits"
         mc:Ignorable="d"
-        Title="Изменение" Height="540" Width="380" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/assets/images/logo.png" SizeToContent="WidthAndHeight">
+        Title="Изменение" Height="540" Width="380" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/assets/images/logo.png" SizeToContent="Manual">
     <Window.Resources>
         <!-- Стиль для кнопок -->
         <Style TargetType="Button">
