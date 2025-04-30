@@ -16,12 +16,15 @@
             <Setter Property="Padding" Value="5,2"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" 
-                    CornerRadius="4"
-                    Padding="{TemplateBinding Padding}">
+                                CornerRadius="4"
+                                BorderBrush="Black"
+                                BorderThickness="0.5"
+                                Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" 
                                   VerticalAlignment="Center"/>
                         </Border>
@@ -54,7 +57,7 @@
         <Button x:Name="Del_btn" Margin="5" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Удалить" Click="Del_btn_Click"/>
         <Button x:Name="Add_btn" Margin="5,5,70,5" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Доб." Click="Add_btn_Click"/>
         <Button x:Name="Update_btn" Margin="5,5,135,5" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Измен." Click="Update_btn_Click"/>
-        <Button x:Name="Refresh_btn" Margin="5,5,200,5" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Обн." Click="Refresh_btn_Click"/>
+        <Button x:Name="Refresh_btn" Margin="5,5,200,5" Width="100" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Обн. таблицу" Click="Refresh_btn_Click"/>
 
         <DataGrid x:Name="DG_Services" ColumnWidth="*" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,40,0,0" SelectionUnit="FullRow" MouseDoubleClick="DG_Clients_MouseDoubleClick">
             <DataGrid.RowDetailsTemplate>
@@ -78,6 +81,7 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
             <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding id}"/>
                 <DataGridTextColumn Header="Название" Binding="{Binding mservice_name}"/>
                 <DataGridTextColumn Header="Код МКБ-11" Binding="{Binding mservice_icd}"/>
                 <DataGridTextColumn Header="Стоимость" Binding="{Binding mservice_price}"/>

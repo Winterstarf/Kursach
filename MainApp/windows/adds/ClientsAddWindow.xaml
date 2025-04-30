@@ -16,11 +16,14 @@
             <Setter Property="Padding" Value="5,2"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" 
                                 CornerRadius="4"
+                                BorderBrush="Black"
+                                BorderThickness="0.5"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" 
                                               VerticalAlignment="Center"/>
@@ -53,7 +56,7 @@
     </Window.Resources>
     <Grid>
         <!-- Основная разметка -->
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,39,0,0" Height="375">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0" Height="410" Width="340">
             <!-- Разметка строк и столбцов -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -116,6 +119,6 @@
 
             <!-- Кнопка добавления -->
         </Grid>
-        <Button x:Name="Save_btn" Content="Добавить" Click="Save_btn_Click" Height="30" Width="100" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,40"/>
+        <Button x:Name="Save_btn" Content="Добавить" Click="Save_btn_Click" Height="30" Width="150" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,430,0,0"/>
     </Grid>
 </Window>

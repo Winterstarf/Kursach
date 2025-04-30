@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System;
 using MainApp.windows.edits;
+using MainApp.windows.main;
 
 namespace MainApp.windows.adds
 {
@@ -31,6 +32,7 @@ namespace MainApp.windows.adds
             newFulfillmentData.FilteredServiceOptions = medical_services;
             var statuses = db_cont.statuses.ToList();
             newFulfillmentData.StatusOptions = statuses;
+            newFulfillmentData.SelectedStatus = statuses.FirstOrDefault(st => st.id == 3);
             var staff = db_cont.staff.ToList();
             newFulfillmentData.StaffOptions = staff;
         }
@@ -38,15 +40,15 @@ namespace MainApp.windows.adds
         private void Services_lb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItems = Services_lb.SelectedItems.Cast<medical_services>().ToList();
-            if (selectedItems.Count > 5)
+            if (selectedItems.Count > 10)
             {
-                // Remove the last selected item if the count exceeds 5
+                // Remove the last selected item if the count exceeds 10
                 foreach (var item in e.AddedItems)
                 {
                     Services_lb.SelectedItems.Remove(item);
                 }
 
-                MessageBox.Show("Нельзя выбрать более чем 5 услуг");
+                MessageBox.Show("Нельзя выбрать более чем 10 услуг");
             }
             else
             {
@@ -95,15 +97,30 @@ namespace MainApp.windows.adds
                 var newFulfillmentData = (NewFulfillmentData)this.DataContext;
 
                 if (newFulfillmentData.SelectedClient == null || !newFulfillmentData.SelectedServices.Any()
-                    || newFulfillmentData.SelectedStatus == null || newFulfillmentData.SelectedStaff == null || DatePaid_dp.SelectedDate == null)
+                    || newFulfillmentData.SelectedStatus == null || newFulfillmentData.SelectedStaff == null)
                 {
                     throw new Exception("Некоторые поля не заполнены или заполнены неверными данными");
                 }
 
-                if ((newFulfillmentData.SelectedStatus.id != 1 && DateMade_dp.SelectedDate != null) || (newFulfillmentData.SelectedStatus.id != 2 && DateMade_dp.SelectedDate != null))
+                if (newFulfillmentData.SelectedStatus.id != 1 && DateMade_dp.SelectedDate != null)
                 {
                     DateMade_dp.SelectedDate = null;
                     throw new Exception("Нельзя указывать дату выполнения при статусе Выполняется или Отменено");
+                }
+
+                if (DatePaid_dp.SelectedDate != null && DatePaid_dp.SelectedDate > DateTime.Today)
+                {
+                    throw new Exception("Дата оплаты не может быть позже сегодняшнего дня");
+                }
+
+                if (newFulfillmentData.SelectedServices == null || !newFulfillmentData.SelectedServices.Any())
+                {
+                    throw new Exception("Не выбрано ни одной медицинской услуги");
+                }
+
+                if (DatePaid_dp.SelectedDate == null)
+                {
+                    throw new Exception("Дата заказа/оплаты не была выбрана");
                 }
 
                 // Handle case when the table is empty
@@ -111,13 +128,16 @@ namespace MainApp.windows.adds
                     ? db_cont.clients_services.Max(cs => cs.id_order) + 1
                     : 1;
 
+                DateTime selDate = (DateTime)DatePaid_dp.SelectedDate;
+                DateTime combinedDateTime = selDate + DateTime.Now.TimeOfDay;
+
                 foreach (var selectedService in newFulfillmentData.SelectedServices)
                 {
                     var newFulfillment = new clients_services
                     {
                         id_client = newFulfillmentData.SelectedClient.id,
                         id_service = selectedService.id,
-                        date_asked = (DateTime)DatePaid_dp.SelectedDate,
+                        date_asked = combinedDateTime,
                         date_made = DateMade_dp.SelectedDate,
                         id_status = newFulfillmentData.SelectedStatus.id,
                         id_staff = newFulfillmentData.SelectedStaff.id,

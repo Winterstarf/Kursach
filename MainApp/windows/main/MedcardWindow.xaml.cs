@@ -1,6 +1,7 @@
 ﻿using MainApp.assets.models;
 using MainApp.windows.adds;
 using MainApp.windows.edits;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -37,12 +38,11 @@ namespace MainApp.windows.main
             this.DataContext = ClientData;
 
             LoadOrders();
-            LoadStatuses();
         }
 
         private void LoadOrders()
         {
-            // Retrieve orders for the selected client
+            //Retrieve orders for the selected client
             var ordersData = db_cont.clients_services
                                .Where(cs => cs.id_client == _selectedClient.id)
                                .GroupBy(cs => cs.id_order)
@@ -50,25 +50,18 @@ namespace MainApp.windows.main
                                .Select(g => new Order
                                {
                                    OrderId = (int)g.Key,
-                                   OrderSummary = $"Заказ {g.Key} - {g.Count()} услуг(и)",
+                                   OrderSummary = $"Заказ {g.Key} - {g.Count()} услуг(и).",
                                    Services = g.ToList()
                                }).ToList();
 
             OrdersListBox.ItemsSource = ordersData;
         }
 
-        private void LoadStatuses()
-        {
-            var statuses = db_cont.statuses.ToList();
-            StatusComboBox.ItemsSource = statuses;
-        }
-
         private void OrdersListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (OrdersListBox.SelectedItem != null)
             {
-                sepa_sep.Visibility = Visibility.Visible;
-
+                OrderCurrentStatus_tb.Text = string.Empty;
                 var selectedOrder = OrdersListBox.SelectedItem as Order;
                 var services = selectedOrder.Services.Select(s => new ServiceDetail
                 {
@@ -81,45 +74,29 @@ namespace MainApp.windows.main
                 OrderDetailsItemsControl.ItemsSource = services;
 
                 var total = services.Sum(s => s.mservice_price);
-                TotalPriceTextBlock.Text = $"Итог: {total:C}";
+                TotalPriceTextBlock.Text = $"Итог: {total:C}. Оплачено {GetOrderDateAsked(selectedOrder.OrderId).ToString("dd.MM.yyyy HH:mm")}.";
 
-                // Bind the selected status
-                StatusComboBox.SelectedValue = selectedOrder.Status;
+                OrderCurrentStatus_tb.Text += $"{GetOrderStatus(selectedOrder.OrderId)}.";
+                sepa_sep2.Visibility = Visibility.Visible;
+                OrderCurrentStatus_tb.Visibility = Visibility.Visible;
+
+                sepa_sep.Visibility = Visibility.Visible;
+                CompleteOrder_btn.Visibility = Visibility.Visible;
             }
             else
             {
-                sepa_sep.Visibility = Visibility.Hidden;
+                OrderCurrentStatus_tb.Text = string.Empty;
                 OrderDetailsItemsControl.ItemsSource = null;
                 TotalPriceTextBlock.Text = string.Empty;
-
-                StatusComboBox.SelectedValue = null; // Clear ComboBox selection
             }
         }
-
-        private void StatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (OrdersListBox.SelectedItem != null && StatusComboBox.SelectedValue != null)
-            {
-                var selectedOrder = OrdersListBox.SelectedItem as Order;
-                var newStatusId = (int)StatusComboBox.SelectedValue;
-
-                // Update the status in the database
-                var orderToUpdate = db_cont.clients_services.FirstOrDefault(o => o.id == selectedOrder.OrderId);
-                if (orderToUpdate != null)
-                {
-                    orderToUpdate.id_status = newStatusId;
-                    db_cont.SaveChanges();
-                }
-            }
-        }
-
-
 
         private void AddOrderButton_Click(object sender, RoutedEventArgs e)
         {
             var addOrderWindow = new FulfillmentsAddWindow(_selectedClient);
             addOrderWindow.ShowDialog();
             LoadOrders();
+            HideControls();
         }
 
         private void DeleteOrderButton_Click(object sender, RoutedEventArgs e)
@@ -143,6 +120,7 @@ namespace MainApp.windows.main
                     }
                     db_cont.SaveChanges();
                     LoadOrders();
+                    HideControls();
                 }
             }
         }
@@ -157,18 +135,97 @@ namespace MainApp.windows.main
             else
             {
                 var selectedOrder = OrdersListBox.SelectedItem as Order;
-                FulfillmentsEditWindow few = new FulfillmentsEditWindow(selectedOrder);
-                few.ShowDialog();
 
-                LoadOrders();
+                if (selectedOrder.Services.Any(cs => cs.id_status == 2) || selectedOrder.Services.Any(cs => cs.id_status == 5))
+                {
+                    MessageBox.Show("Этот заказ был отменен или возвращен. Изменения невозможны");
+                    return;
+                }
+
+                else
+                {
+                    FulfillmentsEditWindow few = new FulfillmentsEditWindow(selectedOrder);
+                    few.ShowDialog();
+
+                    LoadOrders();
+                    HideControls();
+                }
             }
         }
 
         private void OrdersListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             OrdersListBox.SelectedItem = null;
+            HideControls();
+        }
+
+        private void CompleteOrder_btn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("пока что не работает");
+        }
+
+        private DateTime GetOrderDateAsked(int orderId)
+        {
+            var dateAsked = db_cont.clients_services
+                                 .Where(cs => cs.id_order == orderId)
+                                 .Select(cs => cs.date_asked)
+                                 .FirstOrDefault();
+
+            return dateAsked;
+        }
+
+        private string GetOrderStatus(int orderId)
+        {
+            var orderService = db_cont.clients_services
+                                     .Where(cs => cs.id_order == orderId)
+                                     .FirstOrDefault();
+
+            if (orderService != null)
+            {
+                var status = db_cont.statuses
+                                    .FirstOrDefault(s => s.id == orderService.id_status);
+
+                if (status != null)
+                {
+                    if (orderService.id_status == 1)
+                    {
+                        return $"{status.status_name} - {orderService.date_made?.ToString("dd.MM.yyyy HH:mm")}";
+                    }
+                    else
+                    {
+                        return status.status_name;
+                    }
+                }
+            }
+
+            return "Статус неизвестен";
+        }
+
+        private void HideControls()
+        {
+            sepa_sep.Visibility = Visibility.Hidden;
+            sepa_sep2.Visibility = Visibility.Hidden;
+            CompleteOrder_btn.Visibility = Visibility.Hidden;
         }
     }
+
+    public class HeightOffsetConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double height && double.TryParse(parameter.ToString(), out double offset))
+            {
+                return height - offset;
+            }
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 
     public class ClientData
     {

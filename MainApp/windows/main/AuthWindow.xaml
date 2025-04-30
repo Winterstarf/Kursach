@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
-        Title="Вход в систему" Height="264" Width="363" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/assets/images/logo.png">
+        Title="Вход в систему" Height="270" Width="363" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/assets/images/logo.png" Closed="Window_Closed">
     <Window.Resources>
         <!-- Button style -->
         <Style TargetType="Button">
@@ -16,11 +16,14 @@
             <Setter Property="Padding" Value="5,2"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" 
                         CornerRadius="4"
+                        BorderBrush="Black"
+                        BorderThickness="0.5"
                         Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" 
                                       VerticalAlignment="Center"/>
@@ -81,10 +84,10 @@
         </StackPanel>
 
         <TextBlock Height="25" Width="55" Margin="86,132,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Пароль" FontSize="13" TextAlignment="Left"/>
-        <PasswordBox x:Name="PassPB" Height="30" Width="146" Margin="86,153,131,65" PasswordChanged="PassPB_PasswordChanged" Visibility="Visible"/>
-        <TextBox x:Name="PassTB" Height="30" Width="146" Margin="86,153,131,65" VerticalContentAlignment="Center" Visibility="Collapsed"/>
+        <PasswordBox x:Name="PassPB" Height="30" Width="146" Margin="86,153,131,65" Visibility="Visible" KeyDown="Password_KeyDown"/>
+        <TextBox x:Name="PassTB" Height="30" Width="146" Margin="86,153,131,65" VerticalContentAlignment="Center" Visibility="Collapsed" TextChanged="PassTB_TextChanged" KeyDown="Password_KeyDown"/>
         <Button x:Name="eye_btn" Height="25" Width="25" Margin="238,156,100,67" Click="eye_btn_Click">
-            <Image x:Name="eye_btn_img" Height="25" Width="15" Source="/assets/images/eye_open.png"/>
+            <Image x:Name="eye_btn_img" Height="25" Width="14" Source="/assets/images/eye_open.png"/>
         </Button>
 
         <StackPanel Margin="75,183,100,8" Orientation="Horizontal">

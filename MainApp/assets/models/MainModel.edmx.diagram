@@ -4,24 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="dd16640e57f440a0ab9d67ae77e3569a" Name="Diagram1">
-        <EntityTypeShape EntityType="HelixDBModel.clients" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HelixDBModel.clients_services" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="HelixDBModel.genders" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="HelixDBModel.medical_services" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="HelixDBModel.service_types" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="HelixDBModel.staff" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HelixDBModel.staff_roles" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="HelixDBModel.statuses" Width="1.5" PointX="3" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="HelixDBModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="3.125" IsExpanded="true" />
-        <AssociationConnector Association="HelixDBModel.fk_clients_services_clients" ManuallyRouted="false" />
-        <AssociationConnector Association="HelixDBModel.fk_genders_clients" ManuallyRouted="false" />
-        <AssociationConnector Association="HelixDBModel.fk_clients_services_medical_services" ManuallyRouted="false" />
-        <AssociationConnector Association="HelixDBModel.fk_clients_services_staff" ManuallyRouted="false" />
-        <AssociationConnector Association="HelixDBModel.fk_clients_services_statuses" ManuallyRouted="false" />
-        <AssociationConnector Association="HelixDBModel.fk_staff_genders" ManuallyRouted="false" />
-        <AssociationConnector Association="HelixDBModel.fk_medical_services_service_types" ManuallyRouted="false" />
-        <AssociationConnector Association="HelixDBModel.fk_staff_staff_roles" ManuallyRouted="false" />
+      <Diagram DiagramId="dd16640e57f440a0ab9d67ae77e3569a" Name="Diagram1" ZoomLevel="96">
+        <EntityTypeShape EntityType="HelixDBModel.clients" PointX="6" PointY="9.125" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelixDBModel.genders" PointX="3.75" PointY="5.875" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelixDBModel.medical_services" PointX="0.75" PointY="0.75" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelixDBModel.service_types" PointX="1.125" PointY="6.75" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelixDBModel.staff" PointX="6" PointY="4" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelixDBModel.staff_roles" PointX="3.75" PointY="3" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelixDBModel.statuses" PointX="6" PointY="0.75" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HelixDBModel.sysdiagrams" PointX="0.75" PointY="9.25" Width="1.5" IsExpanded="true" />
+        <AssociationConnector ManuallyRouted="false" Association="HelixDBModel.fk_genders_clients" />
+        <AssociationConnector ManuallyRouted="false" Association="HelixDBModel.fk_staff_genders" />
+        <AssociationConnector ManuallyRouted="false" Association="HelixDBModel.fk_medical_services_service_types" />
+        <AssociationConnector ManuallyRouted="false" Association="HelixDBModel.fk_staff_staff_roles" />
+        <EntityTypeShape EntityType="HelixDBModel.action_types" PointX="6" PointY="14.25" Width="1.5" />
+        <EntityTypeShape EntityType="HelixDBModel.loyalty_transactions" PointX="8.25" PointY="9.625" Width="1.5" />
+        <AssociationConnector Association="HelixDBModel.FK__loyalty_t__actio__73BA3083" />
+        <AssociationConnector Association="HelixDBModel.FK__loyalty_t__clien__72C60C4A" />
+        <EntityTypeShape EntityType="HelixDBModel.clients_services" Width="1.5" PointX="8.25" PointY="5" />
+        <AssociationConnector Association="HelixDBModel.fk_clients_services_clients" />
+        <AssociationConnector Association="HelixDBModel.fk_clients_services_medical_services" />
+        <AssociationConnector Association="HelixDBModel.fk_clients_services_staff" />
+        <AssociationConnector Association="HelixDBModel.fk_clients_services_statuses" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

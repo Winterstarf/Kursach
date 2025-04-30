@@ -7,8 +7,85 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="OrdersPage">
-
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="ForestGreen"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="5,2"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4"
+                                BorderBrush="Black"
+                                BorderThickness="0.5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                  VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="White" 
+                    BorderBrush="Black"
+                    BorderThickness="1" 
+                    CornerRadius="4">
+                            <ScrollViewer Margin="0" 
+                              x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
     <Grid>
-        
+        <TextBox x:Name="Search_tb" Margin="5,5,5,5" Width="250" Height="27" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center" TextChanged="Search_TextChanged"/>
+        <Button x:Name="Del_btn" Margin="5" Width="60" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Удалить" Click="Del_btn_Click"/>
+        <Button x:Name="Refresh_btn" Margin="5,5,70,5" Width="130" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Content="Обновить таблицу" Click="Refresh_btn_Click"/>
+
+        <DataGrid x:Name="DG_Orders" ColumnWidth="*" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,40,0,0" SelectionUnit="FullRow" MouseDoubleClick="DG_Orders_MouseDoubleClick">
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="0" Background="DarkSeaGreen" Padding="10">
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Services}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="5">
+                                            <TextBlock FontSize="12" VerticalAlignment="Center" Text="Услуга: " />
+                                            <TextBlock FontSize="16" VerticalAlignment="Center" Foreground="MidnightBlue" Text="{Binding medical_services.mservice_name}" Margin="0,0,10,0"/>
+                                            <TextBlock FontSize="12" VerticalAlignment="Center" Text="Цена: " />
+                                            <TextBlock FontSize="16" VerticalAlignment="Center" Foreground="MidnightBlue" Text="{Binding medical_services.mservice_price, StringFormat={}{0:C}, ConverterCulture=ru-RU}" Margin="0,0,10,0"/>
+                                            <TextBlock FontSize="12" VerticalAlignment="Center" Text="Код МКБ: " />
+                                            <TextBlock FontSize="16" VerticalAlignment="Center" Foreground="MidnightBlue" Text="{Binding medical_services.mservice_icd}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID Заказа" Binding="{Binding OrderId}"/>
+                <DataGridTextColumn Header="ФИО Клиента" Binding="{Binding ClientFullName}"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding StatusName}"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding TotalPrice, StringFormat={}{0:C}, ConverterCulture=ru-RU}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

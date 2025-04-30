@@ -27,13 +27,16 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Padding" Value="5,2"/>
             <Setter Property="Margin" Value="5"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="0.5"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" 
-                CornerRadius="4"
-                Padding="{TemplateBinding Padding}">
+                                CornerRadius="4"
+                                BorderBrush="Black"
+                                BorderThickness="0.5"
+                                Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" 
                               VerticalAlignment="Center"/>
                         </Border>
@@ -62,6 +65,76 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!-- Стиль для Popup меню -->
+        <Style x:Key="DropdownPopupStyle" TargetType="Popup">
+            <Setter Property="AllowsTransparency" Value="True"/>
+            <Setter Property="PopupAnimation" Value="Fade"/>
+        </Style>
+
+        <!-- Стиль контейнера для кнопок в Popup -->
+        <Style x:Key="DropdownMenuBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+        </Style>
+
+        <!-- Стиль кнопок внутри Popup -->
+        <Style x:Key="DropdownButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4">
+                            <ContentPresenter VerticalAlignment="Center" Margin="5,0"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFE0E0E0"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FFCCCCCC"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ToggleButton" x:Key="DropdownToggleButtonStyle">
+            <Setter Property="Background" Value="ForestGreen"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="5,2"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="4"
+                                    BorderBrush="Black"
+                                    BorderThickness="0.5"
+                                    Padding="{TemplateBinding Padding}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ContentPresenter />
+                                <TextBlock Text=" ▶" Margin="2,0,0,0" FontSize="10" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -76,21 +149,42 @@
             <ColumnDefinition Width="14"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Vertical" Margin="617,0,12,0" Height="99" Width="245" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
-            <TextBlock Text="Текущий пользователь:" FontSize="18" Height="25" Margin="13,10,5,0" Width="206" HorizontalAlignment="Left"/>
-            <TextBlock x:Name="CurrentDoctor_tb" FontSize="16" HorizontalAlignment="Left" Margin="13,5,5,0" TextWrapping="Wrap" Height="51" Width="219"/>
+        <StackPanel Orientation="Vertical" Margin="617,0,0,0" Height="100" Width="245" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Пользователь:" FontSize="18" Height="25" Margin="10,10,5,0" Width="130" HorizontalAlignment="Left"/>
+                <Button x:Name="ChangeUser_btn" Content="Сменить" Width="80" Height="25" Margin="0,14,0,0" HorizontalAlignment="Right" Click="ChangeUser_btn_Click"/>
+            </StackPanel>
+            <TextBlock x:Name="CurrentDoctor_tb" FontSize="16" HorizontalAlignment="Left" Margin="10,5,5,0" TextWrapping="Wrap" Height="51" Width="219"/>
         </StackPanel>
 
         <TextBlock x:Name="CurrentPage_tb" FontSize="34" Grid.Column="2" Margin="5,26,0,0" Height="64" Width="378" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.RowSpan="2"><Run Language="ru-ru" Text="Не выбрана страница"/></TextBlock>
         <Image x:Name="Logo_img" Height="90" Width="90" Source="/assets/images/logo.png" Margin="10,13,10,13" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
 
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2">
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2" Height="300" VerticalAlignment="Top">
             <Button x:Name="Clients_btn" Height="35" Margin="10,10,10,5" FontSize="14" Content="Клиенты" Click="Clients_btn_Click"/>
             <Button x:Name="Services_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Услуги" Click="Services_btn_Click"/>
             <Button x:Name="Orders_btn" Height="35" Margin="10,5,10,5" FontSize="14" Content="Архив" Click="Orders_btn_Click"/>
         </StackPanel>
 
-        <Border x:Name="DG_brd" BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="2" Margin="5,10,10,50">
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2" Height="60" VerticalAlignment="Bottom">
+            <ToggleButton x:Name="DropdownButton" Style="{StaticResource DropdownToggleButtonStyle}" Content="Экспорт" Width="80" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10,10,10,-20" Grid.Row="2" Grid.Column="0"/>
+            <Popup Style="{StaticResource DropdownPopupStyle}" 
+                   PlacementTarget="{Binding ElementName=DropdownButton}" 
+                   Placement="Custom"
+                   CustomPopupPlacementCallback="OnCustomPopupPlacement"
+                   IsOpen="{Binding IsChecked, ElementName=DropdownButton, Mode=TwoWay}"
+                   StaysOpen="False">
+                <Border Style="{StaticResource DropdownMenuBorderStyle}">
+                    <StackPanel>
+                        <Button Style="{StaticResource DropdownButtonStyle}" Content=".pdf"/>
+                        <Button Style="{StaticResource DropdownButtonStyle}" Content=".xlsx"/>
+                        <Button Style="{StaticResource DropdownButtonStyle}" Content="placeholder"/>
+                    </StackPanel>
+                </Border>
+            </Popup>
+        </StackPanel>
+
+        <Border x:Name="DG_brd" BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="2" Margin="0,10,10,15">
             <Frame x:Name="DG_frm" NavigationUIVisibility="Hidden"/>
         </Border>
     </Grid>

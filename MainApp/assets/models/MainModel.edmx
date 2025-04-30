@@ -4,7 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HelixDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HelixDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="action_types">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="action_name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="clients">
           <Key>
             <PropertyRef Name="id" />
@@ -19,7 +26,7 @@
           <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="passport" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="card_number" Type="int" Nullable="false" />
-          <Property Name="card_balance" Type="float" Nullable="false" />
+          <Property Name="card_balance" Type="float" />
         </EntityType>
         <EntityType Name="clients_services">
           <Key>
@@ -33,6 +40,7 @@
           <Property Name="id_status" Type="int" Nullable="false" />
           <Property Name="id_staff" Type="int" Nullable="false" />
           <Property Name="id_order" Type="int" Nullable="false" />
+          <Property Name="date_cancelled" Type="datetime" />
         </EntityType>
         <EntityType Name="genders">
           <Key>
@@ -40,6 +48,18 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="gender_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="loyalty_transactions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="datetime" Type="datetime" Nullable="false" />
+          <Property Name="action_type" Type="int" Nullable="false" />
+          <Property Name="amount" Type="float" />
+          <Property Name="balance_after" Type="float" />
+          <Property Name="x_source" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="medical_services">
           <Key>
@@ -74,6 +94,7 @@
           <Property Name="id_role" Type="int" Nullable="false" />
           <Property Name="staff_login" Type="nvarchar" MaxLength="20" />
           <Property Name="staff_pwd" Type="nvarchar" MaxLength="50" />
+          <Property Name="hire_date" Type="datetime" />
         </EntityType>
         <EntityType Name="staff_roles">
           <Key>
@@ -99,6 +120,30 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <Association Name="FK__loyalty_t__actio__73BA3083">
+          <End Role="action_types" Type="Self.action_types" Multiplicity="1" />
+          <End Role="loyalty_transactions" Type="Self.loyalty_transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="action_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="loyalty_transactions">
+              <PropertyRef Name="action_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__loyalty_t__clien__72C60C4A">
+          <End Role="clients" Type="Self.clients" Multiplicity="1" />
+          <End Role="loyalty_transactions" Type="Self.loyalty_transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="loyalty_transactions">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_clients_services_clients">
           <End Role="clients" Type="Self.clients" Multiplicity="1" />
           <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
@@ -196,15 +241,25 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="HelixDBModelStoreContainer">
+          <EntitySet Name="action_types" EntityType="Self.action_types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="clients_services" EntityType="Self.clients_services" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genders" EntityType="Self.genders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="loyalty_transactions" EntityType="Self.loyalty_transactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="medical_services" EntityType="Self.medical_services" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="service_types" EntityType="Self.service_types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="staff" EntityType="Self.staff" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="staff_roles" EntityType="Self.staff_roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="statuses" EntityType="Self.statuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__loyalty_t__actio__73BA3083" Association="Self.FK__loyalty_t__actio__73BA3083">
+            <End Role="action_types" EntitySet="action_types" />
+            <End Role="loyalty_transactions" EntitySet="loyalty_transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__loyalty_t__clien__72C60C4A" Association="Self.FK__loyalty_t__clien__72C60C4A">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="loyalty_transactions" EntitySet="loyalty_transactions" />
+          </AssociationSet>
           <AssociationSet Name="fk_clients_services_clients" Association="Self.fk_clients_services_clients">
             <End Role="clients" EntitySet="clients" />
             <End Role="clients_services" EntitySet="clients_services" />
@@ -238,8 +293,7 @@
             <End Role="staff" EntitySet="staff" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HelixDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -247,43 +301,27 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="middle_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="id_gender" Type="Int32" Nullable="false" />
-          <Property Name="birth_date" Type="DateTime" Nullable="false" />
-          <Property Name="phone_number" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="passport" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="card_number" Type="Int32" Nullable="false" />
-          <Property Name="card_balance" Type="Double" Nullable="false" />
-          <NavigationProperty Name="clients_services" Relationship="Self.fk_clients_services_clients" FromRole="clients" ToRole="clients_services" />
+          <Property Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="first_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="last_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="middle_name" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="id_gender" Nullable="false" Type="Int32" />
+          <Property Name="birth_date" Nullable="false" Precision="0" Type="DateTime" />
+          <Property Name="phone_number" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="passport" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="card_number" Nullable="false" Type="Int32" />
+          <Property Name="card_balance" Type="Double" />
           <NavigationProperty Name="genders" Relationship="Self.fk_genders_clients" FromRole="clients" ToRole="genders" />
-        </EntityType>
-        <EntityType Name="clients_services">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_client" Type="Int32" Nullable="false" />
-          <Property Name="id_service" Type="Int32" Nullable="false" />
-          <Property Name="date_asked" Type="DateTime" Nullable="false" />
-          <Property Name="date_made" Type="DateTime" />
-          <Property Name="id_status" Type="Int32" Nullable="false" />
-          <Property Name="id_staff" Type="Int32" Nullable="false" />
-          <Property Name="id_order" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="clients" Relationship="Self.fk_clients_services_clients" FromRole="clients_services" ToRole="clients" />
-          <NavigationProperty Name="medical_services" Relationship="Self.fk_clients_services_medical_services" FromRole="clients_services" ToRole="medical_services" />
-          <NavigationProperty Name="staff" Relationship="Self.fk_clients_services_staff" FromRole="clients_services" ToRole="staff" />
-          <NavigationProperty Name="statuses" Relationship="Self.fk_clients_services_statuses" FromRole="clients_services" ToRole="statuses" />
+          <NavigationProperty Name="loyalty_transactions" Relationship="HelixDBModel.FK__loyalty_t__clien__72C60C4A" FromRole="clients" ToRole="loyalty_transactions" />
+          <NavigationProperty Name="clients_services" Relationship="HelixDBModel.fk_clients_services_clients" FromRole="clients" ToRole="clients_services" />
         </EntityType>
         <EntityType Name="genders">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="gender_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="gender_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
           <NavigationProperty Name="clients" Relationship="Self.fk_genders_clients" FromRole="genders" ToRole="clients" />
           <NavigationProperty Name="staff" Relationship="Self.fk_staff_genders" FromRole="genders" ToRole="staff" />
         </EntityType>
@@ -291,83 +329,72 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_type" Type="Int32" Nullable="false" />
-          <Property Name="mservice_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="mservice_description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="mservice_icd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="mservice_price" Type="Double" Nullable="false" />
-          <Property Name="extra_info" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="clients_services" Relationship="Self.fk_clients_services_medical_services" FromRole="medical_services" ToRole="clients_services" />
+          <Property Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="id_type" Nullable="false" Type="Int32" />
+          <Property Name="mservice_name" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="mservice_description" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="mservice_icd" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="mservice_price" Nullable="false" Type="Double" />
+          <Property Name="extra_info" MaxLength="1000" FixedLength="false" Unicode="true" Type="String" />
           <NavigationProperty Name="service_types" Relationship="Self.fk_medical_services_service_types" FromRole="medical_services" ToRole="service_types" />
+          <NavigationProperty Name="clients_services" Relationship="HelixDBModel.fk_clients_services_medical_services" FromRole="medical_services" ToRole="clients_services" />
         </EntityType>
         <EntityType Name="service_types">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="stype_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="stype_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
           <NavigationProperty Name="medical_services" Relationship="Self.fk_medical_services_service_types" FromRole="service_types" ToRole="medical_services" />
         </EntityType>
         <EntityType Name="staff">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="middle_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="id_gender" Type="Int32" Nullable="false" />
-          <Property Name="birth_date" Type="DateTime" Nullable="false" />
-          <Property Name="phone_number" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="id_role" Type="Int32" Nullable="false" />
-          <Property Name="staff_login" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="staff_pwd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="clients_services" Relationship="Self.fk_clients_services_staff" FromRole="staff" ToRole="clients_services" />
+          <Property Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="first_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="last_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="middle_name" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="id_gender" Nullable="false" Type="Int32" />
+          <Property Name="birth_date" Nullable="false" Precision="0" Type="DateTime" />
+          <Property Name="phone_number" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="id_role" Nullable="false" Type="Int32" />
+          <Property Name="staff_login" MaxLength="20" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="staff_pwd" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
           <NavigationProperty Name="genders" Relationship="Self.fk_staff_genders" FromRole="staff" ToRole="genders" />
           <NavigationProperty Name="staff_roles" Relationship="Self.fk_staff_staff_roles" FromRole="staff" ToRole="staff_roles" />
+          <NavigationProperty Name="clients_services" Relationship="HelixDBModel.fk_clients_services_staff" FromRole="staff" ToRole="clients_services" />
+          <Property Name="hire_date" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="staff_roles">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="role_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="role_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
           <NavigationProperty Name="staff" Relationship="Self.fk_staff_staff_roles" FromRole="staff_roles" ToRole="staff" />
         </EntityType>
         <EntityType Name="statuses">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="status_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="clients_services" Relationship="Self.fk_clients_services_statuses" FromRole="statuses" ToRole="clients_services" />
+          <Property Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="status_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
+          <NavigationProperty Name="clients_services" Relationship="HelixDBModel.fk_clients_services_statuses" FromRole="statuses" ToRole="clients_services" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="principal_id" Nullable="false" Type="Int32" />
+          <Property Name="diagram_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
           <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="definition" MaxLength="Max" FixedLength="false" Type="Binary" />
         </EntityType>
-        <Association Name="fk_clients_services_clients">
-          <End Role="clients" Type="Self.clients" Multiplicity="1" />
-          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="clients">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="clients_services">
-              <PropertyRef Name="id_client" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_genders_clients">
-          <End Role="genders" Type="Self.genders" Multiplicity="1" />
-          <End Role="clients" Type="Self.clients" Multiplicity="*" />
+          <End Type="Self.genders" Multiplicity="1" Role="genders" />
+          <End Type="Self.clients" Multiplicity="*" Role="clients" />
           <ReferentialConstraint>
             <Principal Role="genders">
               <PropertyRef Name="id" />
@@ -377,45 +404,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_clients_services_medical_services">
-          <End Role="medical_services" Type="Self.medical_services" Multiplicity="1" />
-          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="medical_services">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="clients_services">
-              <PropertyRef Name="id_service" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_clients_services_staff">
-          <End Role="staff" Type="Self.staff" Multiplicity="1" />
-          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="staff">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="clients_services">
-              <PropertyRef Name="id_staff" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_clients_services_statuses">
-          <End Role="statuses" Type="Self.statuses" Multiplicity="1" />
-          <End Role="clients_services" Type="Self.clients_services" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="statuses">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="clients_services">
-              <PropertyRef Name="id_status" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_staff_genders">
-          <End Role="genders" Type="Self.genders" Multiplicity="1" />
-          <End Role="staff" Type="Self.staff" Multiplicity="*" />
+          <End Type="Self.genders" Multiplicity="1" Role="genders" />
+          <End Type="Self.staff" Multiplicity="*" Role="staff" />
           <ReferentialConstraint>
             <Principal Role="genders">
               <PropertyRef Name="id" />
@@ -426,8 +417,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_medical_services_service_types">
-          <End Role="service_types" Type="Self.service_types" Multiplicity="1" />
-          <End Role="medical_services" Type="Self.medical_services" Multiplicity="*" />
+          <End Type="Self.service_types" Multiplicity="1" Role="service_types" />
+          <End Type="Self.medical_services" Multiplicity="*" Role="medical_services" />
           <ReferentialConstraint>
             <Principal Role="service_types">
               <PropertyRef Name="id" />
@@ -438,8 +429,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_staff_staff_roles">
-          <End Role="staff_roles" Type="Self.staff_roles" Multiplicity="1" />
-          <End Role="staff" Type="Self.staff" Multiplicity="*" />
+          <End Type="Self.staff_roles" Multiplicity="1" Role="staff_roles" />
+          <End Type="Self.staff" Multiplicity="*" Role="staff" />
           <ReferentialConstraint>
             <Principal Role="staff_roles">
               <PropertyRef Name="id" />
@@ -451,7 +442,6 @@
         </Association>
         <EntityContainer Name="HelixDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="clients" EntityType="Self.clients" />
-          <EntitySet Name="clients_services" EntityType="Self.clients_services" />
           <EntitySet Name="genders" EntityType="Self.genders" />
           <EntitySet Name="medical_services" EntityType="Self.medical_services" />
           <EntitySet Name="service_types" EntityType="Self.service_types" />
@@ -459,39 +449,162 @@
           <EntitySet Name="staff_roles" EntityType="Self.staff_roles" />
           <EntitySet Name="statuses" EntityType="Self.statuses" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <AssociationSet Name="fk_clients_services_clients" Association="Self.fk_clients_services_clients">
+          <AssociationSet Name="fk_genders_clients" Association="Self.fk_genders_clients">
+            <End EntitySet="genders" Role="genders" />
+            <End EntitySet="clients" Role="clients" />
+          </AssociationSet>
+          <AssociationSet Name="fk_staff_genders" Association="Self.fk_staff_genders">
+            <End EntitySet="genders" Role="genders" />
+            <End EntitySet="staff" Role="staff" />
+          </AssociationSet>
+          <AssociationSet Name="fk_medical_services_service_types" Association="Self.fk_medical_services_service_types">
+            <End EntitySet="service_types" Role="service_types" />
+            <End EntitySet="medical_services" Role="medical_services" />
+          </AssociationSet>
+          <AssociationSet Name="fk_staff_staff_roles" Association="Self.fk_staff_staff_roles">
+            <End EntitySet="staff_roles" Role="staff_roles" />
+            <End EntitySet="staff" Role="staff" />
+          </AssociationSet>
+          <EntitySet Name="action_types" EntityType="HelixDBModel.action_types" />
+          <EntitySet Name="loyalty_transactions" EntityType="HelixDBModel.loyalty_transactions" />
+          <AssociationSet Name="FK__loyalty_t__actio__73BA3083" Association="HelixDBModel.FK__loyalty_t__actio__73BA3083">
+            <End EntitySet="action_types" Role="action_types" />
+            <End EntitySet="loyalty_transactions" Role="loyalty_transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__loyalty_t__clien__72C60C4A" Association="HelixDBModel.FK__loyalty_t__clien__72C60C4A">
+            <End EntitySet="clients" Role="clients" />
+            <End EntitySet="loyalty_transactions" Role="loyalty_transactions" />
+          </AssociationSet>
+          <EntitySet Name="clients_services" EntityType="HelixDBModel.clients_services" />
+          <AssociationSet Name="fk_clients_services_clients" Association="HelixDBModel.fk_clients_services_clients">
             <End Role="clients" EntitySet="clients" />
             <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_genders_clients" Association="Self.fk_genders_clients">
-            <End Role="genders" EntitySet="genders" />
-            <End Role="clients" EntitySet="clients" />
-          </AssociationSet>
-          <AssociationSet Name="fk_clients_services_medical_services" Association="Self.fk_clients_services_medical_services">
+          <AssociationSet Name="fk_clients_services_medical_services" Association="HelixDBModel.fk_clients_services_medical_services">
             <End Role="medical_services" EntitySet="medical_services" />
             <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_clients_services_staff" Association="Self.fk_clients_services_staff">
+          <AssociationSet Name="fk_clients_services_staff" Association="HelixDBModel.fk_clients_services_staff">
             <End Role="staff" EntitySet="staff" />
             <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_clients_services_statuses" Association="Self.fk_clients_services_statuses">
+          <AssociationSet Name="fk_clients_services_statuses" Association="HelixDBModel.fk_clients_services_statuses">
             <End Role="statuses" EntitySet="statuses" />
             <End Role="clients_services" EntitySet="clients_services" />
           </AssociationSet>
-          <AssociationSet Name="fk_staff_genders" Association="Self.fk_staff_genders">
-            <End Role="genders" EntitySet="genders" />
-            <End Role="staff" EntitySet="staff" />
-          </AssociationSet>
-          <AssociationSet Name="fk_medical_services_service_types" Association="Self.fk_medical_services_service_types">
-            <End Role="service_types" EntitySet="service_types" />
-            <End Role="medical_services" EntitySet="medical_services" />
-          </AssociationSet>
-          <AssociationSet Name="fk_staff_staff_roles" Association="Self.fk_staff_staff_roles">
-            <End Role="staff_roles" EntitySet="staff_roles" />
-            <End Role="staff" EntitySet="staff" />
-          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="action_types">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="action_name" MaxLength="100" FixedLength="false" Unicode="true" Type="String" />
+          <NavigationProperty Name="loyalty_transactions" Relationship="HelixDBModel.FK__loyalty_t__actio__73BA3083" FromRole="action_types" ToRole="loyalty_transactions" />
+        </EntityType>
+        <EntityType Name="loyalty_transactions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="client_id" Nullable="false" Type="Int32" />
+          <Property Name="datetime" Nullable="false" Precision="3" Type="DateTime" />
+          <Property Name="action_type" Nullable="false" Type="Int32" />
+          <Property Name="amount" Type="Double" />
+          <Property Name="balance_after" Type="Double" />
+          <Property Name="x_source" MaxLength="255" FixedLength="false" Unicode="true" Type="String" />
+          <NavigationProperty Name="action_types" Relationship="HelixDBModel.FK__loyalty_t__actio__73BA3083" FromRole="loyalty_transactions" ToRole="action_types" />
+          <NavigationProperty Name="clients" Relationship="HelixDBModel.FK__loyalty_t__clien__72C60C4A" FromRole="loyalty_transactions" ToRole="clients" />
+        </EntityType>
+        <Association Name="FK__loyalty_t__actio__73BA3083">
+          <End Type="HelixDBModel.action_types" Multiplicity="1" Role="action_types" />
+          <End Type="HelixDBModel.loyalty_transactions" Multiplicity="*" Role="loyalty_transactions" />
+          <ReferentialConstraint>
+            <Principal Role="action_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="loyalty_transactions">
+              <PropertyRef Name="action_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__loyalty_t__clien__72C60C4A">
+          <End Type="HelixDBModel.clients" Multiplicity="1" Role="clients" />
+          <End Type="HelixDBModel.loyalty_transactions" Multiplicity="*" Role="loyalty_transactions" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="loyalty_transactions">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="clients_services">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_client" Type="Int32" Nullable="false" />
+          <Property Name="id_service" Type="Int32" Nullable="false" />
+          <Property Name="date_asked" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="date_made" Type="DateTime" Precision="3" />
+          <Property Name="id_status" Type="Int32" Nullable="false" />
+          <Property Name="id_staff" Type="Int32" Nullable="false" />
+          <Property Name="id_order" Type="Int32" Nullable="false" />
+          <Property Name="date_cancelled" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="clients" Relationship="HelixDBModel.fk_clients_services_clients" FromRole="clients_services" ToRole="clients" />
+          <NavigationProperty Name="medical_services" Relationship="HelixDBModel.fk_clients_services_medical_services" FromRole="clients_services" ToRole="medical_services" />
+          <NavigationProperty Name="staff" Relationship="HelixDBModel.fk_clients_services_staff" FromRole="clients_services" ToRole="staff" />
+          <NavigationProperty Name="statuses" Relationship="HelixDBModel.fk_clients_services_statuses" FromRole="clients_services" ToRole="statuses" />
+        </EntityType>
+        <Association Name="fk_clients_services_clients">
+          <End Type="HelixDBModel.clients" Role="clients" Multiplicity="1" />
+          <End Type="HelixDBModel.clients_services" Role="clients_services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_clients_services_medical_services">
+          <End Type="HelixDBModel.medical_services" Role="medical_services" Multiplicity="1" />
+          <End Type="HelixDBModel.clients_services" Role="clients_services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medical_services">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_service" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_clients_services_staff">
+          <End Type="HelixDBModel.staff" Role="staff" Multiplicity="1" />
+          <End Type="HelixDBModel.clients_services" Role="clients_services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staff">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_staff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_clients_services_statuses">
+          <End Type="HelixDBModel.statuses" Role="statuses" Multiplicity="1" />
+          <End Type="HelixDBModel.clients_services" Role="clients_services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statuses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="clients_services">
+              <PropertyRef Name="id_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -512,20 +625,6 @@
                 <ScalarProperty Name="passport" ColumnName="passport" />
                 <ScalarProperty Name="card_number" ColumnName="card_number" />
                 <ScalarProperty Name="card_balance" ColumnName="card_balance" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="clients_services">
-            <EntityTypeMapping TypeName="HelixDBModel.clients_services">
-              <MappingFragment StoreEntitySet="clients_services">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="id_client" ColumnName="id_client" />
-                <ScalarProperty Name="id_service" ColumnName="id_service" />
-                <ScalarProperty Name="date_asked" ColumnName="date_asked" />
-                <ScalarProperty Name="date_made" ColumnName="date_made" />
-                <ScalarProperty Name="id_status" ColumnName="id_status" />
-                <ScalarProperty Name="id_staff" ColumnName="id_staff" />
-                <ScalarProperty Name="id_order" ColumnName="id_order" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -561,6 +660,7 @@
           <EntitySetMapping Name="staff">
             <EntityTypeMapping TypeName="HelixDBModel.staff">
               <MappingFragment StoreEntitySet="staff">
+                <ScalarProperty Name="hire_date" ColumnName="hire_date" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="first_name" ColumnName="first_name" />
                 <ScalarProperty Name="last_name" ColumnName="last_name" />
@@ -598,6 +698,42 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="action_types">
+            <EntityTypeMapping TypeName="HelixDBModel.action_types">
+              <MappingFragment StoreEntitySet="action_types">
+                <ScalarProperty Name="action_name" ColumnName="action_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="loyalty_transactions">
+            <EntityTypeMapping TypeName="HelixDBModel.loyalty_transactions">
+              <MappingFragment StoreEntitySet="loyalty_transactions">
+                <ScalarProperty Name="x_source" ColumnName="x_source" />
+                <ScalarProperty Name="balance_after" ColumnName="balance_after" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="action_type" ColumnName="action_type" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clients_services">
+            <EntityTypeMapping TypeName="HelixDBModel.clients_services">
+              <MappingFragment StoreEntitySet="clients_services">
+                <ScalarProperty Name="date_cancelled" ColumnName="date_cancelled" />
+                <ScalarProperty Name="id_order" ColumnName="id_order" />
+                <ScalarProperty Name="id_staff" ColumnName="id_staff" />
+                <ScalarProperty Name="id_status" ColumnName="id_status" />
+                <ScalarProperty Name="date_made" ColumnName="date_made" />
+                <ScalarProperty Name="date_asked" ColumnName="date_asked" />
+                <ScalarProperty Name="id_service" ColumnName="id_service" />
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

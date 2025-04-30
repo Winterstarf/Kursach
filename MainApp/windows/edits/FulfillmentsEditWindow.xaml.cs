@@ -64,20 +64,27 @@ namespace MainApp.windows.edits
             {
                 Services_lb.SelectedItems.Add(service);
             }
+
+            if (editFulfillmentData.SelectedStatus.id == 1)
+            {
+                Services_lb.IsEnabled = false;
+                SearchService_tb.IsEnabled = false;
+                DateMade_dp.IsEnabled = false;
+            }
         }
 
         private void Services_lb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItems = Services_lb.SelectedItems.Cast<medical_services>().ToList();
-            if (selectedItems.Count > 5)
+            if (selectedItems.Count > 10)
             {
-                // Remove the last selected item if the count exceeds 5
+                // Remove the last selected item if the count exceeds 
                 foreach (var item in e.AddedItems)
                 {
                     Services_lb.SelectedItems.Remove(item);
                 }
 
-                MessageBox.Show("Нельзя выбрать более чем 5 услуг");
+                MessageBox.Show("Нельзя выбрать более чем 10 услуг");
             }
             else
             {
@@ -108,46 +115,180 @@ namespace MainApp.windows.edits
             }
         }
 
-        private void Save_btn_Click(object sender, RoutedEventArgs e)
+        public void Save_btn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 var editFulfillmentData = (EditFulfillmentData)this.DataContext;
+                var existingServices = db_cont.clients_services.Where(cs => cs.id_order == orderId).ToList();
 
                 if (editFulfillmentData.SelectedClient == null || !editFulfillmentData.SelectedServices.Any()
-                    || editFulfillmentData.SelectedStatus == null || editFulfillmentData.SelectedStaff == null || DatePaid_dp.SelectedDate == null)
+                    || editFulfillmentData.SelectedStatus == null || editFulfillmentData.SelectedStaff == null)
                 {
                     throw new Exception("Некоторые поля не заполнены или заполнены неверными данными");
                 }
 
-                if ((editFulfillmentData.SelectedStatus.id != 1 && DateMade_dp.SelectedDate != null) || (editFulfillmentData.SelectedStatus.id != 2 && DateMade_dp.SelectedDate != null))
+                if (editFulfillmentData.SelectedStatus.id != 1 && DateMade_dp.SelectedDate != null)
                 {
-                    DateMade_dp.SelectedDate = null;
                     throw new Exception("Нельзя указывать дату выполнения при статусе Выполняется или Отменено");
                 }
 
-                // Delete existing services for the order
-                var existingServices = db_cont.clients_services.Where(cs => cs.id_order == orderId).ToList();
+                if (DatePaid_dp.SelectedDate != null && DatePaid_dp.SelectedDate > DateTime.Today)
+                {
+                    throw new Exception("Дата оплаты не может быть позже сегодняшнего дня");
+                }
+
+                if (!editFulfillmentData.SelectedServices.Any())
+                {
+                    throw new Exception("Не выбрано ни одной медицинской услуги");
+                }
+
+                var originalStatus = existingServices.First().id_status;
+                var newStatus = editFulfillmentData.SelectedStatus.id;
+                double totalPrice = editFulfillmentData.SelectedServices.Sum(s => s.mservice_price);
+                double bonus = Math.Round(totalPrice * 0.15, 2);
+                bool applyBonus = false;
+                bool revokeBonus = false;
+                loyalty_transactions loyaltyTx = null;
+                var client = editFulfillmentData.SelectedClient;
+
+                if (originalStatus == 1 && newStatus == 3)
+                {
+                    throw new Exception("Невозможно изменить статус на В процессе, так как заказ уже выполнен.");
+                }
+
+                if (originalStatus == 3 && newStatus == 2)
+                {
+                    var consent = MessageBox.Show("Вы отменяете заказ досрочно, баллы не начисляются и деньги не возвращаются. Продолжить?", "Подтверждение отмены досрочно", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (consent != MessageBoxResult.Yes)
+                    {
+                        editFulfillmentData.SelectedStatus = db_cont.statuses.First(s => s.id == originalStatus);
+                        return;
+                    }
+
+                    loyaltyTx = null;
+                    foreach (var existingService in existingServices)
+                    {
+                        existingService.date_cancelled = DateTime.Now;
+                        existingService.date_made = null;
+                    }
+                }
+
+                if (originalStatus == 1 && newStatus == 2)
+                {
+                    throw new Exception("Невозможно отменить заказ досрочно, так как заказ уже выполнен.");
+                }
+
+                if (originalStatus == 1 && newStatus == 5)
+                {
+                    var consent = MessageBox.Show("Вы отменяете заказ с возвратом, баллы будут списаны и деньги возвращены. Продолжить?", "Подтверждение отмены с возвратом", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (consent != MessageBoxResult.Yes)
+                    {
+                        editFulfillmentData.SelectedStatus = db_cont.statuses.First(s => s.id == originalStatus);
+                        return;
+                    }
+
+                    revokeBonus = true;
+                    client.card_balance = (client.card_balance ?? 0) - bonus;
+
+                    loyaltyTx = new loyalty_transactions
+                    {
+                        client_id = client.id,
+                        datetime = DateTime.Now,
+                        action_type = 2,
+                        amount = -bonus,
+                        balance_after = client.card_balance ?? 0,
+                        x_source = $"Отмена с возвратом заказа #{orderId}"
+                    };
+
+                    foreach (var existingService in existingServices)
+                    {
+                        existingService.date_cancelled = DateTime.Now;
+                    }
+                }
+
+                if (originalStatus == 3 && newStatus == 1)
+                {
+                    var consent = MessageBox.Show("Вы подтверждаете выполнение заказа. Будут начислены баллы. Продолжить?", "Подтверждение выполнения", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (consent != MessageBoxResult.Yes)
+                    {
+                        editFulfillmentData.SelectedStatus = db_cont.statuses.First(s => s.id == originalStatus);
+                        return;
+                    }
+
+                    applyBonus = true;
+                    client.card_balance = (client.card_balance ?? 0) + bonus;
+
+                    loyaltyTx = new loyalty_transactions
+                    {
+                        client_id = client.id,
+                        datetime = DateTime.Now,
+                        action_type = 1,
+                        amount = bonus,
+                        balance_after = client.card_balance ?? 0,
+                        x_source = $"Зачисление баллов по выполнению заказа #{orderId}"
+                    };
+                }
+
+                if (originalStatus == 1 && newStatus == 1)
+                {
+                    foreach (var existingService in existingServices)
+                    {
+                        if (existingService.date_made == null)
+                        {
+                            if (DateMade_dp.SelectedDate == null)
+                                throw new Exception("Не выбрана дата выполнения для статуса Выполнено");
+
+                            existingService.date_made = DateMade_dp.SelectedDate?.Add(DateTime.Now.TimeOfDay);
+                        }
+
+                        existingService.date_cancelled = null;
+                    }
+                }
+
+                if (originalStatus == 3 && newStatus == 5)
+                {
+                    throw new Exception("Невозможно отменить заказ с возвратом, так как заказ еще в процессе.");
+                }
+
+                // Переносим дату выполнения из существующей записи, если заказ уже был выполнен
+                DateTime? combinedDateTime = null;
+                if (originalStatus == 1)
+                {
+                    combinedDateTime = existingServices.FirstOrDefault()?.date_made;
+                }
+                else if (newStatus == 1)
+                {
+                    // Впервые устанавливаем дату выполнения
+                    if (DateMade_dp.SelectedDate == null)
+                        throw new Exception("Не выбрана дата выполнения для нового выполнения заказа");
+
+                    combinedDateTime = DateMade_dp.SelectedDate?.Add(DateTime.Now.TimeOfDay);
+                }
+
                 foreach (var existingService in existingServices)
                 {
                     db_cont.clients_services.DeleteObject(existingService);
                 }
-                db_cont.SaveChanges();
 
-                // Add updated services for the order
                 foreach (var selectedService in editFulfillmentData.SelectedServices)
                 {
-                    clients_services newService = new clients_services
+                    db_cont.clients_services.AddObject(new clients_services
                     {
-                        id_client = editFulfillmentData.SelectedClient.id,
+                        id_client = client.id,
                         id_service = selectedService.id,
                         id_order = orderId,
-                        date_asked = DatePaid_dp.SelectedDate.Value,
-                        date_made = DateMade_dp.SelectedDate,
-                        id_status = editFulfillmentData.SelectedStatus.id,
-                        id_staff = editFulfillmentData.SelectedStaff.id
-                    };
-                    db_cont.clients_services.AddObject(newService);
+                        date_asked = (DateTime)editFulfillmentData.SelectedDatePaid,
+                        date_made = combinedDateTime,
+                        id_status = newStatus,
+                        id_staff = editFulfillmentData.SelectedStaff.id,
+                        date_cancelled = (newStatus == 2 || newStatus == 5) ? DateTime.Now : (DateTime?)null
+                    });
+                }
+
+                if (applyBonus || revokeBonus)
+                {
+                    db_cont.loyalty_transactions.AddObject(loyaltyTx);
                 }
 
                 db_cont.SaveChanges();

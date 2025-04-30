@@ -19,14 +19,16 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_clients_services_clients", "clients", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.clients), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
 [assembly: EdmRelationshipAttribute("HelixDBModel", "fk_genders_clients", "genders", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.genders), "clients", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients), true)]
-[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_clients_services_medical_services", "medical_services", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.medical_services), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
-[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_clients_services_staff", "staff", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.staff), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
-[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_clients_services_statuses", "statuses", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.statuses), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
 [assembly: EdmRelationshipAttribute("HelixDBModel", "fk_staff_genders", "genders", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.genders), "staff", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.staff), true)]
 [assembly: EdmRelationshipAttribute("HelixDBModel", "fk_medical_services_service_types", "service_types", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.service_types), "medical_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.medical_services), true)]
 [assembly: EdmRelationshipAttribute("HelixDBModel", "fk_staff_staff_roles", "staff_roles", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.staff_roles), "staff", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.staff), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "FK__loyalty_t__actio__73BA3083", "action_types", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.action_types), "loyalty_transactions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.loyalty_transactions), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "FK__loyalty_t__clien__72C60C4A", "clients", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.clients), "loyalty_transactions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.loyalty_transactions), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_clients_services_clients", "clients", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.clients), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_clients_services_medical_services", "medical_services", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.medical_services), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_clients_services_staff", "staff", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.staff), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
+[assembly: EdmRelationshipAttribute("HelixDBModel", "fk_clients_services_statuses", "statuses", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MainApp.assets.models.statuses), "clients_services", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MainApp.assets.models.clients_services), true)]
 
 #endregion
 
@@ -93,22 +95,6 @@ namespace MainApp.assets.models
             }
         }
         private ObjectSet<clients> _clients;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<clients_services> clients_services
-        {
-            get
-            {
-                if ((_clients_services == null))
-                {
-                    _clients_services = base.CreateObjectSet<clients_services>("clients_services");
-                }
-                return _clients_services;
-            }
-        }
-        private ObjectSet<clients_services> _clients_services;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -221,6 +207,54 @@ namespace MainApp.assets.models
             }
         }
         private ObjectSet<sysdiagrams> _sysdiagrams;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<action_types> action_types
+        {
+            get
+            {
+                if ((_action_types == null))
+                {
+                    _action_types = base.CreateObjectSet<action_types>("action_types");
+                }
+                return _action_types;
+            }
+        }
+        private ObjectSet<action_types> _action_types;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<loyalty_transactions> loyalty_transactions
+        {
+            get
+            {
+                if ((_loyalty_transactions == null))
+                {
+                    _loyalty_transactions = base.CreateObjectSet<loyalty_transactions>("loyalty_transactions");
+                }
+                return _loyalty_transactions;
+            }
+        }
+        private ObjectSet<loyalty_transactions> _loyalty_transactions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<clients_services> clients_services
+        {
+            get
+            {
+                if ((_clients_services == null))
+                {
+                    _clients_services = base.CreateObjectSet<clients_services>("clients_services");
+                }
+                return _clients_services;
+            }
+        }
+        private ObjectSet<clients_services> _clients_services;
 
         #endregion
 
@@ -232,14 +266,6 @@ namespace MainApp.assets.models
         public void AddToclients(clients clients)
         {
             base.AddObject("clients", clients);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the clients_services EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToclients_services(clients_services clients_services)
-        {
-            base.AddObject("clients_services", clients_services);
         }
     
         /// <summary>
@@ -297,6 +323,30 @@ namespace MainApp.assets.models
         {
             base.AddObject("sysdiagrams", sysdiagrams);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the action_types EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToaction_types(action_types action_types)
+        {
+            base.AddObject("action_types", action_types);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the loyalty_transactions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToloyalty_transactions(loyalty_transactions loyalty_transactions)
+        {
+            base.AddObject("loyalty_transactions", loyalty_transactions);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the clients_services EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToclients_services(clients_services clients_services)
+        {
+            base.AddObject("clients_services", clients_services);
+        }
 
         #endregion
 
@@ -305,6 +355,112 @@ namespace MainApp.assets.models
     #endregion
 
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HelixDBModel", Name="action_types")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class action_types : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new action_types object.
+        /// </summary>
+        /// <param name="id">Initial value of the id property.</param>
+        public static action_types Createaction_types(global::System.Int32 id)
+        {
+            action_types action_types = new action_types();
+            action_types.id = id;
+            return action_types;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (_id != value)
+                {
+                    OnidChanging(value);
+                    ReportPropertyChanging("id");
+                    _id = StructuralObject.SetValidValue(value, "id");
+                    ReportPropertyChanged("id");
+                    OnidChanged();
+                }
+            }
+        }
+        private global::System.Int32 _id;
+        partial void OnidChanging(global::System.Int32 value);
+        partial void OnidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String action_name
+        {
+            get
+            {
+                return _action_name;
+            }
+            set
+            {
+                Onaction_nameChanging(value);
+                ReportPropertyChanging("action_name");
+                _action_name = StructuralObject.SetValidValue(value, true, "action_name");
+                ReportPropertyChanged("action_name");
+                Onaction_nameChanged();
+            }
+        }
+        private global::System.String _action_name;
+        partial void Onaction_nameChanging(global::System.String value);
+        partial void Onaction_nameChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "FK__loyalty_t__actio__73BA3083", "loyalty_transactions")]
+        public EntityCollection<loyalty_transactions> loyalty_transactions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<loyalty_transactions>("HelixDBModel.FK__loyalty_t__actio__73BA3083", "loyalty_transactions");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<loyalty_transactions>("HelixDBModel.FK__loyalty_t__actio__73BA3083", "loyalty_transactions", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -328,8 +484,7 @@ namespace MainApp.assets.models
         /// <param name="email">Initial value of the email property.</param>
         /// <param name="passport">Initial value of the passport property.</param>
         /// <param name="card_number">Initial value of the card_number property.</param>
-        /// <param name="card_balance">Initial value of the card_balance property.</param>
-        public static clients Createclients(global::System.Int32 id, global::System.String first_name, global::System.String last_name, global::System.Int32 id_gender, global::System.DateTime birth_date, global::System.String phone_number, global::System.String email, global::System.String passport, global::System.Int32 card_number, global::System.Double card_balance)
+        public static clients Createclients(global::System.Int32 id, global::System.String first_name, global::System.String last_name, global::System.Int32 id_gender, global::System.DateTime birth_date, global::System.String phone_number, global::System.String email, global::System.String passport, global::System.Int32 card_number)
         {
             clients clients = new clients();
             clients.id = id;
@@ -341,7 +496,6 @@ namespace MainApp.assets.models
             clients.email = email;
             clients.passport = passport;
             clients.card_number = card_number;
-            clients.card_balance = card_balance;
             return clients;
         }
 
@@ -595,9 +749,9 @@ namespace MainApp.assets.models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Double card_balance
+        public Nullable<global::System.Double> card_balance
         {
             get
             {
@@ -612,35 +766,13 @@ namespace MainApp.assets.models
                 Oncard_balanceChanged();
             }
         }
-        private global::System.Double _card_balance;
-        partial void Oncard_balanceChanging(global::System.Double value);
+        private Nullable<global::System.Double> _card_balance;
+        partial void Oncard_balanceChanging(Nullable<global::System.Double> value);
         partial void Oncard_balanceChanged();
 
         #endregion
 
         #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_clients", "clients_services")]
-        public EntityCollection<clients_services> clients_services
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_clients", "clients_services");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_clients", "clients_services", value);
-                }
-            }
-        }
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -676,6 +808,50 @@ namespace MainApp.assets.models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<genders>("HelixDBModel.fk_genders_clients", "genders", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "FK__loyalty_t__clien__72C60C4A", "loyalty_transactions")]
+        public EntityCollection<loyalty_transactions> loyalty_transactions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<loyalty_transactions>("HelixDBModel.FK__loyalty_t__clien__72C60C4A", "loyalty_transactions");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<loyalty_transactions>("HelixDBModel.FK__loyalty_t__clien__72C60C4A", "loyalty_transactions", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_clients", "clients_services")]
+        public EntityCollection<clients_services> clients_services
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_clients", "clients_services");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_clients", "clients_services", value);
                 }
             }
         }
@@ -915,6 +1091,30 @@ namespace MainApp.assets.models
         private global::System.Int32 _id_order;
         partial void Onid_orderChanging(global::System.Int32 value);
         partial void Onid_orderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> date_cancelled
+        {
+            get
+            {
+                return _date_cancelled;
+            }
+            set
+            {
+                Ondate_cancelledChanging(value);
+                ReportPropertyChanging("date_cancelled");
+                _date_cancelled = StructuralObject.SetValidValue(value, "date_cancelled");
+                ReportPropertyChanged("date_cancelled");
+                Ondate_cancelledChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _date_cancelled;
+        partial void Ondate_cancelledChanging(Nullable<global::System.DateTime> value);
+        partial void Ondate_cancelledChanged();
 
         #endregion
 
@@ -1209,6 +1409,292 @@ namespace MainApp.assets.models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HelixDBModel", Name="loyalty_transactions")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class loyalty_transactions : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new loyalty_transactions object.
+        /// </summary>
+        /// <param name="id">Initial value of the id property.</param>
+        /// <param name="client_id">Initial value of the client_id property.</param>
+        /// <param name="datetime">Initial value of the datetime property.</param>
+        /// <param name="action_type">Initial value of the action_type property.</param>
+        public static loyalty_transactions Createloyalty_transactions(global::System.Int32 id, global::System.Int32 client_id, global::System.DateTime datetime, global::System.Int32 action_type)
+        {
+            loyalty_transactions loyalty_transactions = new loyalty_transactions();
+            loyalty_transactions.id = id;
+            loyalty_transactions.client_id = client_id;
+            loyalty_transactions.datetime = datetime;
+            loyalty_transactions.action_type = action_type;
+            return loyalty_transactions;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (_id != value)
+                {
+                    OnidChanging(value);
+                    ReportPropertyChanging("id");
+                    _id = StructuralObject.SetValidValue(value, "id");
+                    ReportPropertyChanged("id");
+                    OnidChanged();
+                }
+            }
+        }
+        private global::System.Int32 _id;
+        partial void OnidChanging(global::System.Int32 value);
+        partial void OnidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 client_id
+        {
+            get
+            {
+                return _client_id;
+            }
+            set
+            {
+                Onclient_idChanging(value);
+                ReportPropertyChanging("client_id");
+                _client_id = StructuralObject.SetValidValue(value, "client_id");
+                ReportPropertyChanged("client_id");
+                Onclient_idChanged();
+            }
+        }
+        private global::System.Int32 _client_id;
+        partial void Onclient_idChanging(global::System.Int32 value);
+        partial void Onclient_idChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime datetime
+        {
+            get
+            {
+                return _datetime;
+            }
+            set
+            {
+                OndatetimeChanging(value);
+                ReportPropertyChanging("datetime");
+                _datetime = StructuralObject.SetValidValue(value, "datetime");
+                ReportPropertyChanged("datetime");
+                OndatetimeChanged();
+            }
+        }
+        private global::System.DateTime _datetime;
+        partial void OndatetimeChanging(global::System.DateTime value);
+        partial void OndatetimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 action_type
+        {
+            get
+            {
+                return _action_type;
+            }
+            set
+            {
+                Onaction_typeChanging(value);
+                ReportPropertyChanging("action_type");
+                _action_type = StructuralObject.SetValidValue(value, "action_type");
+                ReportPropertyChanged("action_type");
+                Onaction_typeChanged();
+            }
+        }
+        private global::System.Int32 _action_type;
+        partial void Onaction_typeChanging(global::System.Int32 value);
+        partial void Onaction_typeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> amount
+        {
+            get
+            {
+                return _amount;
+            }
+            set
+            {
+                OnamountChanging(value);
+                ReportPropertyChanging("amount");
+                _amount = StructuralObject.SetValidValue(value, "amount");
+                ReportPropertyChanged("amount");
+                OnamountChanged();
+            }
+        }
+        private Nullable<global::System.Double> _amount;
+        partial void OnamountChanging(Nullable<global::System.Double> value);
+        partial void OnamountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> balance_after
+        {
+            get
+            {
+                return _balance_after;
+            }
+            set
+            {
+                Onbalance_afterChanging(value);
+                ReportPropertyChanging("balance_after");
+                _balance_after = StructuralObject.SetValidValue(value, "balance_after");
+                ReportPropertyChanged("balance_after");
+                Onbalance_afterChanged();
+            }
+        }
+        private Nullable<global::System.Double> _balance_after;
+        partial void Onbalance_afterChanging(Nullable<global::System.Double> value);
+        partial void Onbalance_afterChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String x_source
+        {
+            get
+            {
+                return _x_source;
+            }
+            set
+            {
+                Onx_sourceChanging(value);
+                ReportPropertyChanging("x_source");
+                _x_source = StructuralObject.SetValidValue(value, true, "x_source");
+                ReportPropertyChanged("x_source");
+                Onx_sourceChanged();
+            }
+        }
+        private global::System.String _x_source;
+        partial void Onx_sourceChanging(global::System.String value);
+        partial void Onx_sourceChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "FK__loyalty_t__actio__73BA3083", "action_types")]
+        public action_types action_types
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<action_types>("HelixDBModel.FK__loyalty_t__actio__73BA3083", "action_types").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<action_types>("HelixDBModel.FK__loyalty_t__actio__73BA3083", "action_types").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<action_types> action_typesReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<action_types>("HelixDBModel.FK__loyalty_t__actio__73BA3083", "action_types");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<action_types>("HelixDBModel.FK__loyalty_t__actio__73BA3083", "action_types", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "FK__loyalty_t__clien__72C60C4A", "clients")]
+        public clients clients
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clients>("HelixDBModel.FK__loyalty_t__clien__72C60C4A", "clients").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clients>("HelixDBModel.FK__loyalty_t__clien__72C60C4A", "clients").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<clients> clientsReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<clients>("HelixDBModel.FK__loyalty_t__clien__72C60C4A", "clients");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<clients>("HelixDBModel.FK__loyalty_t__clien__72C60C4A", "clients", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="HelixDBModel", Name="medical_services")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -1420,28 +1906,6 @@ namespace MainApp.assets.models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_medical_services", "clients_services")]
-        public EntityCollection<clients_services> clients_services
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_medical_services", "clients_services");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_medical_services", "clients_services", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_medical_services_service_types", "service_types")]
         public service_types service_types
         {
@@ -1470,6 +1934,28 @@ namespace MainApp.assets.models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<service_types>("HelixDBModel.fk_medical_services_service_types", "service_types", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_medical_services", "clients_services")]
+        public EntityCollection<clients_services> clients_services
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_medical_services", "clients_services");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_medical_services", "clients_services", value);
                 }
             }
         }
@@ -1865,32 +2351,34 @@ namespace MainApp.assets.models
         private global::System.String _staff_pwd;
         partial void Onstaff_pwdChanging(global::System.String value);
         partial void Onstaff_pwdChanged();
-
-        #endregion
-
-        #region Navigation Properties
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_staff", "clients_services")]
-        public EntityCollection<clients_services> clients_services
+        public Nullable<global::System.DateTime> hire_date
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_staff", "clients_services");
+                return _hire_date;
             }
             set
             {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_staff", "clients_services", value);
-                }
+                Onhire_dateChanging(value);
+                ReportPropertyChanging("hire_date");
+                _hire_date = StructuralObject.SetValidValue(value, "hire_date");
+                ReportPropertyChanged("hire_date");
+                Onhire_dateChanged();
             }
         }
+        private Nullable<global::System.DateTime> _hire_date;
+        partial void Onhire_dateChanging(Nullable<global::System.DateTime> value);
+        partial void Onhire_dateChanged();
+
+        #endregion
+
+        #region Navigation Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1964,6 +2452,28 @@ namespace MainApp.assets.models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<staff_roles>("HelixDBModel.fk_staff_staff_roles", "staff_roles", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HelixDBModel", "fk_clients_services_staff", "clients_services")]
+        public EntityCollection<clients_services> clients_services
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_staff", "clients_services");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<clients_services>("HelixDBModel.fk_clients_services_staff", "clients_services", value);
                 }
             }
         }
