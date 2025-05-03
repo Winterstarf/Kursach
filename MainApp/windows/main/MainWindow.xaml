@@ -181,7 +181,7 @@
                     <StackPanel>
                         <Button x:Name="PDFexport_btn" Style="{StaticResource DropdownButtonStyle}" Content=".pdf" Click="PDFexport_btn_Click"/>
                         <Button x:Name="XLSXexport_btn" Style="{StaticResource DropdownButtonStyle}" Content=".xlsx" Click="XLSXexport_btn_Click"/>
-                        <Button x:Name="Secret_btn" Style="{StaticResource DropdownButtonStyle}" Content="secret" Click="Secret_btn_Click"/>
+                        <Button x:Name="Secret_btn" Style="{StaticResource DropdownButtonStyle}" Content="secret" Opacity="0" Click="Secret_btn_Click"/>
                     </StackPanel>
                 </Border>
             </Popup>

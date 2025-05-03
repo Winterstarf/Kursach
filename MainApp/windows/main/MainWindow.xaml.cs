@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Diagnostics;
+using System;
 
 namespace MainApp
 {
@@ -115,7 +116,19 @@ namespace MainApp
 
         private void Secret_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            string funny = "https://store.steampowered.com/app/420530/OneShot/";
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = funny,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Не удалось открыть смешнявку: " + ex.Message);
+            }
         }
     }
 }
