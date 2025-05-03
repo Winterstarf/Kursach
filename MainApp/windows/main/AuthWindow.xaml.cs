@@ -1,9 +1,11 @@
-﻿    using System;
+﻿using MainApp.classes;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace MainApp
@@ -46,7 +48,9 @@ namespace MainApp
 
                     if (dataSet.Tables[0].Rows.Count > 0)
                     {
-                        string userId = dataSet.Tables[0].Rows[0]["id"].ToString();
+                        WindowController.RemoveFocus(this);
+
+                        int userId = Convert.ToInt32(dataSet.Tables[0].Rows[0]["id"]);
                         string roleName = dataSet.Tables[0].Rows[0]["role_name"].ToString();
 
                         string lastName = dataSet.Tables[0].Rows[0]["last_name"].ToString();
@@ -55,39 +59,9 @@ namespace MainApp
                             ? ""
                             : dataSet.Tables[0].Rows[0]["middle_name"].ToString();
 
-                        string fullName = $"{lastName} {firstName} {middleName}".Trim();
-                        string fioShort = $"{lastName} {firstName[0]}.";
-                        if (!string.IsNullOrEmpty(middleName)) fioShort += $"{middleName[0]}.";
+                        string fioShort = $"{lastName} {firstName[0]}." + (!string.IsNullOrEmpty(middleName) ? $"{middleName[0]}." : "");
 
-                        this.Focus();
-
-                        // Check if MainWindow already exists
-                        var existingMainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-                        if (existingMainWindow != null)
-                        {
-                            existingMainWindow.SetAuthWindow(this);
-
-                            // Update existing MainWindow user data
-                            existingMainWindow.UpdateUserInfo(userId, username, roleName, fullName, fioShort);
-                            existingMainWindow.Show();
-                            existingMainWindow.Activate();
-                            this.Hide();
-                        }
-                        else
-                        {
-                            // Create new instance of MainWindow if none is found
-                            MainWindow m = new MainWindow(this)
-                            {
-                                CurrentUserId = userId,
-                                CurrentUserName = username,
-                                CurrentUserRole = roleName,
-                                CurrentUserFullName = fullName
-                            };
-
-                            m.CurrentDoctor_tb.Text = $"{fioShort}\n{m.CurrentUserRole}";
-                            m.Show();
-                            this.Hide();
-                        }
+                        WindowController.ShowMainWindow(userId, fioShort);
                     }
                     else if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password))
                         MessageBox.Show("Логин и пароль не введены");
@@ -111,7 +85,7 @@ namespace MainApp
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
+            WindowController.ExitApp();
         }
 
         private void eye_btn_Click(object sender, RoutedEventArgs e)
@@ -139,17 +113,23 @@ namespace MainApp
             PassPB.Password = PassTB.Text;
         }
 
+        /*
         private void Password_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Enter)
             {
+                // Явно снимаем фокус с текущего поля ввода
+                Keyboard.ClearFocus();  // Снимет фокус с текстовых полей
+                FocusManager.SetFocusedElement(this, null);  // Дополнительно снимаем фокус
+
+                // Обрабатываем логин, как если бы кнопка была нажата
                 LoginBtn_Click(sender, new RoutedEventArgs());
             }
-        }
+        }*/
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            System.Environment.Exit(0);
+            WindowController.ExitApp();
         }
 
         public void RestoreEyeState()
@@ -166,6 +146,13 @@ namespace MainApp
                 PassTB.Visibility = Visibility.Collapsed;
                 eye_btn_img.Source = new BitmapImage(new Uri("/assets/images/eye_open.png", UriKind.Relative));
             }
+        }
+
+        public void ClearInputs()
+        {
+            UsernameTB.Text = string.Empty;
+            PassPB.Password = string.Empty;
+            PassTB.Text = string.Empty;
         }
     }
 }

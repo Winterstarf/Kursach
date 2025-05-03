@@ -163,6 +163,13 @@ namespace MainApp.pages
             DG_Orders.ItemsSource = orders;
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (App.IsLimitedPerms)
+            {
+                Del_btn.IsEnabled = false;
+            }
+        }
     }
 
     public class OrderDisplay

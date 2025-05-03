@@ -1,7 +1,12 @@
-﻿using MainApp.pages;
+﻿using MainApp.assets.models;
+using MainApp.classes;
+using MainApp.pages;
+using MainApp.windows.main;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Diagnostics;
 
 namespace MainApp
 {
@@ -10,21 +15,15 @@ namespace MainApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        readonly ClientsPage clientsPage;
-        readonly ServicesPage servicesPage;
-        readonly OrdersPage ordersPage;
-        private AuthWindow authWindow;
+        public ClientsPage clientsPage;
+        public ServicesPage servicesPage;
+        public OrdersPage ordersPage;
 
-        public string CurrentUserId { get; set; }
-        public string CurrentUserName { get; set; }
-        public string CurrentUserRole { get; set; }
-        public string CurrentUserFullName { get; set; }
+        public int CurrentUserId { get; set; }
 
-        public MainWindow(AuthWindow aw)
+        public MainWindow()
         {
             InitializeComponent();
-
-            authWindow = aw;
 
             clientsPage = new ClientsPage();
             servicesPage = new ServicesPage();
@@ -52,7 +51,7 @@ namespace MainApp
 
         private void Window_Closed(object sender, System.EventArgs e)
         {
-            System.Environment.Exit(0);
+            WindowController.ExitApp();
         }
 
         private void Orders_btn_Click(object sender, RoutedEventArgs e)
@@ -66,30 +65,28 @@ namespace MainApp
             var res = MessageBox.Show("Вы уверены, что хотите сменить пользователя?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                authWindow.UsernameTB.Text = string.Empty;
-                authWindow.PassTB.Text = string.Empty;
-                authWindow.PassPB.Password = string.Empty;
-                authWindow.RestoreEyeState();
-                authWindow.Focus();
-                authWindow.Show();
-
-                this.Hide();
+                WindowController.ShowAuthWindow();
             }
         }
 
-        public void UpdateUserInfo(string userId, string userName, string userRole, string fullName, string fioShort)
+        public void UpdateUserInfo(int userId, string fioShort)
         {
-            CurrentUserId = userId;
-            CurrentUserName = userName;
-            CurrentUserRole = userRole;
-            CurrentUserFullName = fullName;
+            var db_cont = new HelixDBEntities();
+            var staff_member = db_cont.staff.FirstOrDefault(sr => sr.id == userId);
 
-            CurrentDoctor_tb.Text = $"{fioShort}\n{userRole}";
+            CurrentUserId = userId;
+            int id_role = staff_member.id_role; // 11 - all perms, 1 and 3 - limited
+            App.IsLimitedPerms = id_role != 11;
+
+            string rolename = db_cont.staff_roles.FirstOrDefault(srn => srn.id == id_role)?.role_name;
+            CurrentDoctor_tb.Text = $"{fioShort}\n{rolename}";
         }
 
-        public void SetAuthWindow(AuthWindow aw)
+        public void ReloadPages()
         {
-            authWindow = aw;
+            clientsPage = new ClientsPage();
+            servicesPage = new ServicesPage();
+            ordersPage = new OrdersPage();
         }
 
         private CustomPopupPlacement[] OnCustomPopupPlacement(Size popupSize, Size targetSize, Point offset)
@@ -102,6 +99,23 @@ namespace MainApp
             {
                 new CustomPopupPlacement(new Point(offsetX, offsetY), PopupPrimaryAxis.Horizontal)
             };
+        }
+
+        private void PDFexport_btn_Click(object sender, RoutedEventArgs e)
+        {
+            var ew = new ExportWindow() {export_type = "pdf", export_page_name = $"{CurrentPage_tb.Text}"};
+            ew.ShowDialog();
+        }
+
+        private void XLSXexport_btn_Click(object sender, RoutedEventArgs e)
+        {
+            var ew = new ExportWindow() {export_type = "xlsx", export_page_name = $"{CurrentPage_tb.Text}"};
+            ew.ShowDialog();
+        }
+
+        private void Secret_btn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

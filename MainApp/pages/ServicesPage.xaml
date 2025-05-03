@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:MainApp.pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ServicesPage">
+      Title="ServicesPage"
+      Loaded="Page_Loaded">
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="Background" Value="ForestGreen"/>
@@ -23,7 +24,7 @@
                         <Border Background="{TemplateBinding Background}" 
                                 CornerRadius="4"
                                 BorderBrush="Black"
-                                BorderThickness="0.5"
+                                BorderThickness="0.75"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" 
                                   VerticalAlignment="Center"/>
@@ -31,6 +32,13 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <!-- Когда кнопка отключена -->
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                    <Setter Property="Cursor" Value="Arrow"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="14"/>

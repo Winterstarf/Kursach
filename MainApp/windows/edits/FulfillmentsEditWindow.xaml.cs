@@ -27,11 +27,14 @@ namespace MainApp.windows.edits
 
             var clients = db_cont.clients.ToList();
             editFulfillmentData.ClientOptions = clients;
+
             var medical_services = db_cont.medical_services.ToList();
             editFulfillmentData.ServiceOptions = medical_services;
             editFulfillmentData.FilteredServiceOptions = medical_services;
+
             var statuses = db_cont.statuses.ToList();
             editFulfillmentData.StatusOptions = statuses;
+
             var staff = db_cont.staff.ToList();
             editFulfillmentData.StaffOptions = staff;
 
@@ -58,6 +61,10 @@ namespace MainApp.windows.edits
             editFulfillmentData.SelectedDatePaid = orderServices.First().date_asked;
             editFulfillmentData.SelectedDateMade = orderServices.First().date_made;
 
+            DatePaid_dp.SelectedDate = orderServices.First().date_asked;
+            var matched_services = orderServices.FirstOrDefault(sms => sms.id_status == 1 && sms.date_made != null);
+            if (matched_services != null) DateMade_dp.SelectedDate = matched_services.date_made;
+
             // Update the Services ListBox
             Services_lb.SelectedItems.Clear();
             foreach (var service in editFulfillmentData.SelectedServices)
@@ -70,6 +77,12 @@ namespace MainApp.windows.edits
                 Services_lb.IsEnabled = false;
                 SearchService_tb.IsEnabled = false;
                 DateMade_dp.IsEnabled = false;
+            }
+
+            if (editFulfillmentData.SelectedStatus.id == 3)
+            {
+                Services_lb.IsEnabled = false;
+                SearchService_tb.IsEnabled = false;
             }
         }
 
@@ -122,13 +135,15 @@ namespace MainApp.windows.edits
                 var editFulfillmentData = (EditFulfillmentData)this.DataContext;
                 var existingServices = db_cont.clients_services.Where(cs => cs.id_order == orderId).ToList();
 
-                if (editFulfillmentData.SelectedClient == null || !editFulfillmentData.SelectedServices.Any()
-                    || editFulfillmentData.SelectedStatus == null || editFulfillmentData.SelectedStaff == null)
+                var originalStatus = existingServices.First().id_status;
+                var newStatus = editFulfillmentData.SelectedStatus.id;
+
+                if (editFulfillmentData.SelectedClient == null || editFulfillmentData.SelectedStatus == null || editFulfillmentData.SelectedStaff == null)
                 {
                     throw new Exception("Некоторые поля не заполнены или заполнены неверными данными");
                 }
 
-                if (editFulfillmentData.SelectedStatus.id != 1 && DateMade_dp.SelectedDate != null)
+                if (newStatus != 1 && originalStatus != 1 && DateMade_dp.SelectedDate != null)
                 {
                     throw new Exception("Нельзя указывать дату выполнения при статусе Выполняется или Отменено");
                 }
@@ -138,17 +153,17 @@ namespace MainApp.windows.edits
                     throw new Exception("Дата оплаты не может быть позже сегодняшнего дня");
                 }
 
-                if (!editFulfillmentData.SelectedServices.Any())
+                if (!editFulfillmentData.SelectedServices.Any() || Services_lb.SelectedItems == null)
                 {
                     throw new Exception("Не выбрано ни одной медицинской услуги");
                 }
 
-                var originalStatus = existingServices.First().id_status;
-                var newStatus = editFulfillmentData.SelectedStatus.id;
                 double totalPrice = editFulfillmentData.SelectedServices.Sum(s => s.mservice_price);
                 double bonus = Math.Round(totalPrice * 0.15, 2);
+
                 bool applyBonus = false;
                 bool revokeBonus = false;
+
                 loyalty_transactions loyaltyTx = null;
                 var client = editFulfillmentData.SelectedClient;
 

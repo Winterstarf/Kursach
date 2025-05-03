@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System;
 using MainApp.windows.edits;
 using MainApp.windows.main;
+using System.Windows.Documents;
 
 namespace MainApp.windows.adds
 {
@@ -35,25 +36,31 @@ namespace MainApp.windows.adds
             newFulfillmentData.SelectedStatus = statuses.FirstOrDefault(st => st.id == 3);
             var staff = db_cont.staff.ToList();
             newFulfillmentData.StaffOptions = staff;
+
+            DatePaid_dp.SelectedDate = DateTime.Now;
         }
 
         private void Services_lb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedItems = Services_lb.SelectedItems.Cast<medical_services>().ToList();
-            if (selectedItems.Count > 10)
+            if (Services_lb.SelectedItems != null)
             {
-                // Remove the last selected item if the count exceeds 10
-                foreach (var item in e.AddedItems)
+                var selectedItems = Services_lb.SelectedItems.Cast<medical_services>().ToList();
+                if (selectedItems.Count > 10)
                 {
-                    Services_lb.SelectedItems.Remove(item);
-                }
+                    // Remove the last selected item if the count exceeds 10
+                    foreach (var item in e.AddedItems)
+                    {
+                        Services_lb.SelectedItems.Remove(item);
+                    }
 
-                MessageBox.Show("Нельзя выбрать более чем 10 услуг");
+                    MessageBox.Show("Нельзя выбрать более чем 10 услуг");
+                }
+                else
+                {
+                    newFulfillmentData.SelectedServices = selectedItems;
+                }
             }
-            else
-            {
-                newFulfillmentData.SelectedServices = selectedItems;
-            }
+            else newFulfillmentData.SelectedServices = null;
         }
 
         private void SearchService_tb_TextChanged(object sender, TextChangedEventArgs e)
@@ -96,8 +103,7 @@ namespace MainApp.windows.adds
             {
                 var newFulfillmentData = (NewFulfillmentData)this.DataContext;
 
-                if (newFulfillmentData.SelectedClient == null || !newFulfillmentData.SelectedServices.Any()
-                    || newFulfillmentData.SelectedStatus == null || newFulfillmentData.SelectedStaff == null)
+                if (newFulfillmentData.SelectedClient == null || newFulfillmentData.SelectedStatus == null || newFulfillmentData.SelectedStaff == null)
                 {
                     throw new Exception("Некоторые поля не заполнены или заполнены неверными данными");
                 }
@@ -113,7 +119,7 @@ namespace MainApp.windows.adds
                     throw new Exception("Дата оплаты не может быть позже сегодняшнего дня");
                 }
 
-                if (newFulfillmentData.SelectedServices == null || !newFulfillmentData.SelectedServices.Any())
+                if (newFulfillmentData.SelectedServices == null || !newFulfillmentData.SelectedServices.Any() || Services_lb.SelectedItems == null || Services_lb.SelectedItems.Count == 0) 
                 {
                     throw new Exception("Не выбрано ни одной медицинской услуги");
                 }

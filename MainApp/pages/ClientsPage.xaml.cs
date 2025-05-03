@@ -126,5 +126,14 @@ namespace MainApp.pages
         {
             DG_Clients.SelectedItem = null;
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (App.IsLimitedPerms)
+            {
+                Update_btn.IsEnabled = false;
+                Del_btn.IsEnabled = false;
+            }
+        }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:MainApp.windows.main"
         mc:Ignorable="d"
         SizeToContent="Manual"
-        Title="Медкарта" MinHeight="550" MinWidth="700" Height="550" Width="700" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" Icon="/assets/images/logo.png">
+        Title="Медкарта" MinHeight="550" MinWidth="700" Height="550" Width="700" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" Icon="/assets/images/logo.png" Loaded="Window_Loaded">
 
     <Window.Resources>
         <!-- Стиль для кнопок с эффектами -->
@@ -23,7 +23,7 @@
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}"
                             BorderBrush="Black"
-                            BorderThickness="0.5"
+                            BorderThickness="0.75"
                             CornerRadius="4"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center"
@@ -32,6 +32,13 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <!-- Когда кнопка отключена -->
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                    <Setter Property="Cursor" Value="Arrow"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <!-- Стиль для TextBox -->
@@ -123,22 +130,22 @@
         <!-- Блок заказов -->
         <Border BorderBrush="Black" BorderThickness="1" Margin="10,6,4,10" Grid.Row="2" Background="WhiteSmoke" CornerRadius="6" x:Name="OrderBorder">
             <StackPanel Margin="5">
-                <Grid Margin="0,0,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <!-- для "Новый заказ" -->
-                        <ColumnDefinition Width="*" />
-                        <!-- пустое пространство -->
-                        <ColumnDefinition Width="Auto" />
-                        <!-- для "Изменить" -->
-                        <ColumnDefinition Width="Auto" />
-                        <!-- для "Удалить" -->
-                    </Grid.ColumnDefinitions>
+                <DockPanel LastChildFill="True" Margin="0,0,0,0">
+                    <!-- Кнопка слева -->
+                    <Button x:Name="AddOrderButton" Content="Новый заказ"
+                            Width="120" Height="25" Margin="5,5,5,5"
+                            DockPanel.Dock="Left" Click="AddOrderButton_Click" />
 
-                    <Button x:Name="AddOrderButton" Content="Новый заказ" Grid.Column="0" Width="120" Height="25" Margin="5,5,10,5" />
-                    <Button x:Name="EditOrderButton" Content="Изменить" Grid.Column="2" Width="70" Height="25" Margin="5,5,0,5" />
-                    <Button x:Name="DeleteOrderButton" Content="Удалить" Grid.Column="3" Width="65" Height="25" Margin="5,5,5,5" />
-                </Grid>
+                    <!-- Обертка для кнопок справа -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="EditOrderButton" Content="Изменить"
+                                Width="70" Height="25" Margin="5,5,0,5"
+                                Click="EditOrderButton_Click" />
+                        <Button x:Name="DeleteOrderButton" Content="Удалить"
+                                Width="65" Height="25" Margin="5,5,5,5"
+                                Click="DeleteOrderButton_Click" />
+                    </StackPanel>
+                </DockPanel>
 
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ListBox x:Name="OrdersListBox" DisplayMemberPath="OrderSummary" SelectionChanged="OrdersListBox_SelectionChanged" SelectionMode="Single" Margin="3" MouseDoubleClick="OrdersListBox_MouseDoubleClick" Height="{Binding ActualHeight, ElementName=OrderBorder, Converter={StaticResource HeightOffsetConverter}, ConverterParameter=55}">

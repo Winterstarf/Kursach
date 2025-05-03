@@ -19,7 +19,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
+        
+        <!-- Стиль для Button -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="ForestGreen"/>
             <Setter Property="Foreground" Value="White"/>
@@ -27,7 +28,7 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Padding" Value="5,2"/>
             <Setter Property="Margin" Value="5"/>
-            <Setter Property="BorderThickness" Value="0.5"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -35,7 +36,7 @@
                         <Border Background="{TemplateBinding Background}" 
                                 CornerRadius="4"
                                 BorderBrush="Black"
-                                BorderThickness="0.5"
+                                BorderThickness="0.75"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" 
                               VerticalAlignment="Center"/>
@@ -107,6 +108,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <!-- Стиль для ToggleButton -->
         <Style TargetType="ToggleButton" x:Key="DropdownToggleButtonStyle">
             <Setter Property="Background" Value="ForestGreen"/>
             <Setter Property="Foreground" Value="White"/>
@@ -123,7 +126,7 @@
                                     Background="{TemplateBinding Background}"
                                     CornerRadius="4"
                                     BorderBrush="Black"
-                                    BorderThickness="0.5"
+                                    BorderThickness="0.75"
                                     Padding="{TemplateBinding Padding}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <ContentPresenter />
@@ -152,7 +155,7 @@
         <StackPanel Orientation="Vertical" Margin="617,0,0,0" Height="100" Width="245" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Пользователь:" FontSize="18" Height="25" Margin="10,10,5,0" Width="130" HorizontalAlignment="Left"/>
-                <Button x:Name="ChangeUser_btn" Content="Сменить" Width="80" Height="25" Margin="0,14,0,0" HorizontalAlignment="Right" Click="ChangeUser_btn_Click"/>
+                <Button x:Name="ChangeUser_btn" Content="Сменить" Width="80" Height="25" Margin="0,15,0,0" HorizontalAlignment="Right" Click="ChangeUser_btn_Click"/>
             </StackPanel>
             <TextBlock x:Name="CurrentDoctor_tb" FontSize="16" HorizontalAlignment="Left" Margin="10,5,5,0" TextWrapping="Wrap" Height="51" Width="219"/>
         </StackPanel>
@@ -176,9 +179,9 @@
                    StaysOpen="False">
                 <Border Style="{StaticResource DropdownMenuBorderStyle}">
                     <StackPanel>
-                        <Button Style="{StaticResource DropdownButtonStyle}" Content=".pdf"/>
-                        <Button Style="{StaticResource DropdownButtonStyle}" Content=".xlsx"/>
-                        <Button Style="{StaticResource DropdownButtonStyle}" Content="placeholder"/>
+                        <Button x:Name="PDFexport_btn" Style="{StaticResource DropdownButtonStyle}" Content=".pdf" Click="PDFexport_btn_Click"/>
+                        <Button x:Name="XLSXexport_btn" Style="{StaticResource DropdownButtonStyle}" Content=".xlsx" Click="XLSXexport_btn_Click"/>
+                        <Button x:Name="Secret_btn" Style="{StaticResource DropdownButtonStyle}" Content="secret" Click="Secret_btn_Click"/>
                     </StackPanel>
                 </Border>
             </Popup>

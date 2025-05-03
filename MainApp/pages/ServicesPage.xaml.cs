@@ -19,7 +19,6 @@ namespace MainApp.pages
         public ServicesPage()
         {
             InitializeComponent();
-
             DG_Services.ItemsSource = db_cont.medical_services.ToList();
         }
 
@@ -101,6 +100,15 @@ namespace MainApp.pages
         private void DG_Clients_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DG_Services.SelectedItem = null;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (App.IsLimitedPerms)
+            {
+                Update_btn.IsEnabled = false;
+                Del_btn.IsEnabled = false;
+            }
         }
     }
 }

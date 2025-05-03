@@ -3,11 +3,13 @@ using MainApp.windows.adds;
 using MainApp.windows.edits;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+
 
 namespace MainApp.windows.main
 {
@@ -50,7 +52,7 @@ namespace MainApp.windows.main
                                .Select(g => new Order
                                {
                                    OrderId = (int)g.Key,
-                                   OrderSummary = $"Заказ {g.Key} - {g.Count()} услуг(и).",
+                                   OrderSummary = $"Заказ {g.Key} - {g.Count()} услуг(и)",
                                    Services = g.ToList()
                                }).ToList();
 
@@ -161,7 +163,90 @@ namespace MainApp.windows.main
 
         private void CompleteOrder_btn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("пока что не работает");
+            try
+            {
+                if (OrdersListBox.SelectedItem == null)
+                {
+                    MessageBox.Show("Не выбран заказ для завершения.");
+                    return;
+                }
+
+                var selectedOrder = OrdersListBox.SelectedItem as Order;
+                var existingServices = selectedOrder.Services;
+
+                if (existingServices.Any(cs => cs.id_status == 1))
+                {
+                    var reconfirm = MessageBox.Show("Заказ уже был выполнен. Хотите изменить дату выполнения на текущую?", "Подтверждение повторного выполнения", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (reconfirm != MessageBoxResult.Yes) return;
+                    else
+                    {
+                        foreach (var service in existingServices)
+                        {
+                            service.date_made = DateTime.Now;
+                            service.date_cancelled = null;
+                        }
+                        db_cont.SaveChanges();
+
+                        LoadOrders();
+                        HideControls();
+                        return;
+                    }
+                }
+
+                // check if its able to be completed
+                if (existingServices.Any(cs => cs.id_status != 3))
+                {
+                    MessageBox.Show("Невозможно выполнить заказ находящийся в любом состоянии кроме 'Выполняется'");
+                    return;
+                }
+
+                // confirm
+                var confirmation = MessageBox.Show("Вы подтверждаете выполнение заказа? Баллы будут начислены.", "Подтверждение выполнения", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (confirmation != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+
+                // calc points
+                double totalPrice = existingServices.Sum(s => s.medical_services.mservice_price);
+                double bonus = Math.Round(totalPrice * 0.15, 2);
+                var client = db_cont.clients.FirstOrDefault(cl => cl.id == _selectedClient.id);
+
+                // upd status
+                foreach (var service in existingServices)
+                {
+                    service.id_status = 1;
+                    service.date_made = DateTime.Now;
+                    service.date_cancelled = null;
+                }
+                
+                // loyalty log
+                var loyaltyTx = new loyalty_transactions
+                {
+                    client_id = client.id,
+                    datetime = DateTime.Now,
+                    action_type = 1,
+                    amount = bonus,
+                    balance_after = (client.card_balance ?? 0) + bonus,
+                    x_source = $"Зачисление баллов по выполнению заказа #{selectedOrder.OrderId}"
+                };
+
+                // points accrual
+                client.card_balance = (client.card_balance ?? 0) + bonus;
+
+                db_cont.loyalty_transactions.AddObject(loyaltyTx);
+                db_cont.SaveChanges();
+
+                MessageBox.Show("Заказ успешно выполнен");
+
+                // upd ui
+                LoadOrders();
+                HideControls();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка: " + ex.Message);
+            }
         }
 
         private DateTime GetOrderDateAsked(int orderId)
@@ -206,6 +291,16 @@ namespace MainApp.windows.main
             sepa_sep.Visibility = Visibility.Hidden;
             sepa_sep2.Visibility = Visibility.Hidden;
             CompleteOrder_btn.Visibility = Visibility.Hidden;
+        }
+
+        
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (App.IsLimitedPerms)
+            {
+                EditOrderButton.IsEnabled = false;
+                DeleteOrderButton.IsEnabled = false;
+            }
         }
     }
 
