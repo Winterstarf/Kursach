@@ -7,6 +7,9 @@ using System.ComponentModel;
 using System;
 using MainApp.windows.main;
 using MainApp.windows.adds;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using MainApp.windows.edits;
+using Order = MainApp.windows.main.Order;
 
 namespace MainApp.windows.edits
 {

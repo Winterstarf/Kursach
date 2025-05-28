@@ -296,10 +296,13 @@ namespace MainApp.windows.main
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (App.IsLimitedPerms)
+            if (App.IsDoctor || App.IsLaborant)
             {
-                EditOrderButton.IsEnabled = false;
                 DeleteOrderButton.IsEnabled = false;
+            }
+            if (App.IsLaborant)
+            {
+                AddOrderButton.IsEnabled = false;
             }
         }
     }

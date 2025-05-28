@@ -35,62 +35,42 @@ namespace MainApp.pages
         {
             string[] searchWords = searchText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
+            var filteredServices = db_cont.clients_services
+                .Where(cs => cs.id_status == 1) // filtering by completed only
+                .ToList();
+
+            var groupedOrders = filteredServices
+                .GroupBy(cs => cs.id_order)
+                .Select(g =>
+                {
+                    var firstService = g.FirstOrDefault();
+                    if (firstService == null) return null;
+
+                    var client = firstService.clients;
+                    var status = db_cont.statuses.FirstOrDefault(s => s.id == firstService.id_status);
+
+                    return new OrderDisplay
+                    {
+                        OrderId = g.Key,
+                        ClientFullName = $"{client.last_name} {client.first_name} {client.middle_name}".Trim(),
+                        StatusName = status != null ? status.status_name : "Неизвестный статус",
+                        TotalPrice = g.Sum(cs => cs.medical_services.mservice_price),
+                        Services = g.ToList()
+                    };
+                })
+                .Where(o => o != null)
+                .ToList();
+
             if (searchWords.Length == 0)
             {
-                return db_cont.clients_services
-                    .GroupBy(cs => cs.id_order)
-                    .ToList()
-                    .Select(g =>
-                    {
-                        var firstService = g.FirstOrDefault();
-                        if (firstService == null) return null;
-
-                        var client = firstService.clients;
-                        var status = db_cont.statuses.FirstOrDefault(s => s.id == firstService.id_status);
-
-                        return new OrderDisplay
-                        {
-                            OrderId = g.Key,
-                            ClientFullName = $"{client.last_name} {client.first_name} {client.middle_name}".Trim(),
-                            StatusName = status != null ? status.status_name : "Неизвестный статус",
-                            TotalPrice = g.Sum(cs => cs.medical_services.mservice_price),
-                            Services = g.ToList()
-                        };
-                    })
-                    .Where(o => o != null)
-                    .ToList();
+                return groupedOrders;
             }
-            else
-            {
-                var allOrders = db_cont.clients_services
-                    .GroupBy(cs => cs.id_order)
-                    .ToList()
-                    .Select(g =>
-                    {
-                        var firstService = g.FirstOrDefault();
-                        if (firstService == null) return null;
 
-                        var client = firstService.clients;
-                        var status = db_cont.statuses.FirstOrDefault(s => s.id == firstService.id_status);
-
-                        return new OrderDisplay
-                        {
-                            OrderId = g.Key,
-                            ClientFullName = $"{client.last_name} {client.first_name} {client.middle_name}".Trim(),
-                            StatusName = status != null ? status.status_name : "Неизвестный статус",
-                            TotalPrice = g.Sum(cs => cs.medical_services.mservice_price),
-                            Services = g.ToList()
-                        };
-                    })
-                    .Where(o => o != null)
-                    .ToList();
-
-                return allOrders
-                    .Where(order => searchWords.All(word =>
-                        order.OrderId.ToString().ToLower().Contains(word.ToLower()) ||
-                        (order.ClientFullName != null && order.ClientFullName.ToLower().Contains(word.ToLower()))))
-                    .ToList();
-            }
+            return groupedOrders
+                .Where(order => searchWords.All(word =>
+                    order.OrderId.ToString().ToLower().Contains(word.ToLower()) ||
+                    (order.ClientFullName != null && order.ClientFullName.ToLower().Contains(word.ToLower()))))
+                .ToList();
         }
 
         public void Search_TextChanged(object sender, TextChangedEventArgs e)
@@ -165,7 +145,7 @@ namespace MainApp.pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (App.IsLimitedPerms)
+            if (App.IsDoctor || App.IsLaborant)
             {
                 Del_btn.IsEnabled = false;
             }

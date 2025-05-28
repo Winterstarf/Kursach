@@ -12,7 +12,9 @@ namespace MainApp
     /// </summary>
     public partial class App : Application
     {
-        public static bool IsLimitedPerms { get; set; } = false;
+        public static bool IsAdmin { get; set; } = false;
+        public static bool IsDoctor { get; set; } = false;
+        public static bool IsLaborant { get; set; } = false;
 
         protected override void OnStartup(StartupEventArgs e)
         {

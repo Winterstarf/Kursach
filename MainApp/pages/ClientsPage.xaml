@@ -69,6 +69,7 @@
         <Button x:Name="Medcard_btn" Margin="270,5,0,5" Width="210" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Просмотр/добавление заказов" Click="Medcard_btn_Click"/>
 
         <DataGrid x:Name="DG_Clients" ColumnWidth="*" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,40,0,0" SelectionUnit="FullRow" MouseDoubleClick="DG_Clients_MouseDoubleClick">
+            
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <Border BorderThickness="0" Background="DarkSeaGreen"  Padding="10">

@@ -129,10 +129,14 @@ namespace MainApp.pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (App.IsLimitedPerms)
+            if (App.IsDoctor || App.IsLaborant)
             {
                 Update_btn.IsEnabled = false;
                 Del_btn.IsEnabled = false;
+            }
+            if (App.IsLaborant)
+            {
+                Add_btn.IsEnabled = false;
             }
         }
     }

@@ -48,22 +48,34 @@ namespace MainApp
 
                     if (dataSet.Tables[0].Rows.Count > 0)
                     {
-                        WindowController.RemoveFocus(this);
+                        string roleId = dataSet.Tables[0].Rows[0]["id_role"].ToString();
+                        var allowedRoles = new[] {"11", "1", "8"};
+                        if (allowedRoles.Contains(roleId))
+                        {
+                            WindowController.RemoveFocus(this);
 
-                        int userId = Convert.ToInt32(dataSet.Tables[0].Rows[0]["id"]);
-                        string roleName = dataSet.Tables[0].Rows[0]["role_name"].ToString();
+                            int userId = Convert.ToInt32(dataSet.Tables[0].Rows[0]["id"]);
+                            string roleName = dataSet.Tables[0].Rows[0]["role_name"].ToString();
 
-                        string lastName = dataSet.Tables[0].Rows[0]["last_name"].ToString();
-                        string firstName = dataSet.Tables[0].Rows[0]["first_name"].ToString();
-                        string middleName = dataSet.Tables[0].Rows[0]["middle_name"] == DBNull.Value
-                            ? ""
-                            : dataSet.Tables[0].Rows[0]["middle_name"].ToString();
+                            string lastName = dataSet.Tables[0].Rows[0]["last_name"].ToString();
+                            string firstName = dataSet.Tables[0].Rows[0]["first_name"].ToString();
+                            string middleName = dataSet.Tables[0].Rows[0]["middle_name"] == DBNull.Value
+                                ? ""
+                                : dataSet.Tables[0].Rows[0]["middle_name"].ToString();
 
-                        string fioShort = $"{lastName} {firstName[0]}." + (!string.IsNullOrEmpty(middleName) ? $"{middleName[0]}." : "");
+                            string fioShort = $"{lastName} {firstName[0]}." + (!string.IsNullOrEmpty(middleName) ? $"{middleName[0]}." : "");
 
-                        WindowController.ShowMainWindow(userId, fioShort);
+                            WindowController.ShowMainWindow(userId, fioShort);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ваша должность не позволяет зайти в систему");
+                            ClearInputs();
+                            RestoreEyeState();
+                            return;
+                        }
                     }
-                    else if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password))
+                        else if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password))
                         MessageBox.Show("Логин и пароль не введены");
                     else if (string.IsNullOrWhiteSpace(username))
                         MessageBox.Show("Логин не введён");
@@ -112,20 +124,6 @@ namespace MainApp
         {
             PassPB.Password = PassTB.Text;
         }
-
-        /*
-        private void Password_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == System.Windows.Input.Key.Enter)
-            {
-                // Явно снимаем фокус с текущего поля ввода
-                Keyboard.ClearFocus();  // Снимет фокус с текстовых полей
-                FocusManager.SetFocusedElement(this, null);  // Дополнительно снимаем фокус
-
-                // Обрабатываем логин, как если бы кнопка была нажата
-                LoginBtn_Click(sender, new RoutedEventArgs());
-            }
-        }*/
 
         private void Window_Closed(object sender, EventArgs e)
         {
