@@ -18,7 +18,7 @@ namespace MainApp.windows.edits
         {
             InitializeComponent();
 
-            _selectedClient = client;
+            _selectedClient = client; //cont.clients.FirstOrDefault(c => c.id == client.id);
 
             var newClientData = new NewClientData
             {
