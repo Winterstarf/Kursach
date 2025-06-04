@@ -1,4 +1,5 @@
-﻿using MainApp.assets.models;
+﻿using MainApp;
+using MainApp.assets.models;
 using MainApp.windows.adds;
 using MainApp.windows.edits;
 using MainApp.windows.main;
