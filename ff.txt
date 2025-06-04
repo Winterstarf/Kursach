@@ -1,0 +1,62 @@
+Чтобы отображать связанные данные из двух таблиц в DataGrid, например, clients_services (услуги клиентов) и clients (сами клиенты), в WPF через Binding, тебе нужно создать DTO-класс (ViewModel), который объединяет данные из обеих таблиц в одну структуру.
+
+✅ Задача:
+Показать, например:
+
+№ заказа	ФИО клиента	Телефон	Название услуги	Статус
+101	Иванов И.И.	+7 900 ...	Анализ крови	Выполнено
+
+🛠️ Шаг 1: ViewModel (класс отображения)
+Создай класс, который будет объединять нужные поля из clients_services и clients:
+
+csharp
+Copy
+Edit
+public class ClientServiceDisplay
+{
+    public int OrderId { get; set; }
+    public string ClientFullName { get; set; }
+    public string PhoneNumber { get; set; }
+    public string ServiceName { get; set; }
+    public string StatusName { get; set; }
+}
+🛠️ Шаг 2: Формирование данных
+В Page_Loaded или Window_Loaded сделай LINQ-запрос:
+
+csharp
+Copy
+Edit
+var data = (from cs in db_cont.clients_services
+            join c in db_cont.clients on cs.id_client equals c.id
+            join s in db_cont.statuses on cs.id_status equals s.id
+            join ms in db_cont.medical_services on cs.id_service equals ms.id
+            select new ClientServiceDisplay
+            {
+                OrderId = cs.id_order ?? 0,
+                ClientFullName = c.last_name + " " + c.first_name + " " + c.middle_name,
+                PhoneNumber = c.phone_number,
+                ServiceName = ms.mservice_name,
+                StatusName = s.status_name
+            }).ToList();
+
+DG_Combined.ItemsSource = data;
+🛠️ Шаг 3: XAML DataGrid
+xml
+Copy
+Edit
+<DataGrid x:Name="DG_Combined" AutoGenerateColumns="False">
+    <DataGrid.Columns>
+        <DataGridTextColumn Header="№ Заказа" Binding="{Binding OrderId}" />
+        <DataGridTextColumn Header="ФИО клиента" Binding="{Binding ClientFullName}" />
+        <DataGridTextColumn Header="Телефон" Binding="{Binding PhoneNumber}" />
+        <DataGridTextColumn Header="Услуга" Binding="{Binding ServiceName}" />
+        <DataGridTextColumn Header="Статус" Binding="{Binding StatusName}" />
+    </DataGrid.Columns>
+</DataGrid>
+🧠 Объяснение:
+ClientServiceDisplay — обёртка для комбинированных данных.
+
+ItemsSource — задаётся как List<ClientServiceDisplay>.
+
+DataGridTextColumn связываются с полями обёртки через Binding.
+
