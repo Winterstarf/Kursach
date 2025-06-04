@@ -18,7 +18,7 @@ namespace MainApp
     {
         private bool isPasswordVisible = false;
 
-        public AuthWindow()
+        public AuthWindow() // гыча
         {
             InitializeComponent();
         }
