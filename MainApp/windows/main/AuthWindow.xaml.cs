@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Configuration;
 
 namespace MainApp
 {
@@ -24,12 +25,14 @@ namespace MainApp
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
+            var conn = ConfigurationManager.ConnectionStrings["HelixDB"].ConnectionString;
+
             string username = Convert.ToString(UsernameTB.Text);
             string password = PassPB.Password;
 
             try
             {
-                using (SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-QLMK9N;Initial Catalog=HelixDB;Integrated Security=SSPI"))
+                using (SqlConnection con = new SqlConnection(conn))
                 {
                     con.Open(); // will throw if the server isn't running or unreachable
 
