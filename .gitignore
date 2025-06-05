@@ -364,3 +364,8 @@ FodyWeavers.xsd
 
 # To prevent SQL Server password leaking
 App.config
+App.Config
+Kursach/MainApp/App.config
+Kursach/MainMSTest/App.config
+Kursach/MainApp/App.Config
+Kursach/MainMSTest/App.Config
