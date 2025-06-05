@@ -18,7 +18,7 @@ namespace MainApp.classes
     public static class Exporter
     {
         private static string connectionString = ConfigurationManager.ConnectionStrings["HelixDB"].ConnectionString;
-
+        // гыча v3
         public static async Task<List<ExpandoObject>> LoadDataAsync(string exportPageName, int? limit)
         {
             var data = new List<ExpandoObject>();
