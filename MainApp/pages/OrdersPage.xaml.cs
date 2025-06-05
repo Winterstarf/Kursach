@@ -108,6 +108,7 @@ namespace MainApp.pages
         private void Refresh_btn_Click(object sender, RoutedEventArgs e)
         {
             LoadOrders();
+            DG_Orders.SelectedItem = null;
         }
 
         private void DG_Orders_MouseDoubleClick(object sender, MouseButtonEventArgs e)
