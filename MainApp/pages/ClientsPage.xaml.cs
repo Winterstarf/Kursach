@@ -86,7 +86,8 @@ namespace MainApp.pages
 
         private void Refresh_btn_Click(object sender, RoutedEventArgs e)
         {
-            DG_Clients.ItemsSource = db_cont.clients.ToList(); 
+            DG_Clients.ItemsSource = db_cont.clients.ToList();
+            DG_Clients.SelectedItem = null;
         }
 
         private void Update_btn_Click(object sender, RoutedEventArgs e)
