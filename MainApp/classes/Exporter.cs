@@ -11,12 +11,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Configuration;
 
 namespace MainApp.classes
 {
     public static class Exporter
     {
-        private static string connectionString = "Data Source=DESKTOP-QLMK9N;Initial Catalog=HelixDB;Integrated Security=SSPI";
+        private static string connectionString = ConfigurationManager.ConnectionStrings["HelixDB"].ConnectionString;
 
         public static async Task<List<ExpandoObject>> LoadDataAsync(string exportPageName, int? limit)
         {
