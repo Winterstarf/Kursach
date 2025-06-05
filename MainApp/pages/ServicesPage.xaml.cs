@@ -78,6 +78,7 @@ namespace MainApp.pages
         private void Refresh_btn_Click(object sender, RoutedEventArgs e)
         {
             DG_Services.ItemsSource = db_cont.medical_services.ToList();
+            DG_Services.SelectedItem = null;
         }
 
         private void Update_btn_Click(object sender, RoutedEventArgs e)
