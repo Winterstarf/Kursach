@@ -364,4 +364,3 @@ FodyWeavers.xsd
 
 # To prevent SQL Server password leaking
 App.config
-App.Config
