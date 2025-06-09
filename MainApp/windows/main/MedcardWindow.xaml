@@ -131,19 +131,22 @@
         <Border BorderBrush="Black" BorderThickness="1" Margin="10,6,4,10" Grid.Row="2" Background="WhiteSmoke" CornerRadius="6" x:Name="OrderBorder">
             <StackPanel Margin="5">
                 <DockPanel LastChildFill="True" Margin="0,0,0,0">
-                    <!-- Кнопка слева -->
+                    <!-- Left button -->
                     <Button x:Name="AddOrderButton" Content="Новый заказ"
                             Width="120" Height="25" Margin="5,5,5,5"
                             DockPanel.Dock="Left" Click="AddOrderButton_Click" />
 
-                    <!-- Обертка для кнопок справа -->
+                    <!-- Right buttons container -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button x:Name="EditOrderButton" Content="Изменить"
-                                Width="70" Height="25" Margin="5,5,0,5"
+                                Width="70" Height="25" Margin="5,5,5,5"
                                 Click="EditOrderButton_Click" />
+                        <!-- Delete button commented out -->
+                        <!--
                         <Button x:Name="DeleteOrderButton" Content="Удалить"
-                                Width="65" Height="25" Margin="5,5,5,5"
-                                Click="DeleteOrderButton_Click" />
+                            Width="65" Height="25" Margin="5,5,5,5"
+                            Click="DeleteOrderButton_Click" />
+                        -->
                     </StackPanel>
                 </DockPanel>
 

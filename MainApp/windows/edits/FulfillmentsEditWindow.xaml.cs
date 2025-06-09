@@ -40,6 +40,10 @@ namespace MainApp.windows.edits
 
             var staff = db_cont.staff.ToList();
             editFulfillmentData.StaffOptions = staff;
+            if (editFulfillmentData.SelectedStaff == null)
+            {
+                editFulfillmentData.SelectedStaff = staff.FirstOrDefault(s => s.id == App.CurrentUserId);
+            }
 
             LoadOrderDetails(selectedOrder);
         }

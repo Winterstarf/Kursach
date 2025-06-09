@@ -22,8 +22,6 @@ namespace MainApp
         public ServicesPage servicesPage;
         public OrdersPage ordersPage;
 
-        public int CurrentUserId { get; set; }
-
         public MainWindow()
         {
             InitializeComponent();
@@ -77,7 +75,7 @@ namespace MainApp
             var db_cont = new HelixDBEntities();
             var staff_member = db_cont.staff.FirstOrDefault(sr => sr.id == userId);
 
-            CurrentUserId = userId;
+            App.CurrentUserId = userId;
             int id_role = staff_member.id_role; // 11 - all perms, 1 - doctor (add clients, orders | edit orders)
             App.IsDoctor = id_role == 1; // 8 - laborant (edit orders)
             App.IsLaborant = id_role == 8;

@@ -41,6 +41,8 @@
           <Property Name="id_staff" Type="int" Nullable="false" />
           <Property Name="id_order" Type="int" Nullable="false" />
           <Property Name="date_cancelled" Type="datetime" />
+          <Property Name="total_sum" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="total_price" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="genders">
           <Key>
@@ -556,6 +558,8 @@
           <NavigationProperty Name="medical_services" Relationship="HelixDBModel.fk_clients_services_medical_services" FromRole="clients_services" ToRole="medical_services" />
           <NavigationProperty Name="staff" Relationship="HelixDBModel.fk_clients_services_staff" FromRole="clients_services" ToRole="staff" />
           <NavigationProperty Name="statuses" Relationship="HelixDBModel.fk_clients_services_statuses" FromRole="clients_services" ToRole="statuses" />
+          <Property Name="total_sum" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="total_price" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="fk_clients_services_clients">
           <End Type="HelixDBModel.clients" Role="clients" Multiplicity="1" />
@@ -725,6 +729,8 @@
           <EntitySetMapping Name="clients_services">
             <EntityTypeMapping TypeName="HelixDBModel.clients_services">
               <MappingFragment StoreEntitySet="clients_services">
+                <ScalarProperty Name="total_price" ColumnName="total_price" />
+                <ScalarProperty Name="total_sum" ColumnName="total_sum" />
                 <ScalarProperty Name="date_cancelled" ColumnName="date_cancelled" />
                 <ScalarProperty Name="id_order" ColumnName="id_order" />
                 <ScalarProperty Name="id_staff" ColumnName="id_staff" />

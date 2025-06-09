@@ -1115,6 +1115,54 @@ namespace MainApp.assets.models
         private Nullable<global::System.DateTime> _date_cancelled;
         partial void Ondate_cancelledChanging(Nullable<global::System.DateTime> value);
         partial void Ondate_cancelledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> total_sum
+        {
+            get
+            {
+                return _total_sum;
+            }
+            set
+            {
+                Ontotal_sumChanging(value);
+                ReportPropertyChanging("total_sum");
+                _total_sum = StructuralObject.SetValidValue(value, "total_sum");
+                ReportPropertyChanged("total_sum");
+                Ontotal_sumChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _total_sum;
+        partial void Ontotal_sumChanging(Nullable<global::System.Decimal> value);
+        partial void Ontotal_sumChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> total_price
+        {
+            get
+            {
+                return _total_price;
+            }
+            set
+            {
+                Ontotal_priceChanging(value);
+                ReportPropertyChanging("total_price");
+                _total_price = StructuralObject.SetValidValue(value, "total_price");
+                ReportPropertyChanged("total_price");
+                Ontotal_priceChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _total_price;
+        partial void Ontotal_priceChanging(Nullable<global::System.Decimal> value);
+        partial void Ontotal_priceChanged();
 
         #endregion
 

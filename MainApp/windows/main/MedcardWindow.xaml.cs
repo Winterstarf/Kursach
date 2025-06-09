@@ -11,7 +11,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-
 namespace MainApp.windows.main
 {
     public partial class MedcardWindow : Window
@@ -31,12 +30,12 @@ namespace MainApp.windows.main
                 Lastname = _selectedClient.last_name,
                 Firstname = _selectedClient.first_name,
                 Middlename = _selectedClient.middle_name,
-                Gender = _selectedClient.genders.gender_name,
+                Gender = _selectedClient.genders != null ? _selectedClient.genders.gender_name : "",
                 Phone = _selectedClient.phone_number,
                 Email = _selectedClient.email,
                 Passport = _selectedClient.passport,
-                Card_number = _selectedClient.card_number.ToString(),
-                Card_balance = _selectedClient.card_balance.ToString()
+                Card_number = _selectedClient.card_number != null ? _selectedClient.card_number.ToString() : "",
+                Card_balance = _selectedClient.card_balance != null ? _selectedClient.card_balance.ToString() : ""
             };
             this.DataContext = ClientData;
 
@@ -45,17 +44,19 @@ namespace MainApp.windows.main
 
         private void LoadOrders()
         {
-            //Retrieve orders for the selected client
-            var ordersData = db_cont.clients_services
-                               .Where(cs => cs.id_client == _selectedClient.id)
-                               .GroupBy(cs => cs.id_order)
-                               .ToList()
-                               .Select(g => new Order
-                               {
-                                   OrderId = (int)g.Key,
-                                   OrderSummary = $"Заказ {g.Key} - {g.Count()} услуг(и)",
-                                   Services = g.ToList()
-                               }).ToList();
+            var services = db_cont.clients_services
+                .Where(cs => cs.id_client == _selectedClient.id)
+                .ToList();
+
+            var ordersData = services
+                .GroupBy(cs => cs.id_order)
+                .Select(g => new Order
+                {
+                    OrderId = g.Key,
+                    OrderSummary = $"Заказ {g.Key} - {g.Count()} услуг(и)",
+                    Services = g.ToList()
+                })
+                .ToList();
 
             OrdersListBox.ItemsSource = ordersData;
         }
@@ -66,25 +67,32 @@ namespace MainApp.windows.main
             {
                 OrderCurrentStatus_tb.Text = string.Empty;
                 var selectedOrder = OrdersListBox.SelectedItem as Order;
-                var services = selectedOrder.Services.Select(s => new ServiceDetail
+
+                if (selectedOrder != null)
                 {
-                    mservice_name = s.medical_services.mservice_name,
-                    mservice_icd = s.medical_services.mservice_icd,
-                    mservice_description = s.medical_services.mservice_description,
-                    mservice_price = (decimal)s.medical_services.mservice_price
-                }).ToList();
+                    var services = selectedOrder.Services.Select(s => new ServiceDetail
+                    {
+                        mservice_name = s.medical_services != null ? s.medical_services.mservice_name : "",
+                        mservice_icd = s.medical_services != null ? s.medical_services.mservice_icd : "",
+                        mservice_description = s.medical_services != null ? s.medical_services.mservice_description : "",
+                        mservice_price = s.medical_services != null ? (decimal)s.medical_services.mservice_price : 0
+                    }).ToList();
 
-                OrderDetailsItemsControl.ItemsSource = services;
+                    OrderDetailsItemsControl.ItemsSource = services;
 
-                var total = services.Sum(s => s.mservice_price);
-                TotalPriceTextBlock.Text = $"Итог: {total:C}. Оплачено {GetOrderDateAsked(selectedOrder.OrderId).ToString("dd.MM.yyyy HH:mm")}.";
+                    decimal total = db_cont.clients_services
+                                    .Where(cs => cs.id_order == selectedOrder.OrderId && cs.total_price != null)
+                                    .Select(cs => cs.total_price)
+                                    .FirstOrDefault() ?? 0;
+                    TotalPriceTextBlock.Text = $"Итог: {total:C}. Оплачено {GetOrderDateAsked(selectedOrder.OrderId).ToString("dd.MM.yyyy HH:mm")}.";
 
-                OrderCurrentStatus_tb.Text += $"{GetOrderStatus(selectedOrder.OrderId)}.";
-                sepa_sep2.Visibility = Visibility.Visible;
-                OrderCurrentStatus_tb.Visibility = Visibility.Visible;
+                    OrderCurrentStatus_tb.Text += GetOrderStatus(selectedOrder.OrderId);
+                    sepa_sep2.Visibility = Visibility.Visible;
+                    OrderCurrentStatus_tb.Visibility = Visibility.Visible;
 
-                sepa_sep.Visibility = Visibility.Visible;
-                CompleteOrder_btn.Visibility = Visibility.Visible;
+                    sepa_sep.Visibility = Visibility.Visible;
+                    CompleteOrder_btn.Visibility = Visibility.Visible;
+                }
             }
             else
             {
@@ -135,25 +143,31 @@ namespace MainApp.windows.main
                 MessageBox.Show("Не выбран заказ для изменения");
                 return;
             }
-            else
+
+            var selectedOrder = OrdersListBox.SelectedItem as Order;
+            if (selectedOrder == null) return;
+
+            bool isCancelledOrReturned = false;
+            foreach (var cs in selectedOrder.Services)
             {
-                var selectedOrder = OrdersListBox.SelectedItem as Order;
-
-                if (selectedOrder.Services.Any(cs => cs.id_status == 2) || selectedOrder.Services.Any(cs => cs.id_status == 5))
+                if (cs.id_status == 2 || cs.id_status == 5)
                 {
-                    MessageBox.Show("Этот заказ был отменен или возвращен. Изменения невозможны");
-                    return;
-                }
-
-                else
-                {
-                    FulfillmentsEditWindow few = new FulfillmentsEditWindow(selectedOrder);
-                    few.ShowDialog();
-
-                    LoadOrders();
-                    HideControls();
+                    isCancelledOrReturned = true;
+                    break;
                 }
             }
+
+            if (isCancelledOrReturned)
+            {
+                MessageBox.Show("Этот заказ был отменен или возвращен. Изменения невозможны");
+                return;
+            }
+
+            var few = new FulfillmentsEditWindow(selectedOrder);
+            few.ShowDialog();
+
+            LoadOrders();
+            HideControls();
         }
 
         private void OrdersListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -173,55 +187,81 @@ namespace MainApp.windows.main
                 }
 
                 var selectedOrder = OrdersListBox.SelectedItem as Order;
+                if (selectedOrder == null) return;
+
                 var existingServices = selectedOrder.Services;
 
-                if (existingServices.Any(cs => cs.id_status == 1))
+                bool hasStatus1 = false;
+                foreach (var cs in existingServices)
                 {
-                    var reconfirm = MessageBox.Show("Заказ уже был выполнен. Хотите изменить дату выполнения на текущую?", "Подтверждение повторного выполнения", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    if (reconfirm != MessageBoxResult.Yes) return;
-                    else
+                    if (cs.id_status == 1)
                     {
-                        foreach (var service in existingServices)
-                        {
-                            service.date_made = DateTime.Now;
-                            service.date_cancelled = null;
-                        }
-                        db_cont.SaveChanges();
-
-                        LoadOrders();
-                        HideControls();
-                        return;
+                        hasStatus1 = true;
+                        break;
                     }
                 }
 
-                // check if its able to be completed
-                if (existingServices.Any(cs => cs.id_status != 3))
+                if (hasStatus1)
+                {
+                    var reconfirm = MessageBox.Show("Заказ уже был выполнен. Хотите изменить дату выполнения на текущую?", "Подтверждение повторного выполнения", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (reconfirm != MessageBoxResult.Yes) return;
+
+                    foreach (var service in existingServices)
+                    {
+                        service.date_made = DateTime.Now;
+                        service.date_cancelled = null;
+                    }
+                    db_cont.SaveChanges();
+
+                    LoadOrders();
+                    HideControls();
+                    return;
+                }
+
+                bool canComplete = true;
+                foreach (var cs in existingServices)
+                {
+                    if (cs.id_status != 3)
+                    {
+                        canComplete = false;
+                        break;
+                    }
+                }
+
+                if (!canComplete)
                 {
                     MessageBox.Show("Невозможно выполнить заказ находящийся в любом состоянии кроме 'Выполняется'");
                     return;
                 }
 
-                // confirm
                 var confirmation = MessageBox.Show("Вы подтверждаете выполнение заказа? Баллы будут начислены.", "Подтверждение выполнения", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (confirmation != MessageBoxResult.Yes)
                 {
                     return;
                 }
 
-                // calc points
-                double totalPrice = existingServices.Sum(s => s.medical_services.mservice_price);
+                double totalPrice = 0;
+                foreach (var s in existingServices)
+                {
+                    if (s.medical_services != null)
+                        totalPrice += s.medical_services.mservice_price;
+                }
                 double bonus = Math.Round(totalPrice * 0.15, 2);
-                var client = db_cont.clients.FirstOrDefault(cl => cl.id == _selectedClient.id);
 
-                // upd status
+                var client = db_cont.clients.FirstOrDefault(cl => cl.id == _selectedClient.id);
+                if (client == null)
+                {
+                    MessageBox.Show("Клиент не найден");
+                    return;
+                }
+
                 foreach (var service in existingServices)
                 {
                     service.id_status = 1;
                     service.date_made = DateTime.Now;
                     service.date_cancelled = null;
                 }
-                
-                // loyalty log
+
                 var loyaltyTx = new loyalty_transactions
                 {
                     client_id = client.id,
@@ -232,7 +272,6 @@ namespace MainApp.windows.main
                     x_source = $"Зачисление баллов по выполнению заказа #{selectedOrder.OrderId}"
                 };
 
-                // points accrual
                 client.card_balance = (client.card_balance ?? 0) + bonus;
 
                 db_cont.loyalty_transactions.AddObject(loyaltyTx);
@@ -240,7 +279,6 @@ namespace MainApp.windows.main
 
                 MessageBox.Show("Заказ успешно выполнен");
 
-                // upd ui
                 LoadOrders();
                 HideControls();
             }
@@ -275,7 +313,7 @@ namespace MainApp.windows.main
                 {
                     if (orderService.id_status == 1)
                     {
-                        return $"{status.status_name} - {orderService.date_made?.ToString("dd.MM.yyyy HH:mm")}";
+                        return status.status_name + " - " + (orderService.date_made.HasValue ? orderService.date_made.Value.ToString("dd.MM.yyyy HH:mm") : "");
                     }
                     else
                     {
@@ -294,12 +332,11 @@ namespace MainApp.windows.main
             CompleteOrder_btn.Visibility = Visibility.Hidden;
         }
 
-        
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             if (App.IsDoctor || App.IsLaborant)
             {
-                DeleteOrderButton.IsEnabled = false;
+                //DeleteOrderButton.IsEnabled = false;
             }
             if (App.IsLaborant)
             {
@@ -312,8 +349,12 @@ namespace MainApp.windows.main
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double height && double.TryParse(parameter.ToString(), out double offset))
+            double height;
+            double offset;
+
+            if (value is double && double.TryParse(parameter.ToString(), out offset))
             {
+                height = (double)value;
                 return height - offset;
             }
             return value;
@@ -324,7 +365,6 @@ namespace MainApp.windows.main
             throw new NotImplementedException();
         }
     }
-
 
     public class ClientData
     {

@@ -2,25 +2,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace MainApp.windows.edits
 {
-    /// <summary>
-    /// Interaction logic for ClientsEditWindow.xaml
-    /// </summary>
     public partial class ClientsEditWindow : Window
     {
         readonly HelixDBEntities db_cont = new HelixDBEntities();
         readonly private clients _selectedClient;
+        private NewClientData newClientData;
 
         public ClientsEditWindow(clients client)
         {
             InitializeComponent();
 
-            _selectedClient = client; //cont.clients.FirstOrDefault(c => c.id == client.id);
+            _selectedClient = client;
 
-            var newClientData = new NewClientData
+            newClientData = new NewClientData
             {
                 LastName = _selectedClient.last_name,
                 FirstName = _selectedClient.first_name,
@@ -36,36 +36,74 @@ namespace MainApp.windows.edits
             BirthDate_dp.SelectedDate = _selectedClient.birth_date;
         }
 
-        private void Save_btn_Click(object sender, RoutedEventArgs e)
+        private async void Save_btn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var newClientData = (NewClientData)this.DataContext;
+                DateTime? birthDate = BirthDate_dp.SelectedDate;
 
-                if (LastName_tb.Text == string.Empty || FirstName_tb.Text == string.Empty || Gender_cb.SelectedItem == null
-                    || BirthDate_dp.SelectedDate == null || Phone_tb.Text == string.Empty || Email_tb.Text == string.Empty
-                    || Passport_tb.Text == string.Empty || Passport_tb.Text.Length != 10)
+                // Валидации
+                if (string.IsNullOrWhiteSpace(newClientData.LastName) || string.IsNullOrWhiteSpace(newClientData.FirstName))
                 {
-                    throw new Exception("Некоторые обязательные поля не указаны или содержат неверный тип данных");
+                    await App.ShowPopup("Имя и фамилия обязательны", ValidationPopup, PopupText);
+                    return;
                 }
 
-                // Обновление существующего клиента
+                if (string.IsNullOrWhiteSpace(newClientData.Passport) || !Regex.IsMatch(newClientData.Passport, @"^\d{10}$"))
+                {
+                    await App.ShowPopup("Паспорт должен содержать только 10 цифр", ValidationPopup, PopupText);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(newClientData.Phone) || !Regex.IsMatch(newClientData.Phone, @"^\+\d{10,15}$"))
+                {
+                    await App.ShowPopup("Номер телефона должен быть в формате +1234567890", ValidationPopup, PopupText);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(newClientData.Email) || !Regex.IsMatch(newClientData.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                {
+                    await App.ShowPopup("Некорректный email", ValidationPopup, PopupText);
+                    return;
+                }
+
+                if (birthDate == null)
+                {
+                    await App.ShowPopup("Укажите дату рождения", ValidationPopup, PopupText);
+                    return;
+                }
+
+                if (birthDate.Value.Year >= DateTime.Now.Year || birthDate > DateTime.Now)
+                {
+                    await App.ShowPopup("Дата рождения некорректна (только до текущего года)", ValidationPopup, PopupText);
+                    return;
+                }
+
+                bool passportExists = db_cont.clients.Any(c => c.passport == newClientData.Passport && c.id != _selectedClient.id);
+                if (passportExists)
+                {
+                    await App.ShowPopup("Клиент с таким паспортом уже существует", ValidationPopup, PopupText);
+                    return;
+                }
+
+                // Обновление клиента
                 _selectedClient.last_name = newClientData.LastName;
                 _selectedClient.first_name = newClientData.FirstName;
                 _selectedClient.middle_name = newClientData.MiddleName;
                 _selectedClient.id_gender = newClientData.SelectedGender.id;
-                _selectedClient.birth_date = (DateTime)BirthDate_dp.SelectedDate;
+                _selectedClient.birth_date = birthDate.Value;
                 _selectedClient.phone_number = newClientData.Phone;
                 _selectedClient.email = newClientData.Email;
                 _selectedClient.passport = newClientData.Passport;
 
                 db_cont.SaveChanges();
 
+                this.DialogResult = true;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message}");
+                await App.ShowPopup($"Ошибка: {ex.Message}", ValidationPopup, PopupText);
             }
         }
 

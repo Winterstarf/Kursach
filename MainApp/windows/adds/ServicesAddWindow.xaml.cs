@@ -1,14 +1,14 @@
 ﻿using MainApp.assets.models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace MainApp.windows.adds
 {
-    /// <summary>
-    /// Interaction logic for ServicesAddWindow.xaml
-    /// </summary>
     public partial class ServicesAddWindow : Window
     {
         readonly HelixDBEntities db_cont = new HelixDBEntities();
@@ -20,39 +20,74 @@ namespace MainApp.windows.adds
             var newServiceData = new NewServiceData();
             this.DataContext = newServiceData;
 
-            var types = db_cont.service_types.ToList();
-            newServiceData.TypeOptions = types;
+            newServiceData.TypeOptions = db_cont.service_types.ToList();
         }
 
-        private void Save_btn_Click(object sender, RoutedEventArgs e)
+        private async void Save_btn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 var newServiceData = (NewServiceData)this.DataContext;
 
-                if (Name_tb.Text == string.Empty || Description_tb.Text == string.Empty || Types_cb.SelectedItem == null
-                    || Price_tb.Text == string.Empty)
+                string name = Name_tb.Text.Trim();
+                string description = Description_tb.Text.Trim();
+                string price = Price_tb.Text.Trim();
+                string icd = ICD_tb.Text.Trim();
+                string extra = Extra_tb.Text.Trim();
+
+                // Название и описание обязательны
+                if (string.IsNullOrWhiteSpace(name))
                 {
-                    throw new Exception("Некоторые обязательные поля не указаны или содержат неверный тип данных");
+                    await App.ShowPopup("Название услуги обязательно", ValidationPopup, PopupText);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(description))
+                {
+                    await App.ShowPopup("Описание услуги обязательно", ValidationPopup, PopupText);
+                    return;
+                }
+
+                // Тип услуги обязателен
+                if (newServiceData.SelectedType == null)
+                {
+                    await App.ShowPopup("Выберите тип услуги", ValidationPopup, PopupText);
+                    return;
+                }
+
+                // Цена обязательна и должна быть числом
+                if (!double.TryParse(price.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out double parsedPrice))
+                {
+                    await App.ShowPopup("Введите корректную цену (например, 1200.50 или 800,75)", ValidationPopup, PopupText);
+                    return;
+                }
+
+                // ICD — если заполнен, проверяем формат (буква + 2 цифры + точка + 1 цифра)
+                if (!string.IsNullOrWhiteSpace(icd) && !Regex.IsMatch(icd, @"^[A-ZА-Я]{1}\d{2}\.\d$"))
+                {
+                    await App.ShowPopup("Код ICD должен быть в формате A00.0", ValidationPopup, PopupText);
+                    return;
                 }
 
                 var newService = new medical_services
                 {
-                    mservice_name = newServiceData.Name,
-                    mservice_description = newServiceData.Description,
-                    mservice_icd = newServiceData.ICD,
-                    mservice_price = Convert.ToDouble(newServiceData.Price),
-                    extra_info = newServiceData.Extra,
+                    mservice_name = name,
+                    mservice_description = description,
+                    mservice_icd = string.IsNullOrWhiteSpace(icd) ? null : icd,
+                    mservice_price = parsedPrice,
+                    extra_info = extra,
                     id_type = newServiceData.SelectedType.id
                 };
+
                 db_cont.medical_services.AddObject(newService);
                 db_cont.SaveChanges();
 
+                this.DialogResult = true;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message}");
+                await App.ShowPopup($"Ошибка при сохранении: {ex.Message}", ValidationPopup, PopupText);
             }
         }
     }

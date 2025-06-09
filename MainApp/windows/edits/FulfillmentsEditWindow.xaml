@@ -56,6 +56,12 @@
         </Style>
     </Window.Resources>
     <Grid>
+        <Popup x:Name="ValidationPopup" Placement="Center" StaysOpen="False" AllowsTransparency="True">
+            <Border Background="Crimson" CornerRadius="8" Padding="10" Margin="10" >
+                <TextBlock x:Name="PopupText" Foreground="White" FontWeight="Bold" FontSize="14"/>
+            </Border>
+        </Popup>
+        
         <Button x:Name="Save_btn" Content="Изменить" Click="Save_btn_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,25" Height="30" Width="150"/>
 
         <StackPanel Width="340" Height="520" Margin="30,10,10,0" VerticalAlignment="Top">
@@ -98,8 +104,8 @@
             </DatePicker>
             <TextBlock Text="Статус *" Height="20" Width="202" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
             <ComboBox x:Name="Status_cb" FontSize="14" Margin="10,0,10,5" Height="30" Width="210" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding StatusOptions}" SelectedItem="{Binding SelectedStatus}" DisplayMemberPath="status_name"/>
-            <TextBlock Text="Ответственный за выполнение *" Height="20" Width="259" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
-            <ComboBox x:Name="Staff_сb" FontSize="14" Margin="10,0,10,5" Height="30" Width="210" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding StaffOptions}" SelectedItem="{Binding SelectedStaff}">
+            <TextBlock Text="Ответственный за выполнение " Height="20" Width="259" HorizontalAlignment="Left" Margin="10,0,10,2" FontSize="14"/>
+            <ComboBox x:Name="Staff_сb" FontSize="14" Margin="10,0,10,5" Height="30" Width="280" VerticalContentAlignment="Center" HorizontalAlignment="Left" ItemsSource="{Binding StaffOptions}" SelectedItem="{Binding SelectedStaff}" IsEnabled="False">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>

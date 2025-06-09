@@ -1,20 +1,53 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<!--local-->
+<?xml version="1.0" encoding="utf-8"?>
 <configuration>
-  <connectionStrings>
-    <add name="HelixDBEntities"
+	<connectionStrings>
+		<add name="HelixDBEntities"
 			 connectionString="metadata=res://*/assets.models.MainModel.csdl|res://*/assets.models.MainModel.ssdl|res://*/assets.models.MainModel.msl;
-                         provider=System.Data.SqlClient;
-                         provider connection string='Data Source=IP,port;Initial Catalog=db_name;User ID=user_id;Password=password;MultipleActiveResultSets=True'"
+                       provider=System.Data.SqlClient;
+                       provider connection string='Data Source=Domain;
+                                                   Initial Catalog=HelixDB;
+                                                   Encrypt=True;
+                                                   TrustServerCertificate=True;
+                                                   Network Library=dbmssocn;
+                                                   MultipleActiveResultSets=True;'"
 			 providerName="System.Data.EntityClient" />
-    <add name="HelixDB"
-	         connectionString="Data Source=IP,port;
-                         Initial Catalog=db_name;
-                         User ID=user_id;
-                         Password=password;
-                         Encrypt=True;
-                         TrustServerCertificate=True;
-                         Network Library=dbmssocn;
-                         MultipleActiveResultSets=True;"
-	         providerName="System.Data.SqlClient" />
-  </connectionStrings>
+		<add name="HelixDB"
+			 connectionString="Data Source=Domain;
+                       Initial Catalog=HelixDB;
+                       Encrypt=True;
+                       TrustServerCertificate=True;
+                       Network Library=dbmssocn;
+                       MultipleActiveResultSets=True;"
+			 providerName="System.Data.SqlClient" />
+	</connectionStrings>
+</configuration>
+
+<!--remote-->
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+	<connectionStrings>
+		<add name="HelixDBEntities"
+			 connectionString="metadata=res://*/assets.models.MainModel.csdl|res://*/assets.models.MainModel.ssdl|res://*/assets.models.MainModel.msl;
+                       provider=System.Data.SqlClient;
+                       provider connection string='Data Source=IP,port;
+                                                   Initial Catalog=HelixDB;
+                                                   User ID=user_id;
+                                                   Password=password;
+                                                   Encrypt=True;
+                                                   TrustServerCertificate=True;
+                                                   Network Library=dbmssocn;
+                                                   MultipleActiveResultSets=True;'"
+			 providerName="System.Data.EntityClient" />
+		<add name="HelixDB"
+			 connectionString="Data Source=IP,port;
+                       Initial Catalog=HelixDB;
+                       User ID=user_id;
+                       Password=password;
+                       Encrypt=True;
+                       TrustServerCertificate=True;
+                       Network Library=dbmssocn;
+                       MultipleActiveResultSets=True;"
+			 providerName="System.Data.SqlClient" />
+	</connectionStrings>
 </configuration>

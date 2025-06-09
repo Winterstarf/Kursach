@@ -134,7 +134,7 @@ namespace MainApp.pages
             if (App.IsDoctor || App.IsLaborant)
             {
                 Update_btn.IsEnabled = false;
-                Del_btn.IsEnabled = false;
+                //Del_btn.IsEnabled = false;
             }
             if (App.IsLaborant)
             {

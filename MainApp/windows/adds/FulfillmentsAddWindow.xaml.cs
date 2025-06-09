@@ -8,6 +8,7 @@ using System;
 using MainApp.windows.edits;
 using MainApp.windows.main;
 using System.Windows.Documents;
+using System.Threading.Tasks;
 
 namespace MainApp.windows.adds
 {
@@ -28,14 +29,19 @@ namespace MainApp.windows.adds
 
             var clients = db_cont.clients.ToList();
             newFulfillmentData.ClientOptions = clients;
+
             var medical_services = db_cont.medical_services.ToList();
             newFulfillmentData.ServiceOptions = medical_services;
             newFulfillmentData.FilteredServiceOptions = medical_services;
+
             var statuses = db_cont.statuses.ToList();
             newFulfillmentData.StatusOptions = statuses;
             newFulfillmentData.SelectedStatus = statuses.FirstOrDefault(st => st.id == 3);
+
             var staff = db_cont.staff.ToList();
             newFulfillmentData.StaffOptions = staff;
+            newFulfillmentData.SelectedStaff = staff.FirstOrDefault(s => s.id == App.CurrentUserId);
+            Staff_сb.SelectedItem = newFulfillmentData.SelectedStaff;
 
             DatePaid_dp.SelectedDate = DateTime.Now;
         }
@@ -97,45 +103,82 @@ namespace MainApp.windows.adds
             }
         }
 
-        private void Save_btn_Click(object sender, RoutedEventArgs e)
+        private async void Save_btn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 var newFulfillmentData = (NewFulfillmentData)this.DataContext;
 
-                if (newFulfillmentData.SelectedClient == null || newFulfillmentData.SelectedStatus == null || newFulfillmentData.SelectedStaff == null)
+                // Проверка обязательных полей
+                if (newFulfillmentData.SelectedClient == null)
                 {
-                    throw new Exception("Некоторые поля не заполнены или заполнены неверными данными");
+                    await App.ShowPopup("Клиент не выбран", ValidationPopup, PopupText);
+                    return;
                 }
 
+                if (newFulfillmentData.SelectedStatus == null)
+                {
+                    await App.ShowPopup("Статус не выбран", ValidationPopup, PopupText);
+                    return;
+                }
+
+                if (newFulfillmentData.SelectedStaff == null)
+                {
+                    await App.ShowPopup("Ответственный за выполнение не выбран", ValidationPopup, PopupText);
+                    return;
+                }
+
+                // Проверка id выбранного сотрудника
+                var allowedStaffIds = new HashSet<int> { 1, 2, 5, 6, 7, 8, 9, 10, 11 };
+                if (!allowedStaffIds.Contains(newFulfillmentData.SelectedStaff.id))
+                {
+                    await App.ShowPopup("Выбранный ответственный не входит в список допустимых", ValidationPopup, PopupText);
+                    return;
+                }
+
+                // Статус и дата выполнения
                 if (newFulfillmentData.SelectedStatus.id != 1 && DateMade_dp.SelectedDate != null)
                 {
                     DateMade_dp.SelectedDate = null;
-                    throw new Exception("Нельзя указывать дату выполнения при статусе Выполняется или Отменено");
+                    await App.ShowPopup("Нельзя указывать дату выполнения при статусе Выполняется или Отменено", ValidationPopup, PopupText);
+                    return;
                 }
 
-                if (DatePaid_dp.SelectedDate != null && DatePaid_dp.SelectedDate > DateTime.Today)
-                {
-                    throw new Exception("Дата оплаты не может быть позже сегодняшнего дня");
-                }
-
-                if (newFulfillmentData.SelectedServices == null || !newFulfillmentData.SelectedServices.Any() || Services_lb.SelectedItems == null || Services_lb.SelectedItems.Count == 0) 
-                {
-                    throw new Exception("Не выбрано ни одной медицинской услуги");
-                }
-
+                // Проверка даты оплаты
                 if (DatePaid_dp.SelectedDate == null)
                 {
-                    throw new Exception("Дата заказа/оплаты не была выбрана");
+                    await App.ShowPopup("Дата оплаты не была выбрана", ValidationPopup, PopupText);
+                    return;
                 }
 
-                // Handle case when the table is empty
+                if (DatePaid_dp.SelectedDate > DateTime.Today)
+                {
+                    await App.ShowPopup("Дата оплаты не может быть позже сегодняшнего дня", ValidationPopup, PopupText);
+                    return;
+                }
+
+                // Проверка выбранных услуг
+                if (newFulfillmentData.SelectedServices == null || newFulfillmentData.SelectedServices.Count == 0)
+                {
+                    await App.ShowPopup("Не выбрано ни одной медицинской услуги", ValidationPopup, PopupText);
+                    return;
+                }
+
+                if (newFulfillmentData.SelectedServices.Count > 10)
+                {
+                    await App.ShowPopup("Нельзя выбрать более 10 услуг", ValidationPopup, PopupText);
+                    return;
+                }
+
+                // Генерация id заказа
                 var newOrderId = db_cont.clients_services.Any()
                     ? db_cont.clients_services.Max(cs => cs.id_order) + 1
                     : 1;
 
                 DateTime selDate = (DateTime)DatePaid_dp.SelectedDate;
                 DateTime combinedDateTime = selDate + DateTime.Now.TimeOfDay;
+                decimal total = (decimal)newFulfillmentData.SelectedServices.Sum(s => s.mservice_price);
+                bool isFirst = true;
 
                 foreach (var selectedService in newFulfillmentData.SelectedServices)
                 {
@@ -147,9 +190,11 @@ namespace MainApp.windows.adds
                         date_made = DateMade_dp.SelectedDate,
                         id_status = newFulfillmentData.SelectedStatus.id,
                         id_staff = newFulfillmentData.SelectedStaff.id,
-                        id_order = newOrderId
+                        id_order = newOrderId,
+                        total_price = isFirst ? total : (decimal?)null
                     };
                     db_cont.clients_services.AddObject(newFulfillment);
+                    isFirst = false;
                 }
 
                 db_cont.SaveChanges();
@@ -157,7 +202,7 @@ namespace MainApp.windows.adds
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message}");
+                await App.ShowPopup($"Ошибка: {ex.Message}", ValidationPopup, PopupText);
             }
         }
     }

@@ -55,7 +55,7 @@ namespace MainApp.pages
                         OrderId = g.Key,
                         ClientFullName = $"{client.last_name} {client.first_name} {client.middle_name}".Trim(),
                         StatusName = status != null ? status.status_name : "Неизвестный статус",
-                        TotalPrice = g.Sum(cs => cs.medical_services.mservice_price),
+                        TotalPrice = (double)(g.FirstOrDefault(cs => cs.total_price.HasValue)?.total_price ?? 0),
                         Services = g.ToList()
                     };
                 })
@@ -135,7 +135,7 @@ namespace MainApp.pages
                         OrderId = g.Key,
                         ClientFullName = $"{client.last_name} {client.first_name} {client.middle_name}".Trim(),
                         StatusName = status != null ? status.status_name : "Неизвестный статус",
-                        TotalPrice = g.Sum(cs => cs.medical_services.mservice_price),
+                        TotalPrice = (double)(g.FirstOrDefault(cs => cs.total_price.HasValue)?.total_price ?? 0),
                         Services = g.ToList()
                     };
                 })
@@ -149,7 +149,7 @@ namespace MainApp.pages
         {
             if (App.IsDoctor || App.IsLaborant)
             {
-                Del_btn.IsEnabled = false;
+                //Del_btn.IsEnabled = false;
             }
         }
     }
