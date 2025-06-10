@@ -1,4 +1,4 @@
-﻿using MainApp.assets.models;
+using MainApp.assets.models;
 using MainApp.windows.main;
 using System;
 using System.Globalization;
@@ -29,38 +29,53 @@ namespace MainApp.pages
         public OrdersPage()
         {
             InitializeComponent();
+
             LoadOrders();
+
+            AllOrdersFilter_check.Checked += FilterCheckChanged;
+            AllOrdersFilter_check.Unchecked += FilterCheckChanged;
+        }
+
+        private void FilterCheckChanged(object sender, RoutedEventArgs e)
+        {
+            RefreshOrdersView();
+        }
+
+        private void RefreshOrdersView()
+        {
+            string searchText = Search_tb.Text.Trim();
+            DG_Orders.ItemsSource = SearchOrders(searchText);
         }
 
         public List<OrderDisplay> SearchOrders(string searchText)
         {
             string[] searchWords = searchText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var filteredServices = db_cont.clients_services
-                .Where(cs => cs.id_status == 1) // filtering by completed only
-                .ToList();
+            var filteredServices = AllOrdersFilter_check.IsChecked == true
+            ? db_cont.clients_services.ToList() // все заказы
+            : db_cont.clients_services.Where(cs => cs.id_status == 1).ToList(); // только выполненные
 
             var groupedOrders = filteredServices
-                .GroupBy(cs => cs.id_order)
-                .Select(g =>
+            .GroupBy(cs => cs.id_order)
+            .Select(g =>
+            {
+                var firstService = g.FirstOrDefault();
+                if (firstService == null) return null;
+
+                var client = firstService.clients;
+                var status = db_cont.statuses.FirstOrDefault(s => s.id == firstService.id_status);
+
+                return new OrderDisplay
                 {
-                    var firstService = g.FirstOrDefault();
-                    if (firstService == null) return null;
-
-                    var client = firstService.clients;
-                    var status = db_cont.statuses.FirstOrDefault(s => s.id == firstService.id_status);
-
-                    return new OrderDisplay
-                    {
-                        OrderId = g.Key,
-                        ClientFullName = $"{client.last_name} {client.first_name} {client.middle_name}".Trim(),
-                        StatusName = status != null ? status.status_name : "Неизвестный статус",
-                        TotalPrice = (double)(g.FirstOrDefault(cs => cs.total_price.HasValue)?.total_price ?? 0),
-                        Services = g.ToList()
-                    };
-                })
-                .Where(o => o != null)
-                .ToList();
+                    OrderId = g.Key,
+                    ClientFullName = $"{client.last_name} {client.first_name} {client.middle_name}".Trim(),
+                    StatusName = status != null ? status.status_name : "Неизвестный статус",
+                    TotalPrice = (double)(g.FirstOrDefault(cs => cs.total_price.HasValue)?.total_price ?? 0),
+                    Services = g.ToList()
+                };
+            })
+            .Where(o => o != null)
+            .ToList();
 
             if (searchWords.Length == 0)
             {
@@ -68,16 +83,15 @@ namespace MainApp.pages
             }
 
             return groupedOrders
-                .Where(order => searchWords.All(word =>
-                    order.OrderId.ToString().ToLower().Contains(word.ToLower()) ||
-                    (order.ClientFullName != null && order.ClientFullName.ToLower().Contains(word.ToLower()))))
-                .ToList();
+            .Where(order => searchWords.All(word =>
+            order.OrderId.ToString().ToLower().Contains(word.ToLower()) ||
+            (order.ClientFullName != null && order.ClientFullName.ToLower().Contains(word.ToLower()))))
+            .ToList();
         }
 
         public void Search_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchText = Search_tb.Text.Trim();
-            DG_Orders.ItemsSource = SearchOrders(searchText);
+            RefreshOrdersView();
         }
 
         private void Del_btn_Click(object sender, RoutedEventArgs e)
@@ -118,31 +132,7 @@ namespace MainApp.pages
 
         private void LoadOrders()
         {
-            var orders = db_cont.clients_services
-                .Where(cs => cs.id_status == 1) //means completed
-                .GroupBy(cs => cs.id_order)
-                .ToList()
-                .Select(g =>
-                {
-                    var firstService = g.FirstOrDefault();
-                    if (firstService == null) return null;
-
-                    var client = firstService.clients;
-                    var status = db_cont.statuses.FirstOrDefault(s => s.id == firstService.id_status);
-
-                    return new OrderDisplay
-                    {
-                        OrderId = g.Key,
-                        ClientFullName = $"{client.last_name} {client.first_name} {client.middle_name}".Trim(),
-                        StatusName = status != null ? status.status_name : "Неизвестный статус",
-                        TotalPrice = (double)(g.FirstOrDefault(cs => cs.total_price.HasValue)?.total_price ?? 0),
-                        Services = g.ToList()
-                    };
-                })
-                .Where(o => o != null)
-                .ToList();
-
-            DG_Orders.ItemsSource = orders;
+            RefreshOrdersView();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
